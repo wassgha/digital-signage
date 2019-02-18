@@ -1,0 +1,28 @@
+{
+  "name": "SeniorProject",
+  "version": "1.0.0",
+  "description": "THis is a nice readme about this project",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexander-e-andrews/CSSeniorDisplayProject.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexander-e-andrews/CSSeniorDisplayProject/issues"
+  },
+  "homepage": "https://github.com/alexander-e-andrews/CSSeniorDisplayProject#readme",
+  "dependencies": {
+    "next": "^8.0.1",
+    "react": "^16.8.2",
+    "react-dom": "^16.8.2"
+  }
+}
