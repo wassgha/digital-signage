@@ -2,6 +2,8 @@
 logs
 *.log
 npm-debug.log*
+.env
+.DS_Store
 
 # Runtime data
 pids
@@ -33,6 +35,15 @@ jspm_packages
 # Optional npm cache directory
 .npm
 
+# Bower
+bower_components/
+
 # Optional REPL history
 .node_repl_history
+# IDE/Editor data
+.idea
+
+# Next
 .next
+
+package-lock.json
