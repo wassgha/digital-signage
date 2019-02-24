@@ -4,11 +4,11 @@
   "description": "THis is a nice readme about this project",
   "main": "index.js",
   "scripts": {
-    "dev": "next",
+    "dev": "node server.js",
     "build": "next build",
-    "start": "next start",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --color ./ *.js"
+    "start": "NODE_ENV=production node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,8 @@
     "eslint": "^5.14.1",
     "eslint-plugin-react": "^7.12.4",
     "isomorphic-unfetch": "^3.0.0",
+    "react-markdown": "^4.0.6",
+    "express": "^4.16.4",
     "next": "^8.0.1",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
