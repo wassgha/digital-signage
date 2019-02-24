@@ -1,12 +1,12 @@
 {
-  "name": "SeniorProject",
+  "name": "DigitalSignage",
   "version": "1.0.0",
-  "description": "THis is a nice readme about this project",
+  "description": "This is a user interface for a dynamic digital signage",
   "main": "index.js",
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
-    "lint": "eslint --color ./ *.js"
+    "lint": "eslint --color ./ *.js",
     "start": "NODE_ENV=production node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
