@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - "lts/*"
+install: npm install
+script:
+  - npm run lint
+branches:
+  only:
+    - master
+    - release
+    - canary
+cache: npm
