@@ -1,13 +1,30 @@
-How to Run:
+### Demo
+
+Use the demo website at [http://digitaldisplay.heroku.com](http://digitaldisplay.heroku.com)
+
+#### How to Run:
+
+```bash
 npm install
 npm run dev
+```
 
+#### Creating branches
 
-Creating Branches:
+```bash
 git checkout -b <branch_name> //This creates a new branch
+```
 
+#### Making changes
+
+```bash
+git add -A
 git commit -m "Your Message here"
 git push
+```
 
-To Go back Onto Main Branch
+#### To go back to the main Branch
+
+```bash
 git checkout origin master
+```
