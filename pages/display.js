@@ -1,18 +1,8 @@
-import Clock from 'react-live-clock'
-
-import Layout from '../components/Layout.js'
+import DisplayFrame from '../components/DisplayFrame.js'
 import Slideshow from '../components/Slideshow.js'
 
 const Display = props => (
-  <div className="display">
-    <div className={'status'}>
-      <div className={'date'}>
-        <Clock ticking={true} format={'dddd, MMMM Mo.'} />
-      </div>
-      <div className={'time'}>
-        <Clock ticking={true} format={'H:mm'} />
-      </div>
-    </div>
+  <DisplayFrame>
     <Slideshow
       slides={[
         {
@@ -56,30 +46,7 @@ const Display = props => (
         }
       ]}
     />
-    <style jsx>
-      {`
-        .display {
-          display: flex;
-          flex-direction: column;
-          width: 100vw;
-          height: 100vh;
-          background: black;
-          font-family: Open Sans, sans-serif;
-          color: white;
-        }
-        .status {
-          padding: 30px;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-        }
-        .date {
-        }
-        .time {
-        }
-      `}
-    </style>
-  </div>
+  </DisplayFrame>
 )
 
 export default Display

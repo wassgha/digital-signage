@@ -23,6 +23,9 @@
   },
   "homepage": "https://github.com/alexander-e-andrews/CSSeniorDisplayProject#readme",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.15",
+    "@fortawesome/free-solid-svg-icons": "^5.7.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.14.1",
     "eslint-plugin-react": "^7.12.4",
