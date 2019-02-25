@@ -1,8 +1,8 @@
-import parse from 'url-parse'
+import getVideoId from 'get-video-id'
 
 const Slide = ({ slide }) => {
   const { url, type, title, desc } = slide
-  const parsedUrl = parse(url, true)
+  const { id, service } = getVideoId(url)
   return (
     <div className="slide">
       {type == 'photo' ? (
@@ -12,11 +12,20 @@ const Slide = ({ slide }) => {
             backgroundImage: `url(${url})`
           }}
         />
-      ) : type == 'youtube' && parsedUrl && parsedUrl.query && parsedUrl.query.v ? (
+      ) : type == 'youtube' && id && service == 'youtube' ? (
         <iframe
           width="100%"
           height="100%"
-          src={`https://www.youtube.com/embed/${parsedUrl.query.v}?autoplay=1&controls=0`}
+          src={`https://www.youtube.com/embed/${id}?autoplay=1&controls=0`}
+          frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        />
+      ) : type == 'web' && url ? (
+        <iframe
+          width="100%"
+          height="100%"
+          src={url}
           frameborder="0"
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
@@ -51,6 +60,7 @@ const Slide = ({ slide }) => {
           background-image: linear-gradient(-180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
           box-sizing: border-box;
           padding-top: 40px;
+          pointer-events: none;
         }
         .info h1 {
           margin: 0;
