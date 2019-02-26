@@ -20,17 +20,6 @@ class Slideshow extends Component {
     this.setState({ firstRender: false })
   }
 
-  waitForNextSlide = () => {
-    const { defaultDuration = DEFAULT_DURATION } = this.props
-    const { current } = this.state
-    const currentSlide = this.orderedSlides[current]
-    setTimeout(() => {
-      this.nextSlide().then(() => {
-        this.waitForNextSlide()
-      })
-    }, currentSlide.duration * 1000 || defaultDuration)
-  }
-
   get orderedSlides() {
     const { slides = [] } = this.props
     return _.sortBy(slides, 'order')
@@ -49,15 +38,15 @@ class Slideshow extends Component {
     })
   }
 
-  goToSlide = n => {
-    const { slides } = this.state
-    if (n < 0 || n > slides.length - 1) {
-      return
-    }
-
-    this.setState(() => ({
-      current: n
-    }))
+  waitForNextSlide = () => {
+    const { defaultDuration = DEFAULT_DURATION } = this.props
+    const { current } = this.state
+    const currentSlide = this.orderedSlides[current]
+    setTimeout(() => {
+      this.nextSlide().then(() => {
+        this.waitForNextSlide()
+      })
+    }, currentSlide.duration * 1000 || defaultDuration)
   }
 
   render() {
@@ -71,13 +60,13 @@ class Slideshow extends Component {
         </div>
         <div className="progress-bar">
           {this.orderedSlides.map((slide, i) => (
-            <div className={`progress-segment ${i < current && 'active'}`}>
+            <div key={`slide-${i}`} className={`progress-segment ${i < current && 'active'}`}>
               <div
                 className={`progress-segment-content`}
                 style={{
                   width: i == current && !firstRender ? '100%' : '0%',
                   transition:
-                    i == current
+                    i == current && !firstRender
                       ? `all linear ${slide.duration || defaultDuration / 1000}s`
                       : 'none'
                 }}
