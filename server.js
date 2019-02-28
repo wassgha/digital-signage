@@ -8,6 +8,7 @@ const app = next({ dev })
 const handle = app.getRequestHandler()
 
 const apis = require('./api/services/mongooseAPI')
+const devF = require('./.dev.js')
 
 app
   .prepare()
@@ -15,6 +16,41 @@ app
     const server = express()
     let db = new apis()
     db.getMirjans()
+    server.get('/mongoTest', (req, res) => {
+      
+      app.render(req, res, '/mongoTest', data)
+    })
+
+
+    mongoose.connect(devF.MONGO_URL)
+    var db = mongoose.connection
+    // eslint-disable-next-line no-console
+    db.on('error', console.error.bind(console, 'connection error:'))
+    var data
+    db.once('open', function() {
+      // we're connected!
+      const schemass = require('./models/simpleModel.js')
+      var testSchema = schemass.GROUP_MEMBER
+      var mirjan = new testSchema({name: 'Mirjan', title: 'Doritoes and MTn Dew Code Red Fetcher'})
+      mirjan.save(function (err, mirjan){
+        // eslint-disable-next-line no-console
+        if (err) return console.error(err)
+        // eslint-disable-next-line no-console
+      })
+
+      testSchema.find(function (err, mirjans){
+        // eslint-disable-next-line no-console
+        if(err) return console.error(err)
+        // eslint-disable-next-line no-console
+        data = mirjans
+      })
+      // eslint-disable-next-line no-console
+      console.log(mirjan.name)
+      // eslint-disable-next-line no-console
+      console.log('yolo nerds')
+    })
+
+    
     server.get('/mongoTest', (req, res) => {
       
       app.render(req, res, '/mongoTest', data)
