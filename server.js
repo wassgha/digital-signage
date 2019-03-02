@@ -16,6 +16,12 @@ app
       app.render(req, res, actualPage, queryParams)
     })
 
+    server.get("/upload", (req, res) => {
+      //file upload TODO
+      res.render('<h1>you hit the upload endpoint</h1>')
+
+    })
+
     server.get('*', (req, res) => {
       return handle(req, res)
     })
