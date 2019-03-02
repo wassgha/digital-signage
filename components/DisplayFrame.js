@@ -1,3 +1,8 @@
+/**
+ * @fileoverview DisplayFrame component which renders the date, time and layout
+ * for the added widgets
+ */
+
 import Clock from 'react-live-clock'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWifi } from '@fortawesome/free-solid-svg-icons'

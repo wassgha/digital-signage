@@ -1,11 +1,17 @@
+/**
+ * @fileoverview Preview page (shows the display frame and renders all the
+ * widgets inside of it)
+ */
+
 import DisplayFrame from '../components/DisplayFrame.js'
 import Slideshow from '../components/Slideshow.js'
 
 /* eslint-disable */
+// TODO(@wassgha): Replace with dynamic slide data through a call to the API
 const MOCK_SLIDES = [
   {
     type: 'photo',
-    url:
+    data:
       'https://compsci.lafayette.edu/wp-content/uploads/sites/66/2010/05/computerSci-homepage.jpg',
     title: 'Welcome to the Computer Science Department',
     desc:
@@ -15,7 +21,7 @@ const MOCK_SLIDES = [
   },
   {
     type: 'photo',
-    url:
+    data:
       'https://news.lafayette.edu/wp-content/blogs.dir/2/files/2018/12/STEM-professors-470x264.jpg',
     title: 'Hidden Figures Week',
     desc:
@@ -25,7 +31,7 @@ const MOCK_SLIDES = [
   },
   {
     type: 'web',
-    url: 'https://compsci.lafayette.edu/courses/',
+    data: 'https://compsci.lafayette.edu/courses/',
     title: 'Classes Website Example',
     desc: '',
     duration: 4, // In seconds
@@ -34,7 +40,7 @@ const MOCK_SLIDES = [
 
   {
     type: 'youtube',
-    url: 'https://www.youtube.com/watch?v=xcs-xnc25-I',
+    data: 'https://www.youtube.com/watch?v=xcs-xnc25-I',
     title: "The President's Challenge: Bring the Best",
     desc:
       "Saeed Malami '20 and Lillian Kennedy '21 talk about the impact Lafayette College has had on their lives and the role donors have played in making this possible.",

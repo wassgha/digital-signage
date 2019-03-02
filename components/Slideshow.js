@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Slideshow component that given an array of slide descriptions
+ * of mixed types, renders the slides and automatically plays the slideshow for
+ * the given durations
+ */
+
 import { Component } from 'react'
 import _ from 'lodash'
 
@@ -20,11 +26,20 @@ class Slideshow extends Component {
     this.setState({ firstRender: false })
   }
 
+  /**
+   * Sorts the slides by the given `order` value of each slide and returns the
+   * slides array in the sorted order
+   * @return {Array}
+   */
   get orderedSlides() {
     const { slides = [] } = this.props
     return _.sortBy(slides, 'order')
   }
 
+  /**
+   * Moves to the next slide (and loops back if on the last slide)
+   * @return {Promise}
+   */
   nextSlide = () => {
     const { current } = this.state
     const { slides } = this.props
@@ -38,6 +53,10 @@ class Slideshow extends Component {
     })
   }
 
+  /**
+   * Waits for the duration specified by each slide then moves to the next slide
+   * and waits again
+   */
   waitForNextSlide = () => {
     const { defaultDuration = DEFAULT_DURATION } = this.props
     const { current } = this.state

@@ -1,3 +1,7 @@
+/**
+ * Overloads the _document container from Next.js in order to add custom fonts
+ */
+
 import Document, { Head, Main, NextScript } from 'next/document'
 
 class AppDocument extends Document {

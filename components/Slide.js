@@ -1,7 +1,18 @@
+/**
+ * @fileoverview Slide component that given a slide type and its data renders it
+ * along with its title and description.
+ */
+
 import { Component } from 'react'
 import getVideoId from 'get-video-id'
 
 class Slide extends Component {
+  /**
+   * Renders the inner content of the slide (ex. the photo, youtube iframe, etc)
+   * @param {string} type Slide type (ex. photo, youtube, web, etc.)
+   * @param {string} data The slide's data (usually a URL or object ID)
+   * @returns {Component}
+   */
   renderSlideContent(type, data) {
     switch (type) {
       case 'photo':
@@ -63,12 +74,16 @@ class Slide extends Component {
     }
   }
 
+  /**
+   * Renders the slide along with an overlayed title and description if given
+   * @returns {Component}
+   */
   render() {
     const { slide } = this.props
-    const { url, type, title, desc } = slide
+    const { data, type, title, desc } = slide
     return (
       <div className="slide">
-        {this.renderSlideContent(type, url)}
+        {this.renderSlideContent(type, data)}
         {(title || desc) && (
           <div className="info">
             {title && <h1>{title}</h1>}
