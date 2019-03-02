@@ -21,7 +21,7 @@ app
     var data
     db.once('open', function() {
       // we're connected!
-      const schemass = require('./models/simpleModel.js')
+      const schemass = require('./api/models/simpleModel.js')
       var testSchema = schemass.GROUP_MEMBER
       var mirjan = new testSchema({name: 'Mirjan', title: 'Doritoes and MTn Dew Code Red Fetcher'})
       mirjan.save(function (err, mirjan){
