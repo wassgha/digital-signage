@@ -24,13 +24,14 @@
   "homepage": "https://github.com/alexander-e-andrews/CSSeniorDisplayProject#readme",
   "dependencies": {
     "babel-eslint": "^10.0.1",
+    "body-parser": "^1.18.3",
     "eslint": "^5.14.1",
     "eslint-plugin-react": "^7.12.4",
-    "isomorphic-unfetch": "^3.0.0",
-    "react-markdown": "^4.0.6",
     "express": "^4.16.4",
+    "isomorphic-unfetch": "^3.0.0",
     "next": "^8.0.1",
     "react": "^16.8.2",
-    "react-dom": "^16.8.2"
+    "react-dom": "^16.8.2",
+    "react-markdown": "^4.0.6"
   }
 }
