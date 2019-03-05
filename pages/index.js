@@ -1,56 +1,45 @@
-import Layout from '../components/Layout.js'
-
 import Link from 'next/link'
-import fetch from 'isomorphic-unfetch'
 
 const Index = props => (
-  <Layout>
-    <h1>Batman TV Shows</h1>
-    <ul>
-      {props.shows.map(({ show }) => (
-        <li key={show.id}>
-          <Link as={`/p/${show.id}`} href={`/post?id=${show.id}`}>
-            <a>{show.name}</a>
-          </Link>
-        </li>
-      ))}
-    </ul>
-    <style jsx>{`
-      h1,
-      a {
-        font-family: 'Arial';
-      }
-
-      ul {
-        padding: 0;
-      }
-
-      li {
-        list-style: none;
-        margin: 5px 0;
-      }
-
-      a {
-        text-decoration: none;
-        color: blue;
-      }
-
-      a:hover {
-        opacity: 0.6;
-      }
-    `}</style>
-  </Layout>
+  <div className="home">
+    <p>The Digital Signage server is running in the background.</p>
+    <Link href="/layout">
+      <a className="btn admin">Admin Home</a>
+    </Link>
+    <Link href="/display">
+      <a className="btn home">Display Home</a>
+    </Link>
+    <style jsx>
+      {`
+        .home {
+          font-family: 'Open Sans', sans-serif;
+          padding: 40px;
+          max-width: 960px;
+          margin: auto;
+          text-align: center;
+        }
+        .home p {
+          margin-bottom: 20px;
+        }
+        .btn {
+          background: lightgray;
+          padding: 20px;
+          text-decoration: none;
+          text-transform: uppercase;
+          color: white;
+          border-radius: 4px;
+          margin: 20px;
+          display: inline-block;
+        }
+        .btn.admin {
+          background: #03a9f4;
+        }
+        .btn.home {
+          background: #8bc34a;
+        }
+      `}
+    </style>
+  </div>
 )
-
-Index.getInitialProps = async function() {
-  const res = await fetch('https://api.tvmaze.com/search/shows?q=batman')
-  const data = await res.json()
-
-  // console.log(`Show data fetched. Count: ${data.length}`)
-
-  return {
-    shows: data
-  }
-}
 
 export default Index

@@ -8,6 +8,7 @@ import { Component } from 'react'
 import _ from 'lodash'
 
 import Slide from './Slide'
+import Progress from './Progress'
 
 const DEFAULT_DURATION = 5000
 
@@ -16,14 +17,12 @@ class Slideshow extends Component {
     super(props)
 
     this.state = {
-      current: 0,
-      firstRender: true
+      current: null
     }
   }
 
   componentDidMount() {
-    this.waitForNextSlide()
-    this.setState({ firstRender: false })
+    this.setState({ current: 0 }, this.waitForNextSlide)
   }
 
   /**
@@ -65,34 +64,23 @@ class Slideshow extends Component {
       this.nextSlide().then(() => {
         this.waitForNextSlide()
       })
-    }, currentSlide.duration * 1000 || defaultDuration)
+    }, (currentSlide && currentSlide.duration * 1000) || defaultDuration)
   }
 
   render() {
     const { defaultDuration = DEFAULT_DURATION } = this.props
-    const { current, firstRender } = this.state
+    const { current } = this.state
     const currentSlide = this.orderedSlides[current]
     return (
       <div className="slideshow">
         <div className="slideshow-wrapper">
-          <Slide key={current} slide={currentSlide} />
+          {currentSlide && <Slide key={current} slide={currentSlide} />}
         </div>
-        <div className="progress-bar">
-          {this.orderedSlides.map((slide, i) => (
-            <div key={`slide-${i}`} className={`progress-segment ${i < current && 'active'}`}>
-              <div
-                className={`progress-segment-content`}
-                style={{
-                  width: i == current && !firstRender ? '100%' : '0%',
-                  transition:
-                    i == current && !firstRender
-                      ? `all linear ${slide.duration || defaultDuration / 1000}s`
-                      : 'none'
-                }}
-              />
-            </div>
-          ))}
-        </div>
+        <Progress
+          defaultDuration={defaultDuration}
+          current={current}
+          orderedSlides={this.orderedSlides}
+        />
         <style jsx>
           {`
             .slideshow {
@@ -105,31 +93,6 @@ class Slideshow extends Component {
               position: relative;
               width: 100%;
               height: 100%;
-            }
-            .progress-segment {
-              height: 4px;
-              border-radius: 4px;
-              background: rgba(255, 255, 255, 0.4);
-              margin: 2px;
-              flex: 1;
-            }
-            .progress-segment.active {
-              background: white;
-            }
-            .progress-segment-content {
-              width: 0%;
-              height: 100%;
-              border-radius: 4px;
-              background: white;
-              transition: all linear 5s;
-            }
-            .progress-bar {
-              display: flex;
-              flex-direction: row;
-              width: 100%;
-              position: absolute;
-              bottom: 0;
-              left: 0;
             }
           `}
         </style>
