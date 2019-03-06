@@ -1,6 +1,6 @@
 ### Demo
 
-Use the demo website at [http://digitaldisplay.heroku.com](http://digitaldisplay.heroku.com)
+Use the demo website at [http://digitaldisplay.herokuapp.com](http://digitaldisplay.herokuapp.com)
 
 #### How to Run:
 

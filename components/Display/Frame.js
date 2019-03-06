@@ -7,7 +7,7 @@ import Clock from 'react-live-clock'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWifi } from '@fortawesome/free-solid-svg-icons'
 
-const DisplayFrame = ({ children }) => (
+const Frame = ({ children }) => (
   <div className="display">
     <div className={'status'}>
       <div className={'left'}>
@@ -28,8 +28,8 @@ const DisplayFrame = ({ children }) => (
         .display {
           display: flex;
           flex-direction: column;
-          width: 100vw;
-          height: 100vh;
+          width: 100%;
+          height: 100%;
           background: black;
           font-family: Open Sans, sans-serif;
           color: white;
@@ -57,4 +57,4 @@ const DisplayFrame = ({ children }) => (
   </div>
 )
 
-export default DisplayFrame
+export default Frame

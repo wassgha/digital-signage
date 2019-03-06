@@ -16,7 +16,7 @@ class AppDocument extends Document {
         <Head>
           <style>{`body { margin: 0 } /* custom! */`}</style>
           <link
-            href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800"
+            href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800"
             rel="stylesheet"
           />
         </Head>
