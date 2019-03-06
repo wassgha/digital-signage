@@ -6,7 +6,9 @@ const Preview = props => (
     <h1>Preview</h1>
     <p>Below is a preview of the display as it will appear on the TV.</p>
     <div className="preview">
-      <Display />
+      <div className="content">
+        <Display />
+      </div>
     </div>
     <style jsx>
       {`
@@ -23,7 +25,14 @@ const Preview = props => (
           margin-top: 20px;
           border-radius: 4px;
           overflow: hidden;
-          height: 640px;
+          padding-top: 56.25%;
+          position: relative;
+        }
+        .preview .content {
+          position: absolute;
+          top: 0;
+          width: 100%;
+          height: 100%;
         }
       `}
     </style>
