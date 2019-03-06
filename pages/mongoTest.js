@@ -1,14 +1,22 @@
-import Layout from '../components/Layout.js'
-import Markdown from 'react-markdown'
-import fetch from 'isomorphic-unfetch'
+import Layout from "../components/Layout.js"
+import Markdown from "react-markdown"
+import React, { Component } from "react"
+import fetch from "isomorphic-unfetch"
 
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 
-const mongoTest = props => (
-  <Layout>
-    
-  </Layout>
-)
+class MongoTest extends Component {
+  //eslint-disable-next-line no-console
+  //console.log(this.props)
+  render() {
+    //eslint-disable-next-line no-console
+    console.log(this.props)
+    return (
+      <Layout>
+        <p>This is the about page</p>
+      </Layout>
+    )
+  }
+}
 
-
-export default mongoTest
+export default MongoTest
