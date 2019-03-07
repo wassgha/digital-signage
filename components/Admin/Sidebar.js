@@ -6,23 +6,26 @@
 import Link from 'next/link'
 import { withRouter } from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTv } from '@fortawesome/free-solid-svg-icons'
+import { faTv, faThLarge, faImages, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 const MENU = [
   {
     id: 'layout',
     name: 'Layout',
-    path: '/layout'
+    path: '/layout',
+    icon: faThLarge
   },
   {
     id: 'preview',
     name: 'Preview',
-    path: '/preview'
+    path: '/preview',
+    icon: faTv
   },
   {
     id: 'slideshow',
     name: 'Slideshows',
-    path: '/slideshows'
+    path: '/slideshows',
+    icon: faImages
   }
 ]
 
@@ -41,14 +44,23 @@ const Sidebar = ({ router }) => (
       {MENU.map(item => (
         <Link href={item.path}>
           <li className={item.path == router.pathname && 'active'}>
-            <a>{item.name}</a>
+            <a>
+              <FontAwesomeIcon icon={item.icon} fixedWidth />
+              <span className={'text'}>
+                {'   '}
+                {item.name}
+              </span>
+            </a>
           </li>
         </Link>
       ))}
     </ul>
     <Link href={'/'}>
       <div className="logout">
-        <a>Logout</a>
+        <a>
+          <FontAwesomeIcon icon={faSignOutAlt} fixedWidth />
+          <span className={'text'}>{'   Logout'}</span>
+        </a>
       </div>
     </Link>
     <style jsx>
@@ -125,6 +137,18 @@ const Sidebar = ({ router }) => (
           vertical-align: middle;
           line-height: 16px;
           padding-right: 4px;
+        }
+        @media only screen and (max-width: 600px) {
+          .sidebar {
+            min-width: 0px;
+          }
+          .logo {
+            display: none;
+          }
+          .menu li .text,
+          .logout .text {
+            display: none;
+          }
         }
       `}
     </style>
