@@ -33,7 +33,7 @@ const Sidebar = ({ router }) => (
   <div className="sidebar">
     <div className="logo">
       <div className="icon">
-        <FontAwesomeIcon icon={faTv} size="3x" fixedWidth color="#7bc043" />
+        <FontAwesomeIcon icon={faTv} fixedWidth color="#7bc043" />
       </div>
       <div className="info">
         <span className="name">Acopian Fifth Floor</span>
@@ -112,6 +112,7 @@ const Sidebar = ({ router }) => (
           display: flex;
           justify-content: center;
           align-items: center;
+          transform: scale(2);
         }
         .logo .info {
           font-family: 'Open Sans', sans-serif;
@@ -142,8 +143,17 @@ const Sidebar = ({ router }) => (
           .sidebar {
             min-width: 0px;
           }
-          .logo {
+          .logo .info {
             display: none;
+          }
+          .logo .icon {
+            min-width: 0px;
+            min-height: 0px;
+            transform: scale(1);
+          }
+          .logo {
+            margin: 0px;
+            padding: 0px;
           }
           .menu li .text,
           .logout .text {
