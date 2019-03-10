@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 const slide = new Schema({
     URL: { type: String },
-    type: { type: String, default: },
+    type: { type: String, default: "photo", enum: ['photo', 'web', 'youtube', 'video']},
     title: {type: String},
     descritpion: {type: String},
     time: {type: Number, default: 5, min: 1}
