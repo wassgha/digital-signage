@@ -11,17 +11,8 @@ class Upload extends Component {
     }
   }
 
-  handleOnDrop = (acceptedfiles, rejectedFiles) => {
-    //eslint-disable-next-line
-    console.log("accepted" + acceptedfiles)
-    //eslint-disable-next-line
-    console.log("rejected" + rejectedFiles)
-  }
-
   handleOnDropAccepted = acceptedFiles => {
-    /* eslint-disable */
-
-    var formData = new FormData()
+    const formData = new FormData()
     formData.append("data", acceptedFiles[acceptedFiles.length - 1])
     axios.post("/api/slide/upload", formData, {
       headers: {
@@ -34,7 +25,7 @@ class Upload extends Component {
         ...this.state.SLIDE_LIST,
         {
           type: "photo",
-          data: acceptedFiles[acceptedFiles.length - 1].fullpath,
+          data: acceptedFiles[acceptedFiles.length - 1].name,
           title: "",
           desc: "",
           duration: 3,
@@ -42,8 +33,8 @@ class Upload extends Component {
         }
       ]
     })
+    //eslint-disable-next-line
     console.log(this.state.SLIDE_LIST)
-    /* eslint-enable */
   }
 
   handleOnDropRejected = rejectedFiles => {
@@ -54,7 +45,6 @@ class Upload extends Component {
     return (
       <div>
         <Dropzone
-          onDrop={this.handleOnDrop}
           accept="image/*"
           onDropAccepted={this.handleOnDropAccepted}
           onDropRejected={this.handleOnDropRejected}
@@ -62,22 +52,42 @@ class Upload extends Component {
         >
           {({ getRootProps, getInputProps, isDragActive }) => {
             return (
-              <div {...getRootProps()}>
+              <div {...getRootProps()} className="upload">
                 <input {...getInputProps()} />
                 {isDragActive ? (
-                  <p>Drop files here...</p>
+                  <p>Click or drop files here to add to the slideshow</p>
                 ) : (
-                  <p>Try dropping some files here, or click to select files to upload.</p>
+                  <p>Drop files here to add to the slideshow </p>
                 )}
               </div>
             )
           }}
         </Dropzone>
-        <div>
+        <div className="list">
           {this.state.SLIDE_LIST.map(item => (
-            <div>{item.data}</div>
+            <div className="element">{item.data}</div>
           ))}
         </div>
+        <style jsx>
+          {`
+            .upload {
+              margin: 40px;
+              background: white;
+              border: 2px black dashed;
+            }
+
+            .list {
+              borderwidth: 2;
+              borderscolor: black;
+            }
+
+            .element {
+              margin 10px;
+              border: 2px black solid ;
+              background: white;
+            }
+          `}
+        </style>
       </div>
     )
   }
