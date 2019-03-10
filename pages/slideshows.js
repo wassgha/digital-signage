@@ -1,8 +1,10 @@
 import Frame from '../components/Admin/Frame.js'
+import Upload from '../components/Slideshow/Upload.js'
 
 const Slideshows = props => (
   <Frame>
     <h1>Slideshows</h1>
+    <Upload/>
     <style jsx>
       {`
         h1 {
