@@ -10,6 +10,15 @@ class mongooseAPI {
     this.db.on("error", console.error.bind(console, "connection error:"))
   }
 
+  clearDatabase(schemaName){
+      db.dropDatabase()
+  }
+
+  clearMirjans(){
+    var testSchema = schemass.GROUP_MEMBER
+    
+  }
+
   getMirjans() {
     var data
     // eslint-disable-next-line no-console
