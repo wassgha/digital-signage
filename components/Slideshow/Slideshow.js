@@ -4,7 +4,7 @@
  * the given durations
  */
 
-import { Component } from 'react'
+import React, { Component } from 'react'
 import _ from 'lodash'
 
 import Slide from './Slide'
@@ -15,6 +15,8 @@ const DEFAULT_DURATION = 5000
 class Slideshow extends Component {
   constructor(props) {
     super(props)
+
+    this.slideRefs = []
 
     this.state = {
       current: null
@@ -47,7 +49,13 @@ class Slideshow extends Component {
         {
           current: (current + 1) % slides.length
         },
-        resolve
+        () => {
+          const { current } = this.state
+          const prev = (((current - 1) % slides.length) + slides.length) % slides.length
+          this.slideRefs[prev].stop()
+          this.slideRefs[current].play()
+          resolve()
+        }
       )
     })
   }
@@ -70,11 +78,17 @@ class Slideshow extends Component {
   render() {
     const { defaultDuration = DEFAULT_DURATION } = this.props
     const { current } = this.state
-    const currentSlide = this.orderedSlides[current]
     return (
       <div className="slideshow">
         <div className="slideshow-wrapper">
-          {currentSlide && <Slide key={current} slide={currentSlide} />}
+          {this.orderedSlides.map((slide, index) => (
+            <Slide
+              key={index}
+              slide={slide}
+              show={index == current}
+              ref={ref => (this.slideRefs[index] = ref)}
+            />
+          ))}
         </div>
         <Progress
           defaultDuration={defaultDuration}
@@ -93,6 +107,7 @@ class Slideshow extends Component {
               position: relative;
               width: 100%;
               height: 100%;
+              overflow: hidden;
             }
           `}
         </style>

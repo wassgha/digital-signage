@@ -75,11 +75,25 @@ class Slide extends Component {
   }
 
   /**
+   * Stops the slide's content from playing when the slide is out of focus
+   */
+  stop = () => {
+    console.log('Slide stopped')
+  }
+
+  /**
+   * Starts or resumes the slide's content when the slide is in focus
+   */
+  play = () => {
+    console.log('Slide played')
+  }
+
+  /**
    * Renders the slide along with an overlayed title and description if given
    * @returns {Component}
    */
   render() {
-    const { slide } = this.props
+    const { slide, show = false } = this.props
     const { data, type, title, desc } = slide
     return (
       <div className="slide">
@@ -129,6 +143,8 @@ class Slide extends Component {
             height: 100%;
             width: 100%;
             position: absolute;
+            opacity: ${show ? 1 : 0};
+            transition: opacity 0.4s;
           }
         `}</style>
       </div>
