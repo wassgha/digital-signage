@@ -78,14 +78,14 @@ class Slide extends Component {
    * Stops the slide's content from playing when the slide is out of focus
    */
   stop = () => {
-    console.log('Slide stopped')
+    // TODO(@wassgha) Execute code to stop slide content
   }
 
   /**
    * Starts or resumes the slide's content when the slide is in focus
    */
   play = () => {
-    console.log('Slide played')
+    // TODO(@wassgha) Execute code to resume/restart slide content
   }
 
   /**
