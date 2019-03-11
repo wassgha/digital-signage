@@ -8,18 +8,21 @@ const port = process.env.PORT || 3000
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
-const apis = require('./api/services/mongooseAPI')
+const dbAPI = require('./api/services/mongooseAPI')
 const devF = require('./.dev.js')
 
 app
   .prepare()
   .then(() => {
     const server = express()
-    let db = new apis()
-    db.getMirjans()
+    let db = new dbAPI()
     server.get('/mongoTest', (req, res) => {
-      
-      app.render(req, res, '/mongoTest', data)
+      db.getMirjans()
+      app.render(req, res, '/mongoTest')
+    })
+
+    server.get('/mongoClear', (req, res) =>{
+      db.clearMirjans()
     })
 
 

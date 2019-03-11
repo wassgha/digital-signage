@@ -1,5 +1,6 @@
 const devF = require("../../.dev.js")
 const mongoose = require("mongoose")
+const schemas = require("../models/simpleModel.js")
 
 var db
 class mongooseAPI {
@@ -8,27 +9,41 @@ class mongooseAPI {
     this.db = mongoose.connection
     // eslint-disable-next-line no-console
     this.db.on("error", console.error.bind(console, "connection error:"))
+    
   }
 
-  clearDatabase(schemaName){
-      db.dropDatabase()
+  dropDatabase(){
+    // eslint-disable-next-line no-console
+    console.log("Lets see whats happening")
+  }
+
+  clearSchema(schemalModel){
+    var testSchema = schemas.GROUP_MEMBER
+    schemalModel.deleteMany({}, function(err){
+      // eslint-disable-next-line no-console
+      if (err) return console.error(err)
+    })
   }
 
   clearMirjans(){
-    var testSchema = schemass.GROUP_MEMBER
-    
+    var testSchema = schemas.GROUP_MEMBER
+    // eslint-disable-next-line no-console
+    console.log("Frag noobs")
+    testSchema.deleteMany({}, function(err){
+      // eslint-disable-next-line no-console
+      if (err) return console.error(err)
+      // eslint-disable-next-line no-console
+    })
   }
 
   getMirjans() {
     var data
     // eslint-disable-next-line no-console
     this.db.on("error", console.error.bind(console, "connection error:"))
-
-    this.db.once("open", function() {
+    //this.db.on("open", function() {
       // we're connected!
-
-      const schemass = require("../models/simpleModel.js")
-      var testSchema = schemass.GROUP_MEMBER
+      
+      var testSchema = schemas.GROUP_MEMBER
       var mirjan = new testSchema({
         name: "Mirjan",
         title: "Doritoes and MTn Dew Code Red Fetcher"
@@ -43,15 +58,17 @@ class mongooseAPI {
         // eslint-disable-next-line no-console
         if (err) return console.error(err)
         // eslint-disable-next-line no-console
-        data = mirjans
+        console.log(mirjans)
       })
+      
       // eslint-disable-next-line no-console
       console.log(mirjan.name)
       // eslint-disable-next-line no-console
-      console.log(data)
+      console.log()
       // eslint-disable-next-line no-console
       console.log("yolo nerds")
-    })
+      
+    //})
     return data
   }
 }
