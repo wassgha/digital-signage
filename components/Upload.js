@@ -1,7 +1,7 @@
-import { Component } from "react"
-import React from "react"
-import Dropzone from "react-dropzone"
-import axios from "axios"
+import { Component } from 'react'
+import React from 'react'
+import Dropzone from 'react-dropzone'
+import axios from 'axios'
 
 class Upload extends Component {
   constructor(props) {
@@ -13,10 +13,10 @@ class Upload extends Component {
 
   handleOnDropAccepted = acceptedFiles => {
     const formData = new FormData()
-    formData.append("data", acceptedFiles[acceptedFiles.length - 1])
-    axios.post("/api/slide/upload", formData, {
+    formData.append('data', acceptedFiles[acceptedFiles.length - 1])
+    axios.post('/api/slide/upload', formData, {
       headers: {
-        "Content-Type": "multipart/form-data"
+        'Content-Type': 'multipart/form-data'
       }
     })
 
@@ -24,10 +24,10 @@ class Upload extends Component {
       SLIDE_LIST: [
         ...this.state.SLIDE_LIST,
         {
-          type: "photo",
+          type: 'photo',
           data: acceptedFiles[acceptedFiles.length - 1].name,
-          title: "",
-          desc: "",
+          title: '',
+          desc: '',
           duration: 3,
           order: this.state.SLIDE_LIST.length + 1
         }
@@ -38,7 +38,7 @@ class Upload extends Component {
   }
 
   handleOnDropRejected = rejectedFiles => {
-    alert("This file type is not allowed:" + rejectedFiles[rejectedFiles.length - 1].name)
+    alert('This file type is not allowed:' + rejectedFiles[rejectedFiles.length - 1].name)
   }
 
   render() {
@@ -64,16 +64,20 @@ class Upload extends Component {
           }}
         </Dropzone>
         <div className="list">
-          {this.state.SLIDE_LIST.map(item => (
-            <div className="element">{item.data}</div>
-          ))}
+          {this.state.SLIDE_LIST.map(item => <div className="element">{item.data}</div>)}
         </div>
         <style jsx>
           {`
             .upload {
-              margin: 40px;
+              padding: 20px;
+              font-family: "Open Sans", sans-serif;
+              text-align: center;
+              border-radius: 4px;
+              border: 2px dashed #adadad;
+              cursor: pointer;
               background: white;
-              border: 2px black dashed;
+              margin: 40px auto;
+              max-width: 640px;
             }
 
             .list {
