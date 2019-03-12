@@ -31,7 +31,7 @@
     "no-alert": 0,
     "react/jsx-uses-react": 1,
     "react/jsx-uses-vars": 1,
-    "jsx-quotes": [1, "prefer-double"],
+    "jsx-quotes": [1, "prefer-single"],
     "semi": ["error", "never"],
     "max-len": ["error", { "code": 100 }]
   }
