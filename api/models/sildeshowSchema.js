@@ -12,10 +12,9 @@ const slide = new Schema({
 const slideShow = new Schema({
     title: {type: String},
     descritpion: {type: String},
-    
+    //slides: {type: [slide]}
+    slides: [{type: Schema.Types.ObjectId, ref: "slide"}]
 })
-
-//module.exports = mongoose.model('member', groupMember)
 
 module.exports = {
     SLIDE: mongoose.model('slide', slide),
