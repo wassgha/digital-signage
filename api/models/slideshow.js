@@ -20,7 +20,7 @@ const Schema = mongoose.Schema
  */
 const slideShow = new Schema({
     title: {type: String},
-    descritpion: {type: String},
+    description: {type: String},
     slides: [{type: Schema.Types.ObjectId, ref: "slide"}]
 })
 
