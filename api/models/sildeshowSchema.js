@@ -1,3 +1,4 @@
+/* eslint-disable multiline-comment-style */
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
@@ -15,8 +16,12 @@ const slideShow = new Schema({
     //slides: {type: [slide]}
     slides: [{type: Schema.Types.ObjectId, ref: "slide"}]
 })
-
+//try{
 module.exports = {
     SLIDE: mongoose.model('slide', slide),
     SLIDESHOW: mongoose.model('slideshow', slideShow)
 }
+//}catch(e){
+    // eslint-disable-next-line no-console
+    //console.log(e)
+//}

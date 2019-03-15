@@ -1,3 +1,4 @@
+/* eslint-disable multiline-comment-style */
 const express = require('express')
 const next = require('next')
 const formidable = require('formidable')
@@ -11,33 +12,28 @@ const handle = app.getRequestHandler()
 const dbAPI = require('./api/services/mongooseAPI')
 
 const devF = require('./.dev.js')
-const schemas = require("./api/models/sildeshowSchema")
+//const schemas = require("./api/models/sildeshowSchema")
+
+const slidesAPI = require("./api/services/slideshowMongooseAPI")
 
 app
   .prepare()
   .then(() => {
     const server = express()
+    
     let db = new dbAPI()
     
     
     server.get('/mongoTest', (req, res) => {
       
       try{
-        var slideShow = schemas.SLIDESHOW
-        var slide = schemas.SLIDE
+        var slideShow = slidesAPI.slideShow
+        var slide = slidesAPI.slide
         
         var tSlide = new slide({
           URL: "https://i.imgur.com/3MlKktU.jpg",
           type: "photo",
           title: "Test Slide",
-          descritpion: "A Slide for Testing Purposes",
-          time: 5
-        })
-
-        var rSlide = new slide({
-          URL: "https://i.imgur.com/3MlKktU.jpg",
-          type: "photo",
-          title: "2",
           descritpion: "A Slide for Testing Purposes",
           time: 5
         })
@@ -50,6 +46,7 @@ app
         // eslint-disable-next-line no-console
         console.log(tSlide.id)
 
+        var testID = tSlide._id
         // eslint-disable-next-line multiline-comment-style
         //rSlide.save()
         tSlideShow.slides = [tSlide._id]
@@ -66,11 +63,6 @@ app
               slideShow.find(function(err, data){
                 // eslint-disable-next-line no-console
                 if (err) return console.error(err)
-                
-                // eslint-disable-next-line no-console
-                console.error(data)
-                // eslint-disable-next-line no-console
-                console.error(data[0].slides)
                  // eslint-disable-next-line no-console
                  console.error("Before populate")
               }).populate("slides").
@@ -80,25 +72,37 @@ app
                  // eslint-disable-next-line no-console
                  console.error("After populate")
                 // eslint-disable-next-line no-console
-                console.error(data[0].slides)
+                //console.error(data[0].slides)
               })
             }catch(e){
               // eslint-disable-next-line no-console
               console.log(e)
             }
+            try{
+              // eslint-disable-next-line no-console
+              console.log("PRINTING FIRST SOME STUFCC \n"
+                + slidesAPI.returnSlides() + "\n")
+              // eslint-disable-next-line no-console
+              console.log("HERE IS SOMETHIGN THATS HAPPENING \n"
+                + slidesAPI.getSlide(testID) + "\n")
+              }catch(e){
+                // eslint-disable-next-line no-console
+                console.log(e)
+              }
           })
         })
       }catch(e){
         // eslint-disable-next-line no-console
         console.log(e)
       }
+
       // eslint-disable-next-line no-console
       console.log("We logged")
       res.send("mongoTest")
     })
 
     server.get('/mongoClear', (req, res) =>{
-      db.clearSlides()
+      slidesAPI.clearALLSlidesandShows()
       res.send("mongo Clear")
     })
 
