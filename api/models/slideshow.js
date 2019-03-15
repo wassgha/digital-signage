@@ -1,15 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const slide = new Schema({
-    URL: { type: String, default: "https://i.imgur.com/3MlKktU.jpg" },
-    type: { type: String, default: "photo", enum: ['photo', 'web', 'youtube', 'video']},
-    title: {type: String},
-    descritpion: {type: String},
-    time: {type: Number, default: 5, min: 1}
-})
-
-
 /*
  * SlideShow.slides = [1Slide._id, 2Slide._id]->
  * Does not matter if you save slide first or after slideshow.save
@@ -35,6 +26,5 @@ const slideShow = new Schema({
 
 
 module.exports = {
-    SLIDE: mongoose.model('slide', slide),
     SLIDESHOW: mongoose.model('slideshow', slideShow)
 }
