@@ -1,11 +1,11 @@
 const express = require("express")
 const next = require("next")
+const formidable = require("formidable")
 
 const dev = process.env.NODE_ENV !== "production"
 const port = process.env.PORT || 3000
 const app = next({ dev })
 const handle = app.getRequestHandler()
-var pathForUploadedFiles = []
 
 app
   .prepare()
@@ -19,22 +19,19 @@ app
     })
 
     server.post("/api/slide/upload", (req, res) => {
-      //handy npm package that parses form data
-      const formidable = require("formidable")
       var form = new formidable.IncomingForm()
-      form.uploadDir = "./Uploaded_Slides"
+      form.uploadDir = "./uploads"
       form.keepExtensions = true
       form.multiples = false
       //parse the sent data and save it, as well as save the path for alex to work his database magic
       form.parse(req, (err, fields, files) => {
         if (err) {
           res.json({
-            result: "Failed!",
+            result: "error",
             message: "Cannot upload file, Error: ${err}"
           })
         }
         const filePath = files.data.path
-        pathForUploadedFiles.push(filePath)
       })
     })
 
