@@ -41,6 +41,7 @@
     "react-dom": "^16.8.2",
     "react-dropzone": "^10.0.0",
     "react-live-clock": "^3.1.0",
-    "react-markdown": "^4.0.6"
+    "react-markdown": "^4.0.6",
+    "react-youtube": "^7.9.0"
   }
 }
