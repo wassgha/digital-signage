@@ -7,7 +7,11 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 
-import Slide from './Slide'
+import GenericSlide from './Slide/Generic'
+import PhotoSlide from './Slide/Photo'
+import YoutubeSlide from './Slide/Youtube'
+import WebSlide from './Slide/Web'
+
 import Progress from './Progress'
 
 const DEFAULT_DURATION = 5000
@@ -19,7 +23,8 @@ class Slideshow extends Component {
     this.slideRefs = []
 
     this.state = {
-      current: null
+      current: null,
+      ready: false
     }
   }
 
@@ -68,32 +73,63 @@ class Slideshow extends Component {
     const { defaultDuration = DEFAULT_DURATION } = this.props
     const { current } = this.state
     const currentSlide = this.orderedSlides[current]
-    setTimeout(() => {
-      this.nextSlide().then(() => {
-        this.waitForNextSlide()
+    this.setState({ ready: false }, () => {
+      console.log('this.slideRefs', this.slideRefs)
+      this.slideRefs[current].loadedPromise.then(() => {
+        this.setState({ ready: true })
+        setTimeout(
+          () =>
+            this.nextSlide().then(() => {
+              this.waitForNextSlide()
+            }),
+          (currentSlide && currentSlide.duration * 1000) || defaultDuration
+        )
       })
-    }, (currentSlide && currentSlide.duration * 1000) || defaultDuration)
+    })
+  }
+
+  getSlideComponent = type => {
+    switch (type) {
+      case 'photo':
+        return PhotoSlide
+      case 'youtube':
+        return YoutubeSlide
+      case 'web':
+        return WebSlide
+      default:
+        return GenericSlide
+    }
+  }
+
+  renderSlide = (slide, index) => {
+    const { current } = this.state
+    const { type } = slide
+
+    const SlideComponent = this.getSlideComponent(type)
+
+    return (
+      <SlideComponent
+        key={index}
+        slide={slide}
+        show={index == current}
+        ref={ref => (this.slideRefs[index] = ref)}
+      />
+    )
   }
 
   render() {
     const { defaultDuration = DEFAULT_DURATION } = this.props
-    const { current } = this.state
+    const { current, ready } = this.state
     return (
-      <div className="slideshow">
-        <div className="slideshow-wrapper">
-          {this.orderedSlides.map((slide, index) => (
-            <Slide
-              key={index}
-              slide={slide}
-              show={index == current}
-              ref={ref => (this.slideRefs[index] = ref)}
-            />
-          ))}
+      <div className='slideshow'>
+        <div className='slideshow-wrapper'>
+          {this.orderedSlides.map((slide, index) => this.renderSlide(slide, index))}
         </div>
         <Progress
           defaultDuration={defaultDuration}
           current={current}
           orderedSlides={this.orderedSlides}
+          ready={ready}
         />
         <style jsx>
           {`
