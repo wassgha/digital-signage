@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWifi } from '@fortawesome/free-solid-svg-icons'
 
 const Frame = ({ children }) => (
-  <div className="display">
+  <div className='display'>
     <div className={'status'}>
       <div className={'left'}>
         <Clock ticking={true} format={'dddd, MMMM Mo.'} />

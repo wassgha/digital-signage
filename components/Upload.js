@@ -45,14 +45,14 @@ class Upload extends Component {
     return (
       <div>
         <Dropzone
-          accept="image/*"
+          accept='image/*'
           onDropAccepted={this.handleOnDropAccepted}
           onDropRejected={this.handleOnDropRejected}
           multiple={false}
         >
           {({ getRootProps, getInputProps, isDragActive }) => {
             return (
-              <div {...getRootProps()} className="upload">
+              <div {...getRootProps()} className='upload'>
                 <input {...getInputProps()} />
                 {isDragActive ? (
                   <p>Click or drop files here to add to the slideshow</p>
@@ -63,8 +63,8 @@ class Upload extends Component {
             )
           }}
         </Dropzone>
-        <div className="list">
-          {this.state.SLIDE_LIST.map(item => <div className="element">{item.data}</div>)}
+        <div className='list'>
+          {this.state.SLIDE_LIST.map(item => <div className='element'>{item.data}</div>)}
         </div>
         <style jsx>
           {`

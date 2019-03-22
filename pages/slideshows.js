@@ -1,7 +1,7 @@
 import Frame from '../components/Admin/Frame.js'
 import Upload from '../components/Upload.js'
 
-const Slideshows = props => (
+const Slideshows = () => (
   <Frame>
     <h1>Slideshows</h1>
     <Upload />
