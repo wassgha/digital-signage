@@ -32,6 +32,7 @@ class YoutubeSlide extends GenericSlide {
    */
   renderSlideContent(data) {
     const { id, service } = getVideoId(data)
+    /* eslint-disable-next-line no-console */
     if (!id || service !== 'youtube') console.error('Failed to parse Youtube URL')
     return (
       <div className={'youtube-container'}>
@@ -39,6 +40,7 @@ class YoutubeSlide extends GenericSlide {
           containerClassName={'youtube-container-nojsx'}
           videoId={id}
           opts={{
+            /* eslint-disable camelcase */
             height: '100%',
             width: '100%',
             playerVars: {
@@ -52,6 +54,7 @@ class YoutubeSlide extends GenericSlide {
               rel: 0,
               showinfo: 0
             }
+            /* eslint-enable camelcase */
           }}
           onReady={this.onYoutubeReady}
         />

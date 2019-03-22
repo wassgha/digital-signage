@@ -74,7 +74,6 @@ class Slideshow extends Component {
     const { current } = this.state
     const currentSlide = this.orderedSlides[current]
     this.setState({ ready: false }, () => {
-      console.log('this.slideRefs', this.slideRefs)
       this.slideRefs[current].loadedPromise.then(() => {
         this.setState({ ready: true })
         setTimeout(
