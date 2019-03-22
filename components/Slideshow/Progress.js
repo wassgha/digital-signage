@@ -7,7 +7,7 @@ import { Component } from 'react'
 
 class Progress extends Component {
   render() {
-    const { current, defaultDuration, orderedSlides } = this.props
+    const { current, defaultDuration, orderedSlides, ready } = this.props
     return (
       <div className='progress-bar'>
         {orderedSlides.map((slide, i) => (
@@ -15,9 +15,11 @@ class Progress extends Component {
             <div
               className={`progress-segment-content`}
               style={{
-                width: i == current ? '100%' : '0%',
+                width: i == current && ready ? '100%' : '0%',
                 transition:
-                  i == current ? `all linear ${slide.duration || defaultDuration / 1000}s` : 'none'
+                  i == current && ready
+                    ? `all linear ${slide.duration || defaultDuration / 1000}s`
+                    : 'none'
               }}
             />
           </div>

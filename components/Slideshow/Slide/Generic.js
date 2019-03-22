@@ -3,75 +3,65 @@
  * along with its title and description.
  */
 
-import { Component } from 'react'
-import getVideoId from 'get-video-id'
+import React, { Component } from 'react'
 
-class Slide extends Component {
+class GenericSlide extends Component {
+  constructor(props) {
+    super(props)
+
+    const loading = {
+      promise: null,
+      resolve: null,
+      reject: null,
+      done: null
+    }
+
+    loading.promise = new Promise((resolve, reject) => {
+      loading.resolve = resolve
+      loading.reject = reject
+    }).then(() => this.setState({ loaded: true }))
+
+    this.state = {
+      loading: { ...loading },
+      loaded: false
+    }
+  }
+
+  componentDidMount() {
+    this.state.loading.resolve()
+  }
+
+  get loadedPromise() {
+    return this.state.loading.promise
+  }
+
+  get loaded() {
+    return this.state.loaded
+  }
+
   /**
    * Renders the inner content of the slide (ex. the photo, youtube iframe, etc)
-   * @param {string} type Slide type (ex. photo, youtube, web, etc.)
    * @param {string} data The slide's data (usually a URL or object ID)
    * @returns {Component}
    */
-  renderSlideContent(type, data) {
-    switch (type) {
-      case 'photo':
-        return (
-          <div
-            className="slide-content photo"
-            style={{
-              backgroundImage: `url(${data})`
-            }}
-          >
-            <style jsx>{`
-              .slide-content.photo {
-                width: 100%;
-                height: 100%;
-                background-size: cover;
-                background-repeat: no-repeat;
-                background-position: 50% 50%;
-              }
-            `}</style>
-          </div>
-        )
-      case 'youtube':
-        const { id, service } = getVideoId(data)
-        if (id && service == 'youtube') {
-          return (
-            <iframe
-              width="100%"
-              height="100%"
-              src={`https://www.youtube.com/embed/${id}?autoplay=1&controls=0&start=18`}
-              frameborder="0"
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            />
-          )
-        }
-      case 'web':
-        return (
-          <iframe
-            width="100%"
-            height="100%"
-            src={data}
-            frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          />
-        )
-      default:
-        return (
-          <div className="slide-content unknown">
-            <style jsx>{`
-              .slide-content.unknown {
-                width: 100%;
-                height: 100%;
-                background: #ebebeb;
-              }
-            `}</style>
-          </div>
-        )
-    }
+  renderSlideContent(data) {
+    return (
+      <div className='slide-content unknown'>
+        {`Unknown slide type with data: ${data}`}
+        <style jsx>{`
+          .slide-content.unknown {
+            width: 100%;
+            height: 100%;
+            background: #ebebeb;
+            color: #333;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        `}</style>
+      </div>
+    )
   }
 
   /**
@@ -94,12 +84,13 @@ class Slide extends Component {
    */
   render() {
     const { slide, show = false } = this.props
-    const { data, type, title, desc } = slide
+    const { data, title, desc } = slide
+    const { loaded } = this.state
     return (
-      <div className="slide">
-        {this.renderSlideContent(type, data)}
+      <div className='slide'>
+        {this.renderSlideContent(data)}
         {(title || desc) && (
-          <div className="info">
+          <div className='info'>
             {title && <h1>{title}</h1>}
             {desc && <p>{desc}</p>}
           </div>
@@ -144,7 +135,8 @@ class Slide extends Component {
             width: 100%;
             position: absolute;
             opacity: ${show ? 1 : 0};
-            transition: opacity 0.4s;
+            filter: ${loaded ? 'none' : 'blur(40px)'};
+            transition: all 0.4s;
           }
         `}</style>
       </div>
@@ -152,4 +144,4 @@ class Slide extends Component {
   }
 }
 
-export default Slide
+export default GenericSlide
