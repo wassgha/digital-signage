@@ -23,7 +23,7 @@ app
       form.uploadDir = "./uploads"
       form.keepExtensions = true
       form.multiples = false
-      //parse the sent data and save it, as well as save the path for alex to work his database magic
+      //parse the sent data and save it + the path for alex
       form.parse(req, (err, fields, files) => {
         if (err) {
           res.json({
