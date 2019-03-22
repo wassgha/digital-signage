@@ -1,6 +1,6 @@
 import Frame from '../components/Admin/Frame.js'
 
-const Layout = props => (
+const Layout = () => (
   <Frame>
     <h1>Layout</h1>
     <style jsx>

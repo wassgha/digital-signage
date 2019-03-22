@@ -6,9 +6,9 @@
 import Sidebar from './Sidebar'
 
 const Frame = props => (
-  <div className="container">
+  <div className='container'>
     <Sidebar />
-    <div className="content">{props.children}</div>
+    <div className='content'>{props.children}</div>
     <style jsx>
       {`
         .container {

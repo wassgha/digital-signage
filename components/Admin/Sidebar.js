@@ -30,17 +30,17 @@ const MENU = [
 ]
 
 const Sidebar = ({ router }) => (
-  <div className="sidebar">
-    <div className="logo">
-      <div className="icon">
-        <FontAwesomeIcon icon={faTv} fixedWidth color="#7bc043" />
+  <div className='sidebar'>
+    <div className='logo'>
+      <div className='icon'>
+        <FontAwesomeIcon icon={faTv} fixedWidth color='#7bc043' />
       </div>
-      <div className="info">
-        <span className="name">Acopian Fifth Floor</span>
-        <span className="status online">online</span>
+      <div className='info'>
+        <span className='name'>Acopian Fifth Floor</span>
+        <span className='status online'>online</span>
       </div>
     </div>
-    <ul className="menu">
+    <ul className='menu'>
       {MENU.map(item => (
         <Link href={item.path}>
           <li className={item.path == router.pathname && 'active'}>
@@ -56,7 +56,7 @@ const Sidebar = ({ router }) => (
       ))}
     </ul>
     <Link href={'/'}>
-      <div className="logout">
+      <div className='logout'>
         <a>
           <FontAwesomeIcon icon={faSignOutAlt} fixedWidth />
           <span className={'text'}>{'   Logout'}</span>

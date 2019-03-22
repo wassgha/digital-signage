@@ -9,7 +9,7 @@ class Progress extends Component {
   render() {
     const { current, defaultDuration, orderedSlides } = this.props
     return (
-      <div className="progress-bar">
+      <div className='progress-bar'>
         {orderedSlides.map((slide, i) => (
           <div key={`slide-${i}`} className={`progress-segment ${i < current && 'active'}`}>
             <div
