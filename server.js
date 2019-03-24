@@ -4,15 +4,14 @@ const next = require('next')
 const formidable = require('formidable')
 const mongoose = require('mongoose')
 
-const dev = process.env.NODE_ENV !== 'production'
+const dev = process.env.NODE_ENV !== "production"
 const port = process.env.PORT || 3000
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
-const dbAPI = require('./api/services/mongooseAPI')
+const dbAPI = require("./api/services/mongooseAPI")
 
-const devF = require('./.dev.js')
-//const schemas = require("./api/models/sildeshowSchema")
+const devF = require("./.dev.js")
 
 const slidesAPI = require("./api/services/slideshowMongooseAPI")
 
@@ -20,95 +19,10 @@ app
   .prepare()
   .then(() => {
     const server = express()
-    
     let db = new dbAPI()
-    
-    
-    server.get('/mongoTest', (req, res) => {
-      
-      try{
-        var slideShow = slidesAPI.slideShow
-        var slide = slidesAPI.slide
-        
-        var tSlide = new slide({
-          URL: "https://i.imgur.com/3MlKktU.jpg",
-          type: "photo",
-          title: "Test Slide",
-          descritpion: "A Slide for Testing Purposes",
-          time: 5
-        })
 
-        var tSlideShow = new slideShow({
-          title: "Test SlideShow",
-          descritpion: "A slideshow for Testing Purposes",
-          slides: []
-        })
-        // eslint-disable-next-line no-console
-        console.log(tSlide.id)
-
-        var testID = tSlide._id
-        // eslint-disable-next-line multiline-comment-style
-        //rSlide.save()
-        tSlideShow.slides = [tSlide._id]
-        tSlideShow.save(function(err) {
-          // eslint-disable-next-line no-console
-          if (err) return console.error(err)
-          // eslint-disable-next-line no-console
-          console.error(tSlideShow.slide)
-          tSlide.save(function(err){
-            // eslint-disable-next-line no-console
-            if (err) return console.error(err)
-            
-            try{
-              slideShow.find(function(err, data){
-                // eslint-disable-next-line no-console
-                if (err) return console.error(err)
-                 // eslint-disable-next-line no-console
-                 console.error("Before populate")
-              }).populate("slides").
-              exec(function (err, data) {
-                // eslint-disable-next-line no-console
-                if (err) return console.error(err)
-                 // eslint-disable-next-line no-console
-                 console.error("After populate")
-                // eslint-disable-next-line no-console
-                //console.error(data[0].slides)
-              })
-            }catch(e){
-              // eslint-disable-next-line no-console
-              console.log(e)
-            }
-            try{
-              // eslint-disable-next-line no-console
-              console.log("PRINTING FIRST SOME STUFCC \n"
-                + slidesAPI.returnSlides() + "\n")
-              // eslint-disable-next-line no-console
-              console.log("HERE IS SOMETHIGN THATS HAPPENING \n"
-                + slidesAPI.getSlide(testID) + "\n")
-              }catch(e){
-                // eslint-disable-next-line no-console
-                console.log(e)
-              }
-          })
-        })
-      }catch(e){
-        // eslint-disable-next-line no-console
-        console.log(e)
-      }
-
-      // eslint-disable-next-line no-console
-      console.log("We logged")
-      res.send("mongoTest")
-    })
-
-    server.get('/mongoClear', (req, res) =>{
-      slidesAPI.clearALLSlidesandShows()
-      res.send("mongo Clear")
-    })
-
-
-    server.get('/p/:id', (req, res) => {
-      const actualPage = '/post'
+    server.get("/p/:id", (req, res) => {
+      const actualPage = "/post"
       const queryParams = { id: req.params.id }
       app.render(req, res, actualPage, queryParams)
     })
@@ -139,7 +53,7 @@ app
     server.listen(port, err => {
       if (err) throw err
       // eslint-disable-next-line
-      console.log('> Ready on http://localhost:' + port)
+      console.log("> Ready on http://localhost:" + port)
     })
   })
   .catch(ex => {
@@ -147,4 +61,3 @@ app
     console.error(ex.stack)
     process.exit(1)
   })
-
