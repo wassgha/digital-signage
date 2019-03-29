@@ -23,7 +23,7 @@
     "global-strict": 0,
     "no-extra-semi": 1,
     "no-underscore-dangle": 0,
-    "no-console": ["error"],
+    "no-console": [1, { "allow": ["warn", "error"] }],
     "global-require": "off",
     "no-unused-vars": 1,
     "no-trailing-spaces": [1, { "skipBlankLines": true }],
