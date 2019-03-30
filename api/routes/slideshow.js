@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
 
-const SlideShow = require('../models/SlideShow')
+const Slideshow = require('../models/Slideshow')
 
 // Route: /api/v1/slideshow
 router.get('/', (req, res, next) => {
-  return SlideShow.find({})
+  return Slideshow.find({})
     .populate('slides')
     .then(slideshows => {
       return res.json(slideshows)
@@ -17,7 +17,7 @@ router.get('/', (req, res, next) => {
 router
   .get('/:id', (req, res, next) => {
     const { id } = req.params
-    return SlideShow.findById(id)
+    return Slideshow.findById(id)
       .populate('slides')
       .then(slideshow => {
         return res.json(slideshow)
@@ -26,7 +26,7 @@ router
   })
   .delete('/:id', (req, res, next) => {
     const { id } = req.params
-    return SlideShow.findById(id)
+    return Slideshow.findById(id)
       .then(slideshow => {
         if (!slideshow) return next('Slideshow not found')
         return slideshow.remove().then(() => {
