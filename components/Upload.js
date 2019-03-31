@@ -64,7 +64,9 @@ class Upload extends Component {
           }}
         </Dropzone>
         <div className='list'>
-          {this.state.SLIDE_LIST.map(item => <div className='element'>{item.data}</div>)}
+          {this.state.SLIDE_LIST.map(item => (
+            <div className='element'>{item.data}</div>
+          ))}
         </div>
         <style jsx>
           {`
