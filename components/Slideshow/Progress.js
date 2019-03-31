@@ -13,7 +13,7 @@ class Progress extends Component {
         {orderedSlides.map((slide, i) => (
           <div key={`slide-${i}`} className={`progress-segment ${i < current && 'active'}`}>
             <div
-              className={`progress-segment-content`}
+              className={'progress-segment-content'}
               style={{
                 width: i == current && ready ? '100%' : '0%',
                 transition:
