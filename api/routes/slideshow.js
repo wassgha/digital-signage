@@ -1,12 +1,12 @@
-const express = require('express')
+const express = require("express")
 const router = express.Router()
 
-const Slideshow = require('../models/Slideshow')
+const Slideshow = require("../models/Slideshow")
 
 // Route: /api/v1/slideshow
-router.get('/', (req, res, next) => {
+router.get("/", (req, res, next) => {
   return Slideshow.find({})
-    .populate('slides')
+    .populate("slides")
     .then(slideshows => {
       return res.json(slideshows)
     })
@@ -15,25 +15,34 @@ router.get('/', (req, res, next) => {
 
 // Route: /api/v1/slideshow/:id
 router
-  .get('/:id', (req, res, next) => {
+  .get("/:id", (req, res, next) => {
     const { id } = req.params
     return Slideshow.findById(id)
-      .populate('slides')
+      .populate("slides")
       .then(slideshow => {
         return res.json(slideshow)
       })
       .catch(err => next(err))
   })
-  .delete('/:id', (req, res, next) => {
+  .delete("/:id", (req, res, next) => {
     const { id } = req.params
     return Slideshow.findById(id)
       .then(slideshow => {
-        if (!slideshow) return next('Slideshow not found')
+        if (!slideshow) return next("Slideshow not found")
         return slideshow.remove().then(() => {
-          return res.send('success')
+          return res.send("success")
         })
       })
       .catch(err => next(err))
+  }) //Adding new slide
+  .post("/:id", (req, res, next) => {
+    // eslint-disable-next-line no-console
+    console.log(req.params)
+    // eslint-disable-next-line no-console
+    console.log(req.body)
+  })
+  .patch("/:id", (req, res, next) =>{
+    
   })
 
 module.exports = router
