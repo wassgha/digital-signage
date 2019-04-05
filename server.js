@@ -1,5 +1,6 @@
 /* eslint-disable multiline-comment-style */
 const express = require('express')
+var bodyParser = require('body-parser')
 const next = require('next')
 const mongoose = require('mongoose')
 
@@ -26,13 +27,11 @@ app
 
     // MongoDB
     mongoose.Promise = Promise
-    mongoose.connect(
-      Keys.MONGODB_URI,
-      { useNewUrlParser: true }
-    )
+    mongoose.connect(Keys.MONGODB_URI, { useNewUrlParser: true })
     const db = mongoose.connection
     db.on('error', console.error.bind(console, 'connection error:'))
 
+    server.use(bodyParser.json())
     // API routes
     server.use('/api/v1', apiRoutes)
 

@@ -1,12 +1,13 @@
-const express = require("express")
+const express = require('express')
 const router = express.Router()
 
-const Slideshow = require("../models/Slideshow")
+const Slideshow = require('../models/Slideshow')
+const Slide = require('../models/Slide')
 
 // Route: /api/v1/slideshow
-router.get("/", (req, res, next) => {
+router.get('/', (req, res, next) => {
   return Slideshow.find({})
-    .populate("slides")
+    .populate('slides')
     .then(slideshows => {
       return res.json(slideshows)
     })
@@ -15,34 +16,58 @@ router.get("/", (req, res, next) => {
 
 // Route: /api/v1/slideshow/:id
 router
-  .get("/:id", (req, res, next) => {
+  .get('/:id', (req, res, next) => {
     const { id } = req.params
     return Slideshow.findById(id)
-      .populate("slides")
+      .populate('slides')
       .then(slideshow => {
         return res.json(slideshow)
       })
       .catch(err => next(err))
   })
-  .delete("/:id", (req, res, next) => {
+  .delete('/:id', (req, res, next) => {
     const { id } = req.params
-    return Slideshow.findById(id)
+    return Slideshow.findByIdAndDelete(id)
       .then(slideshow => {
-        if (!slideshow) return next("Slideshow not found")
-        return slideshow.remove().then(() => {
-          return res.send("success")
-        })
+        if (!slideshow) return next('Slideshow not found')
+        /**
+         * return slideshow.remove().then(() => {
+         * return res.send('success')
+         *})
+         */
+        deleteSlides(slideshow.slides)
       })
       .catch(err => next(err))
-  }) //Adding new slide
-  .post("/:id", (req, res, next) => {
-    // eslint-disable-next-line no-console
-    console.log(req.params)
-    // eslint-disable-next-line no-console
-    console.log(req.body)
-  })
-  .patch("/:id", (req, res, next) =>{
-    
+  }) //Adding new slide, this funciton
+  .post('/:id', (req, res, next) => {
+    const { id } = req.params
+    const { slideID } = req.body
+    return Slideshow.findById(id).then(slideshow => {
+      slideshow.slides.push(slideID)
+      slideshow.save()
+    })
+  }) //For updating: changing slide order, give slide_id and location from 0->n, -1 is end
+  .patch('/:id', (req, res, next) => {
+    const { id } = req.params
+    try {
+      var slideID = req.body.slideID
+      var index = req.body.index
+      return Slideshow.findById(id).then(slideshow => {
+        slideshow.slides = slideshow.slides.filter(function(value, index, arr) {
+          return value == slideID
+        })
+        slideshow.slides.splice(index, 0, slideID)
+        return 'Removed that slide and repositioned it baby'
+      })
+    } catch (e) {
+      console.error(e)
+    }
   })
 
 module.exports = router
+
+function deleteSlides(slides) {
+  slides.forEach(slide => {
+    Slide.findByIdAndRemove(slide)
+  })
+}

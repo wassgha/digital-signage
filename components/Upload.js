@@ -14,7 +14,7 @@ class Upload extends Component {
   handleOnDropAccepted = acceptedFiles => {
     const formData = new FormData()
     formData.append('data', acceptedFiles[acceptedFiles.length - 1])
-    axios.post('/api/slide/upload', formData, {
+    axios.post('/api/v1/slide', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
