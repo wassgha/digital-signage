@@ -5,7 +5,7 @@ import List from '../components/List.js'
 const Slideshows = () => (
   <Frame>
     <h1>Slideshows</h1>
-    <div className="wrapper">
+    <div className='wrapper'>
       <Upload />
       <List />
     </div>

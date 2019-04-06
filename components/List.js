@@ -1,10 +1,6 @@
 import { Component } from 'react'
 import React from 'react'
-import {
-  SortableContainer,
-  SortableElement,
-  arrayMove
-} from 'react-sortable-hoc'
+import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClock, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 
@@ -52,20 +48,20 @@ const MOCK_SLIDES = [
 /* eslint-enable */
 
 const SortableItem = SortableElement(({ value }) => (
-  <div className="rectangle">
-    <div className="rectangle1">
-      <img className="bitmap" src={value.data} />
+  <div className='rectangle'>
+    <div className='rectangle1'>
+      <img className='bitmap' src={value.data} />
     </div>
-    <div className="rectangle2">
-      <div className="title">{value.title}</div>
-      <div className="duration">
+    <div className='rectangle2'>
+      <div className='title'>{value.title}</div>
+      <div className='duration'>
         {value.duration}s
-        <FontAwesomeIcon icon={faClock} fixedWidth color="#adadad" />
+        <FontAwesomeIcon icon={faClock} fixedWidth color='#adadad' />
       </div>
     </div>
-    <div className="rectangle3">
-      <FontAwesomeIcon icon={faEdit} fixedWidth color="#adadad" />
-      <FontAwesomeIcon icon={faTrash} fixedWidth color="#adadad" />
+    <div className='rectangle3'>
+      <FontAwesomeIcon icon={faEdit} fixedWidth color='#adadad' />
+      <FontAwesomeIcon icon={faTrash} fixedWidth color='#adadad' />
     </div>
     <style jsx>
       {`
@@ -129,13 +125,7 @@ class List extends Component {
     }))
   }
   render() {
-    return (
-      <SortableList
-        items={this.state.items}
-        onSortEnd={this.onSortEnd}
-        lockAxis="y"
-      />
-    )
+    return <SortableList items={this.state.items} onSortEnd={this.onSortEnd} lockAxis='y' />
   }
 }
 

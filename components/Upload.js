@@ -1,61 +1,58 @@
-import { Component } from "react";
-import React from "react";
-import Dropzone from "react-dropzone";
-import axios from "axios";
+import { Component } from 'react'
+import React from 'react'
+import Dropzone from 'react-dropzone'
+import axios from 'axios'
 
 class Upload extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       SLIDE_LIST: []
-    };
+    }
   }
 
   handleOnDropAccepted = acceptedFiles => {
-    const formData = new FormData();
-    formData.append("data", acceptedFiles[acceptedFiles.length - 1]);
-    axios.post("/api/slide/upload", formData, {
+    const formData = new FormData()
+    formData.append('data', acceptedFiles[acceptedFiles.length - 1])
+    axios.post('/api/slide/upload', formData, {
       headers: {
-        "Content-Type": "multipart/form-data"
+        'Content-Type': 'multipart/form-data'
       }
-    });
+    })
 
     this.setState({
       SLIDE_LIST: [
         ...this.state.SLIDE_LIST,
         {
-          type: "photo",
+          type: 'photo',
           data: acceptedFiles[acceptedFiles.length - 1].name,
-          title: "",
-          desc: "",
+          title: '',
+          desc: '',
           duration: 3,
           order: this.state.SLIDE_LIST.length + 1
         }
       ]
-    });
+    })
     //eslint-disable-next-line
-    console.log(this.state.SLIDE_LIST);
-  };
+    console.log(this.state.SLIDE_LIST)
+  }
 
   handleOnDropRejected = rejectedFiles => {
-    alert(
-      "This file type is not allowed:" +
-        rejectedFiles[rejectedFiles.length - 1].name
-    );
-  };
+    alert('This file type is not allowed:' + rejectedFiles[rejectedFiles.length - 1].name)
+  }
 
   render() {
     return (
       <div>
         <Dropzone
-          accept="image/*"
+          accept='image/*'
           onDropAccepted={this.handleOnDropAccepted}
           onDropRejected={this.handleOnDropRejected}
           multiple={false}
         >
           {({ getRootProps, getInputProps, isDragActive }) => {
             return (
-              <div {...getRootProps()} className="upload">
+              <div {...getRootProps()} className='upload'>
                 <input {...getInputProps()} />
                 {isDragActive ? (
                   <p>Click or drop files here to add to the slideshow</p>
@@ -63,12 +60,12 @@ class Upload extends Component {
                   <p>Drop files here to add to the slideshow </p>
                 )}
               </div>
-            );
+            )
           }}
         </Dropzone>
-        <div className="list">
+        <div className='list'>
           {this.state.SLIDE_LIST.map(item => (
-            <div className="element">{item.data}</div>
+            <div className='element'>{item.data}</div>
           ))}
         </div>
         <style jsx>
@@ -96,8 +93,8 @@ class Upload extends Component {
           `}
         </style>
       </div>
-    );
+    )
   }
 }
 
-export default Upload;
+export default Upload
