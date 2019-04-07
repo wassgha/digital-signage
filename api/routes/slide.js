@@ -14,69 +14,53 @@ router
   .get('/', (req, res, next) => {
     return Slide.find({})
       .then(slides => {
+        if (!slides) {
+          res.sendStatus(500)
+          return res.send('NO slides found')
+        }
         return res.json(slides)
       })
       .catch(err => next(err))
   })
   .post('/', (req, res, next) => {
-    try {
-      var newSlide = new Slide()
-      var slideshowID
-      /**
-       * Try CATCH error block
-       * If front end does not send all data, its okay
-       * Only requires a parent slideshow
-       * Catches do nothing, as they are left blank
-       */
-      /*
-       * try {
-       *   newSlide.data = req.body.data
-       * } catch (e) {}
-       */
-      if (req.body.data) {
-        newSlide.data = req.body.data
-      }
-      if (req.body.type) {
-        newSlide.type = req.body.type
-      }
-      if (req.body.title) {
-        newSlide.title = req.body.title
-      }
-      if (req.body.description) {
-        newSlide.description = req.body.description
-      }
-      if (req.body.duration) {
-        newSlide.duration = req.body.duration
-      }
-      if (req.body.slideshowID) {
-        slideshowID = req.body.slideshowID
-        newSlide.slideshow = slideshowID
-      } else {
-        console.error('Missing SlideShow ID, slide not added')
-        return 'Missing SlideSHow ID, slide not added'
-      }
-      const form = new formidable.IncomingForm()
-      form.uploadDir = '../../uploads'
-      form.keepExtensions = true
-      form.multiples = false
-      // Parse the sent data and save it + the path for alex
-      form.parse(req, (err, fields, files) => {
-        if (err) {
-          res.json({
-            result: 'error',
-            message: 'Cannot upload file, Error: ${err}'
-          })
-        } else {
-          const filePath = files.data.path
-          newSlide.data = filePath
-          return addSlideToSlideShow(slideshowID, newSlide, next)
-        }
-      })
-      // Checks to make sure the slideShow exists, then adds and saves
-    } catch (err) {
-      console.error(err)
-      next(err)
+    var newSlide = new Slide()
+    var slideshowID
+    if ('data' in req.body) newSlide.data = req.body.data
+
+    if ('type' in req.body) newSlide.type = req.body.type
+
+    if ('title' in req.body) newSlide.title = req.body.title
+
+    if ('description' in req.body) newSlide.description = req.body.description
+
+    if ('duration' in req.body) newSlide.duration = req.body.duration
+
+    if ('slideshowID' in req.body) {
+      slideshowID = req.body.slideshowID
+      newSlide.slideshow = slideshowID
+    } else {
+      console.error('Missing SlideShow ID, slide not added')
+      return 'Missing SlideSHow ID, slide not added'
     }
+    const form = new formidable.IncomingForm()
+    form.uploadDir = '../../uploads'
+    form.keepExtensions = true
+    form.multiples = false
+    // Parse the sent data and save it + the path for alex
+    return form.parse(req, (err, fields, files) => {
+      if (err) {
+        res.sendStatus(500)
+        res.json({
+          result: 'error',
+          message: 'Cannot upload file, Error: ${err}'
+        })
+      } else {
+        const filePath = files.data.path
+        newSlide.data = filePath
+        return addSlideToSlideShow(slideshowID, newSlide, res, next)
+      }
+    })
+    // Checks to make sure the slideShow exists, then adds and saves
   })
 
 // Route: /api/v1/slide/:id
@@ -86,6 +70,12 @@ router
     return Slide.findById(id)
       .populate('slides')
       .then(slide => {
+        if (!slide) {
+          {
+            res.sendStatus(500)
+            return res.send('')
+          }
+        }
         return res.json(slide)
       })
       .catch(err => next(err))
@@ -94,7 +84,10 @@ router
     const { id } = req.params
     return Slide.findByIdAndRemove(id)
       .then(slide => {
-        if (!slide) return next('Slide not found')
+        if (!slide) {
+          res.sendStatus(500)
+          return res.send('slide not found')
+        }
         return slide
           .remove()
           .then(() => {
@@ -109,35 +102,27 @@ router
     const { id } = req.params
     return Slide.findById(id)
       .then(slide => {
-        if (!slide) return next('Slide not found')
-        /*
-         * try {
-         * slide.data = req.body.data
-         *} catch (e) {}
-         */
-        if (req.body.data) {
-          slide.data = req.body.data
+        if (!slide) {
+          res.sendStatus(500)
+          return res.send('slide not found')
         }
-        if (req.body.type) {
-          slide.type = req.body.type
-        }
-        if (req.body.title) {
-          slide.title = req.body.title
-        }
-        if (req.body.description) {
-          slide.description = req.body.description
-        }
-        if (req.body.duration) {
-          slide.duration = req.body.duration
-        }
-        try {
-          slide.slideshow = req.body.slideShowID
+        if ('data' in req.body) slide.data = req.body.data
+
+        if ('type' in req.body) slide.type = req.body.type
+
+        if ('title' in req.body) slide.title = req.body.title
+
+        if ('description' in req.body) slide.description = req.body.description
+
+        if ('duration' in req.body) slide.duration = req.body.duration
+        if ('slideShowID' in req.body)
           console.error('Switching slide to a different slideshow currently not implemented')
-        } catch (e) {}
-        slide
+
+        return slide
           .save()
           .then(() => {
-            return res.send('success')
+            res.sendStatus(200)
+            return res.send('Field Succesfuly Changed')
           })
           .catch(err => next(err))
       })
@@ -153,20 +138,30 @@ module.exports = router
  * @param {The slide that is being saved} slide
  * @param {Whatever next is, ask Wasssseeeeeemmm} next
  */
-function addSlideToSlideShow(slideShowID, slide, next) {
-  Slideshow.findById(slideShowID)
+function addSlideToSlideShow(slideShowID, slide, res, next) {
+  return Slideshow.findById(slideShowID)
     .then(slideshow => {
-      if (!slideshow) return next('Slide not found')
+      if (!slideshow) {
+        res.sendStatus(500)
+        return res.send('slideshow not found')
+      }
       slide
         .save()
         .then(slide => {
-          if (!slide) return next('Slide not saved ??')
+          if (!slide) {
+            res.sendStatus(500)
+            return res.send('slide not saved')
+          }
           slideshow.slides.push(slide._id).catch(err => next(err))
-          slideshow
+          return slideshow
             .save()
             .then(slideshow => {
-              if (!slideshow) return next('Slideshow not saved ??')
-              return 'Slide succesfully created'
+              if (!slideshow) {
+                res.sendStatus(500)
+                return res.send('slideshow not saved')
+              }
+              res.sendStatus(200)
+              return res.send('Slide added to slideshow')
             })
             .catch(err => next(err))
         })
@@ -177,12 +172,19 @@ function addSlideToSlideShow(slideShowID, slide, next) {
 
 function deleteSlideFromSlideShow(slide, next, res) {
   var slideShowID = slide.slideshow
-  Slideshow.findById(slideShowID).then(slideshow => {
-    if (!slideshow) return next('Slideshow not found, not sure what the move is')
+  return Slideshow.findById(slideShowID).then(slideshow => {
+    if (!slideshow) {
+      res.sendStatus(500)
+      return res.send('something went wrong finding slideshow')
+    }
     slideshow.slides.remove(slideShowID)
-    slideshow.save().then(slideshow => {
-      if (!slideshow) return next('Slideshow not found, not sure what the move is')
-      return res.send('success')
+    return slideshow.save().then(slideshow => {
+      if (!slideshow) {
+        res.sendStatus(500)
+        return res.send('something went wrong finding slideshow')
+      }
+      res.sendStatus(200)
+      return res.send('slide deleted from slideshow')
     })
   })
 }
