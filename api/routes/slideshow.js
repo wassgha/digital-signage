@@ -30,21 +30,16 @@ router
     return Slideshow.findByIdAndDelete(id)
       .then(slideshow => {
         if (!slideshow) return next('Slideshow not found')
-        /**
-         * return slideshow.remove().then(() => {
-         * return res.send('success')
-         *})
-         */
         deleteSlides(slideshow.slides)
       })
       .catch(err => next(err))
-  }) //Adding new slide, this funciton
+  }) //Adding new slide, this funciton, not need
   .post('/:id', (req, res, next) => {
     const { id } = req.params
     const { slideID } = req.body
     return Slideshow.findById(id).then(slideshow => {
       slideshow.slides.push(slideID)
-      slideshow.save()
+      slideshow.save().then()
     })
   }) //For updating: changing slide order, give slide_id and location from 0->n, -1 is end
   .patch('/:id', (req, res, next) => {

@@ -28,27 +28,32 @@ router
        * Only requires a parent slideshow
        * Catches do nothing, as they are left blank
        */
-      try {
+      /*
+       * try {
+       *   newSlide.data = req.body.data
+       * } catch (e) {}
+       */
+      if (req.body.data) {
         newSlide.data = req.body.data
-      } catch (e) {}
-      try {
+      }
+      if (req.body.type) {
         newSlide.type = req.body.type
-      } catch (e) {}
-      try {
+      }
+      if (req.body.title) {
         newSlide.title = req.body.title
-      } catch (e) {}
-      try {
+      }
+      if (req.body.description) {
         newSlide.description = req.body.description
-      } catch (e) {}
-      try {
+      }
+      if (req.body.duration) {
         newSlide.duration = req.body.duration
-      } catch (e) {}
-      try {
+      }
+      if (req.body.slideshowID) {
         slideshowID = req.body.slideshowID
         newSlide.slideshow = slideshowID
-      } catch (err) {
+      } else {
         console.error('Missing SlideShow ID, slide not added')
-        next(err)
+        return 'Missing SlideSHow ID, slide not added'
       }
       const form = new formidable.IncomingForm()
       form.uploadDir = '../../uploads'
@@ -105,21 +110,26 @@ router
     return Slide.findById(id)
       .then(slide => {
         if (!slide) return next('Slide not found')
-        try {
+        /*
+         * try {
+         * slide.data = req.body.data
+         *} catch (e) {}
+         */
+        if (req.body.data) {
           slide.data = req.body.data
-        } catch (e) {}
-        try {
+        }
+        if (req.body.type) {
           slide.type = req.body.type
-        } catch (e) {}
-        try {
+        }
+        if (req.body.title) {
           slide.title = req.body.title
-        } catch (e) {}
-        try {
+        }
+        if (req.body.description) {
           slide.description = req.body.description
-        } catch (e) {}
-        try {
+        }
+        if (req.body.duration) {
           slide.duration = req.body.duration
-        } catch (e) {}
+        }
         try {
           slide.slideshow = req.body.slideShowID
           console.error('Switching slide to a different slideshow currently not implemented')
