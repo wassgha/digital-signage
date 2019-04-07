@@ -78,8 +78,6 @@ class Upload extends Component {
               border: 2px dashed #adadad;
               cursor: pointer;
               background: white;
-              margin: 40px auto;
-              max-width: 640px;
             }
 
             .list {
