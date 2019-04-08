@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const Slideshow = require('../models/Slideshow')
-const Slide = require('../models/Slide')
+const SlideshowHelper = require('../helpers/slideshow_helper')
 
 // Route: /api/v1/slideshow
 router.get('/', (req, res, next) => {
@@ -30,39 +30,23 @@ router
     return Slideshow.findByIdAndDelete(id)
       .then(slideshow => {
         if (!slideshow) return next('Slideshow not found')
-        deleteSlides(slideshow.slides)
+        SlideshowHelper.deleteSlides(slideshow.slides)
       })
       .catch(err => next(err))
-  }) //Adding new slide, this funciton, not need
-  .post('/:id', (req, res, next) => {
-    const { id } = req.params
-    const { slideID } = req.body
-    return Slideshow.findById(id).then(slideshow => {
-      slideshow.slides.push(slideID)
-      slideshow.save().then()
-    })
-  }) //For updating: changing slide order, give slide_id and location from 0->n, -1 is end
+  })
   .patch('/:id', (req, res, next) => {
     const { id } = req.params
-    try {
-      var slideID = req.body.slideID
-      var index = req.body.index
-      return Slideshow.findById(id).then(slideshow => {
-        slideshow.slides = slideshow.slides.filter(function(value, index, arr) {
-          return value == slideID
+    return Slideshow.findById(id)
+      .then(slideshow => {
+        if (!slideshow) return next(new Error('Slideshow not found'))
+
+        if ('title' in req.body) slideshow.title = req.body.title
+
+        return slideshow.save().then(() => {
+          return res.json({ success: true })
         })
-        slideshow.slides.splice(index, 0, slideID)
-        return 'Removed that slide and repositioned it baby'
       })
-    } catch (e) {
-      console.error(e)
-    }
+      .catch(err => next(err))
   })
 
 module.exports = router
-
-function deleteSlides(slides) {
-  slides.forEach(slide => {
-    Slide.findByIdAndRemove(slide)
-  })
-}
