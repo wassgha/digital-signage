@@ -8,9 +8,10 @@ const customStyles = {
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
+    transform: 'translate(-50%, -50%)',
+    border: 'none'
   },
-  overlay: { zIndex: 3 }
+  overlay: { zIndex: 3, backgroundColor: 'rgba(0,0, 0, 0.6)' }
 }
 
 /*
@@ -49,118 +50,128 @@ class Dialog extends React.Component {
 
   render() {
     return (
-      <div className="rectangle">
+      <div className='container'>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
           style={customStyles}
-          contentLabel="Example Modal"
         >
-          <div className="rectangle1">
-            <h2 ref={subtitle => (this.subtitle = subtitle)}>
-              SLIDE INFORMATION
-            </h2>
+          <div className='form'>
+            <div className='inputGroup'>
+              <label>Position</label>
+              <input name='position' onChange={this.handleInputChange} />
+            </div>
+            <div className='inputGroup'>
+              <label>Media</label>
+              <input name='media' onChange={this.handleInputChange} />
+            </div>
+            <div className='inputGroup'>
+              <label>Duration</label>
+              <input name='duration' onChange={this.handleInputChange} type='number' />
+            </div>
+            <div className='inputGroup'>
+              <label>Title</label>
+              <input name='title' onChange={this.handleInputChange} />
+            </div>
+            <div className='inputGroup'>
+              <label>Description</label>
+              <textarea name='description' onChange={this.handleInputChange} />
+            </div>
           </div>
 
-          <div className="rectangle2">
-            <div>Position</div>
-            <input
-              name="position"
-              className="position"
-              onChange={this.handleInputChange}
-            />
-            <div>Media</div>
-            <input
-              name="media"
-              className="media"
-              onChange={this.handleInputChange}
-            />
-            <div>Duration</div>
-            <input
-              name="duration"
-              className="duration"
-              onChange={this.handleInputChange}
-            />
-            <div>Title</div>
-            <input
-              name="title"
-              className="title"
-              onChange={this.handleInputChange}
-            />
-            <div>Description</div>
-            <input
-              name="decription"
-              className="description"
-              onChange={this.handleInputChange}
-            />
+          <div className={'btnGroup'}>
+            <button className={'btn save'} onClick={this.closeModal}>
+              Save
+            </button>
+            <button className={'btn cancel'} onClick={this.closeModal}>
+              Cancel
+            </button>
           </div>
-
-          <button className="btn save" onClick={this.closeModal}>
-            Save
-          </button>
-
-          <button className="btn cancel" onClick={this.closeModal}>
-            Cancel
-          </button>
         </Modal>
         <style jsx>{`
-          .rectangle {
+          .container {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
             align-content: center;
             font-color: black;
+            font-family: 'Open Sans', sans-serif;
           }
 
-          .rectangle1 {
+          .form {
             display: flex;
             flex-direction: column;
           }
 
-          .rectangle2 {
+          .form .inputGroup {
+            margin-bottom: 16px;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            justify-content: flex-start;
           }
 
-          .position {
-            height: 25px;
-            width: 50px;
+          .form label {
+            margin-right: 16px;
+            color: #878787;
+            font-family: 'Open Sans', sans-serif;
+            min-width: 100px;
+            max-width: 100px;
+            display: inline-block;
+            padding-top: 16px;
           }
 
-          .media {
-            height: 50px;
-            width: 500px;
+          .form input,
+          .form textarea {
+            background-color: #f7f7f7;
+            min-height: 40px;
+            min-width: 450px;
+            border-radius: 2px;
+            border: none;
+            outline: none;
+            padding: 8px;
+            padding-left: 16px;
+            padding-right: 16px;
+            font-size: 16px;
           }
 
-          .duration {
-            height: 25px;
-            width: 50px;
+          .form textarea {
+            resize: vertical;
+            min-height: 100px;
           }
 
-          .title {
-            height: 25px;
-            width: 500px;
+          .form input[type='number'] {
+            min-width: 50px !important;
+            max-width: 50px !important;
           }
 
-          .description {
-            height: 100px;
-            width: 500px;
+          .btnGroup {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            flex: 1;
           }
 
           .btn {
+            font-family: 'Open Sans', sans-serif;
             background: lightgray;
-            padding: 20px;
             text-decoration: none;
             text-transform: uppercase;
             color: white;
+            font-size: 14px;
             border-radius: 4px;
-            margin: 20px;
+            border: none;
             display: inline-block;
+            margin-left: 16px;
+            padding: 16px;
+            padding-left: 24px;
+            padding-right: 24px;
           }
+
           .btn.save {
             background: #8bc34a;
           }
+
           .btn.cancel {
             background: #e85454;
           }
