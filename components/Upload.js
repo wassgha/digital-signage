@@ -1,6 +1,7 @@
 import { Component } from 'react'
 import React from 'react'
 import Dropzone from 'react-dropzone'
+import Dialog from './Dialog.js'
 import axios from 'axios'
 
 class Upload extends Component {
@@ -9,11 +10,15 @@ class Upload extends Component {
     this.state = {
       SLIDE_LIST: []
     }
+    this.modal = React.createRef()
   }
 
   handleOnDropAccepted = acceptedFiles => {
     const formData = new FormData()
     formData.append('data', acceptedFiles[acceptedFiles.length - 1])
+
+    this.modal && this.modal.current.openModal()
+
     axios.post('/api/slide/upload', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -38,12 +43,16 @@ class Upload extends Component {
   }
 
   handleOnDropRejected = rejectedFiles => {
-    alert('This file type is not allowed:' + rejectedFiles[rejectedFiles.length - 1].name)
+    alert(
+      'This file type is not allowed:' +
+        rejectedFiles[rejectedFiles.length - 1].name
+    )
   }
 
   render() {
     return (
       <div>
+        <Dialog ref={this.modal} />
         <Dropzone
           accept='image/*'
           onDropAccepted={this.handleOnDropAccepted}
@@ -63,6 +72,7 @@ class Upload extends Component {
             )
           }}
         </Dropzone>
+        <Dialog ref={this.modal} />
         <div className='list'>
           {this.state.SLIDE_LIST.map(item => (
             <div className='element'>{item.data}</div>
