@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const Slide = new Schema({
-  slideshow: { type: Schema.Types.ObjectId, ref: 'Slideshow' },
   data: { type: String, default: 'https://i.imgur.com/3MlKktU.jpg' },
   type: {
     type: String,
@@ -11,7 +10,8 @@ const Slide = new Schema({
   },
   title: { type: String },
   description: { type: String },
-  duration: { type: Number, default: 5, min: 1 }
+  duration: { type: Number, default: 5, min: 1 },
+  slideshow: { type: Schema.Types.ObjectId, ref: 'Slideshow' }
 })
 
 module.exports = mongoose.model('Slide', Slide)

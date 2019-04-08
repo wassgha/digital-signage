@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const Slideshow = require('../models/Slideshow')
+const SlideshowHelper = require('../helpers/slideshow_helper')
 
 // Route: /api/v1/slideshow
 router.get('/', (req, res, next) => {
@@ -26,11 +27,23 @@ router
   })
   .delete('/:id', (req, res, next) => {
     const { id } = req.params
-    return Slideshow.findById(id)
+    return Slideshow.findByIdAndDelete(id)
       .then(slideshow => {
         if (!slideshow) return next('Slideshow not found')
-        return slideshow.remove().then(() => {
-          return res.send('success')
+        SlideshowHelper.deleteSlides(slideshow.slides)
+      })
+      .catch(err => next(err))
+  })
+  .patch('/:id', (req, res, next) => {
+    const { id } = req.params
+    return Slideshow.findById(id)
+      .then(slideshow => {
+        if (!slideshow) return next(new Error('Slideshow not found'))
+
+        if ('title' in req.body) slideshow.title = req.body.title
+
+        return slideshow.save().then(() => {
+          return res.json({ success: true })
         })
       })
       .catch(err => next(err))
