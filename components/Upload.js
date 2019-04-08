@@ -7,9 +7,6 @@ import axios from 'axios'
 class Upload extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      SLIDE_LIST: []
-    }
     this.modal = React.createRef()
   }
 
@@ -25,28 +22,11 @@ class Upload extends Component {
       }
     })
 
-    this.setState({
-      SLIDE_LIST: [
-        ...this.state.SLIDE_LIST,
-        {
-          type: 'photo',
-          data: acceptedFiles[acceptedFiles.length - 1].name,
-          title: '',
-          desc: '',
-          duration: 3,
-          order: this.state.SLIDE_LIST.length + 1
-        }
-      ]
-    })
-    //eslint-disable-next-line
-    console.log(this.state.SLIDE_LIST)
+    const fileName = acceptedFiles[acceptedFiles.length - 1].name
   }
 
   handleOnDropRejected = rejectedFiles => {
-    alert(
-      'This file type is not allowed:' +
-        rejectedFiles[rejectedFiles.length - 1].name
-    )
+    alert('This file type is not allowed:' + rejectedFiles[rejectedFiles.length - 1].name)
   }
 
   render() {
@@ -73,32 +53,17 @@ class Upload extends Component {
           }}
         </Dropzone>
         <Dialog ref={this.modal} />
-        <div className='list'>
-          {this.state.SLIDE_LIST.map(item => (
-            <div className='element'>{item.data}</div>
-          ))}
-        </div>
         <style jsx>
           {`
             .upload {
               padding: 20px;
-              font-family: "Open Sans", sans-serif;
+              font-family: 'Open Sans', sans-serif;
               text-align: center;
               border-radius: 4px;
               border: 2px dashed #adadad;
               cursor: pointer;
               background: white;
-            }
-
-            .list {
-              borderwidth: 2;
-              borderscolor: black;
-            }
-
-            .element {
-              margin 10px;
-              border: 2px black solid ;
-              background: white;
+              outline: none;
             }
           `}
         </style>

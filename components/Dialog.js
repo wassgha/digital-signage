@@ -1,7 +1,7 @@
 import React from 'react'
 import Modal from 'react-modal'
 
-const customStyles = {
+const modalStyles = {
   content: {
     top: '50%',
     left: '50%',
@@ -13,11 +13,6 @@ const customStyles = {
   },
   overlay: { zIndex: 3, backgroundColor: 'rgba(0,0, 0, 0.6)' }
 }
-
-/*
- * Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
- *Modal.setAppElement('#yourAppElement')
- */
 
 class Dialog extends React.Component {
   constructor() {
@@ -55,7 +50,7 @@ class Dialog extends React.Component {
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
-          style={customStyles}
+          style={modalStyles}
         >
           <div className='form'>
             <div className='inputGroup'>
@@ -180,7 +175,5 @@ class Dialog extends React.Component {
     )
   }
 }
-
-//ReactDOM.render(<App />, appElement)
 
 export default Dialog
