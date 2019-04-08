@@ -9,11 +9,14 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)'
-  }
+  },
+  overlay: { zIndex: 3 }
 }
 
-// Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
-//Modal.setAppElement('#yourAppElement')
+/*
+ * Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
+ *Modal.setAppElement('#yourAppElement')
+ */
 
 class Dialog extends React.Component {
   constructor() {
@@ -22,24 +25,19 @@ class Dialog extends React.Component {
     this.state = {
       modalIsOpen: false
     }
-
-    this.openModal = this.openModal.bind(this)
-    this.afterOpenModal = this.afterOpenModal.bind(this)
-    this.closeModal = this.closeModal.bind(this)
   }
 
-  openModal() {
-    console.log('Open called')
+  openModal = () => {
     this.setState({ modalIsOpen: true })
   }
 
-  afterOpenModal() {}
+  afterOpenModal = () => {}
 
-  closeModal() {
+  closeModal = () => {
     this.setState({ modalIsOpen: false })
   }
 
-  handleInputChange(event) {
+  handleInputChange = event => {
     const target = event.target
     const value = target.value
     const name = target.name

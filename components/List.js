@@ -66,10 +66,9 @@ class Card extends Component {
   render() {
     const { value } = this.props
     return (
-      <div className="card">
-        <Dialog ref={this.modal} />
-        <div className="order">{value.order}</div>
-        <div className="left">
+      <div className='card'>
+        <div className='order'>{value.order}</div>
+        <div className='left'>
           <div
             className={'thumbnail'}
             style={{
@@ -86,42 +85,43 @@ class Card extends Component {
               <FontAwesomeIcon
                 icon={faPlay}
                 fixedWidth
-                size="lg"
-                color="#FFFFFF"
+                size='lg'
+                color='#FFFFFF'
               />
             )}
             {value.type == 'web' && (
               <FontAwesomeIcon
                 icon={faGlobe}
                 fixedWidth
-                size="lg"
-                color="#FFFFFF"
+                size='lg'
+                color='#FFFFFF'
               />
             )}
           </div>
         </div>
-        <div className="middle">
-          <div className="title">{value.title}</div>
-          <div className="duration">
-            <div className="icon">
-              <FontAwesomeIcon icon={faClock} fixedWidth color="#878787" />
+        <div className='middle'>
+          <div className='title'>{value.title}</div>
+          <div className='duration'>
+            <div className='icon'>
+              <FontAwesomeIcon icon={faClock} fixedWidth color='#878787' />
             </div>
-            <span className="text">{value.duration}s</span>
+            <span className='text'>{value.duration}s</span>
           </div>
         </div>
-        <div className="right">
-          <div className="actionIcon">
+        <div className='right'>
+          <div className='actionIcon'>
             <FontAwesomeIcon
               icon={faEdit}
               fixedWidth
-              color="#828282"
+              color='#828282'
               onClick={() => this.modal && this.modal.current.openModal()}
             />
           </div>
-          <div className="actionIcon">
-            <FontAwesomeIcon icon={faTrash} fixedWidth color="#828282" />
+          <div className='actionIcon'>
+            <FontAwesomeIcon icon={faTrash} fixedWidth color='#828282' />
           </div>
         </div>
+        <Dialog ref={this.modal} />
         <style jsx>
           {`
             .card {
@@ -269,7 +269,7 @@ class List extends Component {
         items={this.state.items}
         onSortEnd={this.onSortEnd}
         distance={2}
-        lockAxis="y"
+        lockAxis='y'
       />
     )
   }
