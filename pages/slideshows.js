@@ -1,6 +1,7 @@
 import Frame from '../components/Admin/Frame.js'
 import Upload from '../components/Upload.js'
 import List from '../components/List.js'
+import Dialog from '../components/Dialog.js'
 
 const Slideshows = () => (
   <Frame>
@@ -8,6 +9,7 @@ const Slideshows = () => (
     <div className='wrapper'>
       <Upload />
       <List />
+      <Dialog />
     </div>
     <style jsx>
       {`
