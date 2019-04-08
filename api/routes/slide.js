@@ -79,7 +79,7 @@ router
         return res.json(slide)
       })
       .catch(err => next(err))
-  })
+  }) //Delete a specific slide
   .delete('/:id', (req, res, next) => {
     const { id } = req.params
     return Slide.findByIdAndRemove(id)
@@ -88,12 +88,7 @@ router
           res.sendStatus(500)
           return res.send('slide not found')
         }
-        return slide
-          .remove()
-          .then(() => {
-            return deleteSlideFromSlideShow(slide, next, res)
-          })
-          .catch(err => next(err))
+        return deleteSlideFromSlideShow(slide, next, res)
       })
       .catch(err => next(err))
   })
