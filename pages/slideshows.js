@@ -3,8 +3,10 @@ import Upload from '../components/Upload.js'
 import List from '../components/List.js'
 import Dialog from '../components/Dialog.js'
 
-const Slideshows = () => (
-  <Frame>
+import { protect } from '../helpers/auth.js'
+
+const Slideshows = ({ loggedIn }) => (
+  <Frame loggedIn={loggedIn}>
     <h1>Slideshows</h1>
     <div className='wrapper'>
       <Upload />
@@ -28,4 +30,4 @@ const Slideshows = () => (
   </Frame>
 )
 
-export default Slideshows
+export default protect(Slideshows)

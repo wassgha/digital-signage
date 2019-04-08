@@ -1,8 +1,9 @@
 import Frame from '../components/Admin/Frame.js'
 import Display from '../components/Display/Display.js'
+import { protect } from '../helpers/auth.js'
 
-const Preview = () => (
-  <Frame>
+const Preview = ({ loggedIn }) => (
+  <Frame loggedIn={loggedIn}>
     <h1>Preview</h1>
     <p>Below is a preview of the display as it will appear on the TV.</p>
     <div className='preview'>
@@ -39,4 +40,4 @@ const Preview = () => (
   </Frame>
 )
 
-export default Preview
+export default protect(Preview)
