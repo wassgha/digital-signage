@@ -145,7 +145,7 @@ function addSlideToSlideShow(slideShowID, slide, res, next) {
         res.sendStatus(500)
         return res.send('slideshow not found')
       }
-      slide
+      return slide
         .save()
         .then(slide => {
           if (!slide) {
@@ -177,7 +177,9 @@ function deleteSlideFromSlideShow(slide, next, res) {
       res.sendStatus(500)
       return res.send('something went wrong finding slideshow')
     }
-    slideshow.slides.remove(slideShowID)
+    slideshow.slides = slideshow.slides.filter(function(value, index, arr) {
+      return value == slide._id
+    })
     return slideshow.save().then(slideshow => {
       if (!slideshow) {
         res.sendStatus(500)
