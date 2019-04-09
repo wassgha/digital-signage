@@ -1,6 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
+import { library, config } from '@fortawesome/fontawesome-svg-core'
 import {
   faPlay,
   faFont,
@@ -11,6 +11,7 @@ import {
   faTimes
 } from '@fortawesome/free-solid-svg-icons'
 
+config.autoAddCss = false
 library.add(faList)
 library.add(faPlay)
 library.add(faFont)
@@ -26,7 +27,7 @@ class EditableWidget extends React.Component {
     return (
       <div className={'widget'}>
         <div className={'delete'} onClick={onDelete}>
-          <FontAwesomeIcon icon={faTimes} size={'s'} fixedWidth />
+          <FontAwesomeIcon icon={faTimes} size={'xs'} fixedWidth />
         </div>
         <div className={'info'}>
           <div className={'icon'}>

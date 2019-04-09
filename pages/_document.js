@@ -3,23 +3,29 @@
  */
 
 import Document, { Head, Main, NextScript } from 'next/document'
+import { ServerStyleSheet } from 'styled-components'
+import flush from 'styled-jsx/server'
 
 class AppDocument extends Document {
-  static async getInitialProps(ctx) {
-    const initialProps = await Document.getInitialProps(ctx)
-    return { ...initialProps }
+  static getInitialProps({ renderPage }) {
+    const sheet = new ServerStyleSheet()
+    const page = renderPage(App => props => sheet.collectStyles(<App {...props} />))
+    const styleTags = sheet.getStyleElement()
+    const styles = flush()
+    return { ...page, styleTags, styles }
   }
 
   render() {
     return (
       <html>
         <Head>
-          <style>{'body { margin: 0 } /* custom! */'}</style>
           <meta name='viewport' content='width=device-width, initial-scale=1' />
+          <meta charSet='utf-8' />
           <link
             href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'
             rel='stylesheet'
           />
+          {this.props.styleTags}
         </Head>
         <body>
           <Main />
