@@ -3,7 +3,7 @@ import Link from 'next/link'
 const Index = () => (
   <div className='home'>
     <p>The Digital Signage server is running in the background.</p>
-    <Link href='/slideshows'>
+    <Link href='/layout'>
       <a className='btn admin'>Admin Home</a>
     </Link>
     <Link href='/display'>

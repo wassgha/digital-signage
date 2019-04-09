@@ -7,9 +7,6 @@ import WidthProvider from '../components/Admin/Widgets/WidthProvider'
 
 import { WidgetType } from '../constants'
 
-import '../styles/GridLayoutStyles.css'
-import 'react-resizable/css/styles.css'
-
 const GridLayoutWithWidth = WidthProvider(GridLayout)
 
 class Layout extends React.Component {
