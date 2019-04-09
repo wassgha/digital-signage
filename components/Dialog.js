@@ -161,6 +161,7 @@ class Dialog extends React.Component {
             padding: 16px;
             padding-left: 24px;
             padding-right: 24px;
+            outline: none;
           }
 
           .btn.save {

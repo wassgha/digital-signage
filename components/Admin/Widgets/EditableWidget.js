@@ -7,7 +7,8 @@ import {
   faList,
   faMousePointer,
   faCloudSun,
-  faCalendar
+  faCalendar,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faList)
@@ -21,9 +22,12 @@ import { WidgetType } from '../../../constants'
 
 class EditableWidget extends React.Component {
   render() {
-    const { type = WidgetType.Slideshow } = this.props
+    const { type = WidgetType.Slideshow, onDelete = () => {} } = this.props
     return (
       <div className={'widget'}>
+        <div className={'delete'} onClick={onDelete}>
+          <FontAwesomeIcon icon={faTimes} size={'s'} fixedWidth />
+        </div>
         <div className={'info'}>
           <div className={'icon'}>
             <FontAwesomeIcon icon={type.icon} size={'2x'} />
@@ -65,6 +69,24 @@ class EditableWidget extends React.Component {
               font-family: 'Open Sans', sans-serif;
               text-transform: uppercase;
               font-size: 12px;
+            }
+            .widget .delete {
+              position: absolute;
+              font-family: 'Open Sans', sans-serif;
+              top: 8px;
+              right: 8px;
+              width: 32px;
+              height: 32px;
+              justify-content: center;
+              align-items: center;
+              color: white;
+              background: rgba(0, 0, 0, 0.6);
+              border-radius: 50%;
+              cursor: pointer;
+              display: none;
+            }
+            .widget:hover .delete {
+              display: flex;
             }
           `}
         </style>{' '}
