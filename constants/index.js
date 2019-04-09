@@ -1,25 +1,25 @@
 const WidgetType = {
-  Slideshow: {
+  slideshow: {
     name: 'Slideshow',
     icon: 'play'
   },
-  Calendar: {
+  calendar: {
     name: 'Calendar',
     icon: 'calendar'
   },
-  Weather: {
+  weather: {
     name: 'Weather',
     icon: 'cloud-sun'
   },
-  Button: {
+  button: {
     name: 'Button',
     icon: 'mouse-pointer'
   },
-  List: {
+  list: {
     name: 'List',
     icon: 'list'
   },
-  Text: {
+  text: {
     name: 'Text',
     icon: 'font'
   }
