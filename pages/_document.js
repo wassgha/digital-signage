@@ -19,6 +19,7 @@ class AppDocument extends Document {
     return (
       <html>
         <Head>
+          <style>{'body { margin: 0 } /* custom! */'}</style>
           <meta name='viewport' content='width=device-width, initial-scale=1' />
           <meta charSet='utf-8' />
           <link
