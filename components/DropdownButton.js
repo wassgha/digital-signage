@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
+import { library, config } from '@fortawesome/fontawesome-svg-core'
 import {
   faPlay,
   faFont,
@@ -10,6 +10,7 @@ import {
   faPlus
 } from '@fortawesome/free-solid-svg-icons'
 
+config.autoAddCss = false
 library.add(faPlus)
 library.add(faList)
 library.add(faPlay)
