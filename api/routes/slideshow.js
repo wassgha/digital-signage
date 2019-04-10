@@ -19,9 +19,15 @@ router
       title: req.body.title,
       description: req.body.description
     })
-    return newSlideShow.save().then(slideshow => {
-      return slideshow
-    })
+    return newSlideShow
+      .save()
+      .then(slideshow => {
+        if (!slideshow) {
+          next(new Error('Slideshow not created'))
+        }
+        return slideshow
+      })
+      .catch(err => next(err))
   })
 
 // Route: /api/v1/slideshow/5c8ef466c66b0e9338943005
