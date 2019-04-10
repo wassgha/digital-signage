@@ -17,7 +17,6 @@ router
   .post('/', (req, res, next) => {
     const newSlideShow = new Slideshow({
       title: req.body.title,
-      description: req.body.description
     })
     return newSlideShow
       .save()
