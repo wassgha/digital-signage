@@ -30,7 +30,7 @@ router
       .catch(err => next(err))
   })
 
-// Route: /api/v1/slideshow/5c8ef466c66b0e9338943005
+// Route: /api/v1/slideshow/:id
 router
   .get('/:id', (req, res, next) => {
     const { id } = req.params
