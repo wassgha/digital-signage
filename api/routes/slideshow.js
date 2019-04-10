@@ -5,16 +5,26 @@ const Slideshow = require('../models/Slideshow')
 const SlideshowHelper = require('../helpers/slideshow_helper')
 
 // Route: /api/v1/slideshow
-router.get('/', (req, res, next) => {
-  return Slideshow.find({})
-    .populate('slides')
-    .then(slideshows => {
-      return res.json(slideshows)
+router
+  .get('/', (req, res, next) => {
+    return Slideshow.find({})
+      .populate('slides')
+      .then(slideshows => {
+        return res.json(slideshows)
+      })
+      .catch(err => next(err))
+  })
+  .post('/', (req, res, next) => {
+    const newSlideShow = new Slideshow({
+      title: req.body.title,
+      description: req.body.description
     })
-    .catch(err => next(err))
-})
+    return newSlideShow.save().then(slideshow => {
+      return slideshow
+    })
+  })
 
-// Route: /api/v1/slideshow/:id
+// Route: /api/v1/slideshow/5c8ef466c66b0e9338943005
 router
   .get('/:id', (req, res, next) => {
     const { id } = req.params
@@ -30,7 +40,7 @@ router
     return Slideshow.findByIdAndDelete(id)
       .then(slideshow => {
         if (!slideshow) return next('Slideshow not found')
-        SlideshowHelper.deleteSlides(slideshow.slides)
+        return SlideshowHelper.deleteSlides(slideshow.slides)
       })
       .catch(err => next(err))
   })
