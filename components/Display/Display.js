@@ -9,6 +9,7 @@ import GridLayout from 'react-grid-layout'
 import Frame from './Frame.js'
 import HeightProvider from '../Widgets/HeightProvider'
 import Widgets from '../../widgets'
+import EmptyWidget from '../Widgets/EmptyWidget'
 
 import { getWidgets } from '../../actions/widgets'
 
@@ -53,7 +54,7 @@ class Display extends React.Component {
             cols={6}
           >
             {widgets.map(widget => {
-              const Widget = Widgets[widget.type].Widget
+              const Widget = Widgets[widget.type] ? Widgets[widget.type].Widget : EmptyWidget
               return (
                 <div key={widget._id} className={'widget'}>
                   <Widget data={widget.data} />
