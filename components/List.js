@@ -1,19 +1,10 @@
 import { Component } from 'react'
 import React from 'react'
-import Dialog from './Dialog'
-import {
-  SortableContainer,
-  SortableElement,
-  arrayMove
-} from 'react-sortable-hoc'
+import SlideEditDialog from './Admin/SlideEditDialog'
+import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClock } from '@fortawesome/free-regular-svg-icons'
-import {
-  faTrash,
-  faEdit,
-  faPlay,
-  faGlobe
-} from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faEdit, faPlay, faGlobe } from '@fortawesome/free-solid-svg-icons'
 
 /* eslint-disable */
 const MOCK_SLIDES = [
@@ -61,7 +52,7 @@ const MOCK_SLIDES = [
 class Card extends Component {
   constructor(props) {
     super(props)
-    this.modal = React.createRef()
+    this.dialog = React.createRef()
   }
   render() {
     const { value } = this.props
@@ -82,20 +73,10 @@ class Card extends Component {
             }}
           >
             {value.type == 'youtube' && (
-              <FontAwesomeIcon
-                icon={faPlay}
-                fixedWidth
-                size='lg'
-                color='#FFFFFF'
-              />
+              <FontAwesomeIcon icon={faPlay} fixedWidth size='lg' color='#FFFFFF' />
             )}
             {value.type == 'web' && (
-              <FontAwesomeIcon
-                icon={faGlobe}
-                fixedWidth
-                size='lg'
-                color='#FFFFFF'
-              />
+              <FontAwesomeIcon icon={faGlobe} fixedWidth size='lg' color='#FFFFFF' />
             )}
           </div>
         </div>
@@ -114,14 +95,14 @@ class Card extends Component {
               icon={faEdit}
               fixedWidth
               color='#828282'
-              onClick={() => this.modal && this.modal.current.openModal()}
+              onClick={() => this.dialog && this.dialog.current.open()}
             />
           </div>
           <div className='actionIcon'>
             <FontAwesomeIcon icon={faTrash} fixedWidth color='#828282' />
           </div>
         </div>
-        <Dialog ref={this.modal} />
+        <SlideEditDialog ref={this.dialog} />
         <style jsx>
           {`
             .card {
@@ -265,12 +246,7 @@ class List extends Component {
   }
   render() {
     return (
-      <SortableList
-        items={this.state.items}
-        onSortEnd={this.onSortEnd}
-        distance={2}
-        lockAxis='y'
-      />
+      <SortableList items={this.state.items} onSortEnd={this.onSortEnd} distance={2} lockAxis='y' />
     )
   }
 }
