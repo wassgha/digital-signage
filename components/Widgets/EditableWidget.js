@@ -19,11 +19,12 @@ library.add(faMousePointer)
 library.add(faCloudSun)
 library.add(faCalendar)
 
-import { WidgetType } from '../../../constants'
+import Widgets from '../../widgets'
 
 class EditableWidget extends React.Component {
   render() {
-    const { type = WidgetType.Slideshow, onDelete = () => {} } = this.props
+    const { type = 'slideshow', onDelete = () => {} } = this.props
+    const widget = Widgets[type] || {}
     return (
       <div className={'widget'}>
         <div className={'delete'} onClick={onDelete}>
@@ -31,10 +32,10 @@ class EditableWidget extends React.Component {
         </div>
         <div className={'info'}>
           <div className={'icon'}>
-            <FontAwesomeIcon icon={type.icon} size={'2x'} />
+            <FontAwesomeIcon icon={widget.icon || faTimes} size={'2x'} />
           </div>
-          <span className={'type'}>{type.name}</span>
-          <span className={'name'}>NEWS</span>
+          <span className={'type'}>{widget.name || 'Broken Widget'}</span>
+          {/* <span className={'name'}>NEWS</span> */}
         </div>
         <style jsx>
           {`
@@ -90,7 +91,7 @@ class EditableWidget extends React.Component {
               display: flex;
             }
           `}
-        </style>{' '}
+        </style>
       </div>
     )
   }

@@ -5,8 +5,8 @@ const Preview = () => (
   <Frame>
     <h1>Preview</h1>
     <p>Below is a preview of the display as it will appear on the TV.</p>
-    <div className="preview">
-      <div className="content">
+    <div className='preview'>
+      <div className='content'>
         <Display />
       </div>
     </div>

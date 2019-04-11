@@ -4,7 +4,7 @@
   "description": "This is a user interface for a dynamic digital signage",
   "main": "index.js",
   "scripts": {
-    "dev": "node server.js",
+    "dev": "NODE_ENV=dev node server.js",
     "build": "next build",
     "lint": "eslint --color ./ *.js",
     "start": "NODE_ENV=production node server.js",

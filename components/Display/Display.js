@@ -3,57 +3,82 @@
  * widgets inside of it
  */
 
+import React from 'react'
+import GridLayout from 'react-grid-layout'
+
 import Frame from './Frame.js'
-import Slideshow from '../Slideshow/Slideshow.js'
+import HeightProvider from '../Widgets/HeightProvider'
+import Widgets from '../../widgets'
+import EmptyWidget from '../Widgets/EmptyWidget'
 
-/* eslint-disable */
-// TODO(@wassgha): Replace with dynamic slide data through a call to the API
-const MOCK_SLIDES = [
-  {
-    type: 'photo',
-    data:
-      'https://compsci.lafayette.edu/wp-content/uploads/sites/66/2010/05/computerSci-homepage.jpg',
-    title: 'Welcome to the Computer Science Department',
-    desc:
-      'Welcome to the fifth floor of the Acopian Engineering Center, home of the Computer Science department!',
-    duration: 3, // In seconds
-    order: 2
-  },
-  {
-    type: 'photo',
-    data:
-      'https://news.lafayette.edu/wp-content/blogs.dir/2/files/2018/12/STEM-professors-470x264.jpg',
-    title: 'Hidden Figures Week',
-    desc:
-      'Hidden Figures Week explored issues related to women in STEM through a roundtable faculty discussion.',
-    duration: 2, // In seconds
-    order: 1
-  },
-  {
-    type: 'web',
-    data: 'https://compsci.lafayette.edu/courses/',
-    title: 'Classes Website Example',
-    desc: '',
-    duration: 4, // In seconds
-    order: 3
-  },
+import { getWidgets } from '../../actions/widgets'
 
-  {
-    type: 'youtube',
-    data: 'https://www.youtube.com/watch?v=xcs-xnc25-I',
-    title: "The President's Challenge: Bring the Best",
-    desc:
-      "Saeed Malami '20 and Lillian Kennedy '21 talk about the impact Lafayette College has had on their lives and the role donors have played in making this possible.",
-    duration: 10, // In seconds
-    order: 4
+class Display extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      widgets: props.widgets || []
+    }
   }
-]
-/* eslint-enable */
 
-const Display = () => (
-  <Frame>
-    <Slideshow slides={MOCK_SLIDES} />
-  </Frame>
-)
+  componentDidMount() {
+    this.refresh()
+  }
+
+  refresh = () => {
+    return getWidgets().then(widgets => {
+      this.setState({ widgets })
+    })
+  }
+
+  render() {
+    const { widgets } = this.state
+    const layout = widgets.map(widget => ({
+      i: widget._id,
+      x: widget.x || 0,
+      y: widget.y || 0,
+      w: widget.w || 1,
+      h: widget.h || 1
+    }))
+
+    const GridLayoutWithHeight = HeightProvider(GridLayout, this.container)
+
+    return (
+      <Frame>
+        <div className={'gridContainer'} ref={ref => (this.container = ref)}>
+          <GridLayoutWithHeight
+            className='layout'
+            isDraggable={false}
+            isResizable={false}
+            layout={layout}
+            cols={6}
+          >
+            {widgets.map(widget => {
+              const Widget = Widgets[widget.type] ? Widgets[widget.type].Widget : EmptyWidget
+              return (
+                <div key={widget._id} className={'widget'}>
+                  <Widget data={widget.data} />
+                </div>
+              )
+            })}
+          </GridLayoutWithHeight>
+          <style jsx>
+            {`
+              .gridContainer {
+                flex: 1;
+                overflow: hidden;
+                margin-bottom: 10px;
+              }
+              .widget {
+                border-radius: 6px;
+                overflow: hidden;
+              }
+            `}
+          </style>
+        </div>
+      </Frame>
+    )
+  }
+}
 
 export default Display
