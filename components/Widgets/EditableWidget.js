@@ -32,10 +32,10 @@ class EditableWidget extends React.Component {
         </div>
         <div className={'info'}>
           <div className={'icon'}>
-            <FontAwesomeIcon icon={widget.icon} size={'2x'} />
+            <FontAwesomeIcon icon={widget.icon || faTimes} size={'2x'} />
           </div>
-          <span className={'type'}>{widget.name}</span>
-          <span className={'name'}>NEWS</span>
+          <span className={'type'}>{widget.name || 'Broken Widget'}</span>
+          {/* <span className={'name'}>NEWS</span> */}
         </div>
         <style jsx>
           {`
