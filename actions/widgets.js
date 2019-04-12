@@ -1,8 +1,9 @@
 import axios from 'axios'
 
-export const addWidget = (type, host = '') => {
+export const addWidget = (type, data = {}, host = '') => {
   return axios.post(host + '/api/v1/widgets', {
-    type
+    type,
+    data
   })
 }
 

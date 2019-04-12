@@ -35,7 +35,8 @@ class Layout extends React.Component {
   }
 
   addWidget = type => {
-    return addWidget(type).then(this.refresh)
+    const widgetDefinition = Widgets[type]
+    return addWidget(type, widgetDefinition && widgetDefinition.defaultData).then(this.refresh)
   }
 
   deleteWidget = id => {
