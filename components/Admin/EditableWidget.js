@@ -34,8 +34,14 @@ class EditableWidget extends React.Component {
     this.dialog && this.dialog.current.open()
   }
 
+  deleteClicked = e => {
+    if (e) e.stopPropagation()
+    const { onDelete = () => {} } = this.props
+    onDelete()
+  }
+
   render() {
-    const { type = 'slideshow', id, onDelete = () => {} } = this.props
+    const { type = 'slideshow', id } = this.props
     const widget = Widgets[type] || {}
     return (
       <div className={'widget'}>
@@ -43,7 +49,7 @@ class EditableWidget extends React.Component {
           <div className={'edit'} onClick={this.open}>
             <FontAwesomeIcon icon={faCog} size={'xs'} fixedWidth />
           </div>
-          <div className={'delete'} onClick={onDelete}>
+          <div className={'delete'} onClick={this.deleteClicked}>
             <FontAwesomeIcon icon={faTimes} size={'xs'} fixedWidth />
           </div>
         </div>
