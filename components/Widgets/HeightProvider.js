@@ -43,19 +43,21 @@ export default function HeightProvider(ComposedComponent, MeasureComponent) {
         return <div className={this.props.className} style={this.props.style} />
       }
 
-      const rowNum = Math.max.apply(
-        Math,
-        rest.layout.map(widget => {
-          return widget.y + widget.h
-        })
-      )
+      const rowNum =
+        Math.max.apply(
+          Math,
+          rest.layout.map(widget => {
+            return widget.y + widget.h
+          })
+        ) || 12
 
-      const colNum = Math.max.apply(
-        Math,
-        rest.layout.map(widget => {
-          return widget.x + widget.w
-        })
-      )
+      const colNum =
+        Math.max.apply(
+          Math,
+          rest.layout.map(widget => {
+            return widget.x + widget.w
+          })
+        ) || 12
 
       return (
         <ComposedComponent
