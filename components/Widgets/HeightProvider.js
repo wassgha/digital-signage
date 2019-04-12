@@ -50,10 +50,17 @@ export default function HeightProvider(ComposedComponent, MeasureComponent) {
         })
       )
 
+      const colNum = Math.max.apply(
+        Math,
+        rest.layout.map(widget => {
+          return widget.x + widget.w
+        })
+      )
+
       return (
         <ComposedComponent
           {...rest}
-          {...{ width: this.state.width, rowHeight: this.state.height / rowNum - 10 }}
+          {...{ width: this.state.width, rowHeight: this.state.height / rowNum - 10, cols: colNum }}
         />
       )
     }

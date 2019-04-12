@@ -8,7 +8,8 @@ import {
   faMousePointer,
   faCloudSun,
   faCalendar,
-  faTimes
+  faTimes,
+  faCog
 } from '@fortawesome/free-solid-svg-icons'
 
 config.autoAddCss = false
@@ -28,7 +29,8 @@ class EditableWidget extends React.Component {
     this.dialog = React.createRef()
   }
 
-  open = () => {
+  open = e => {
+    if (e) e.stopPropagation()
     this.dialog && this.dialog.current.open()
   }
 
@@ -36,9 +38,14 @@ class EditableWidget extends React.Component {
     const { type = 'slideshow', id, onDelete = () => {} } = this.props
     const widget = Widgets[type] || {}
     return (
-      <div className={'widget'} onClick={this.open}>
-        <div className={'delete'} onClick={onDelete}>
-          <FontAwesomeIcon icon={faTimes} size={'xs'} fixedWidth />
+      <div className={'widget'}>
+        <div className={'controls'}>
+          <div className={'edit'} onClick={this.open}>
+            <FontAwesomeIcon icon={faCog} size={'xs'} fixedWidth />
+          </div>
+          <div className={'delete'} onClick={onDelete}>
+            <FontAwesomeIcon icon={faTimes} size={'xs'} fixedWidth />
+          </div>
         </div>
         <div className={'info'}>
           <div className={'icon'}>
@@ -58,7 +65,7 @@ class EditableWidget extends React.Component {
               display: flex;
               flex-direction: column;
               justify-content: center;
-              cursor: pointer;
+              cursor: move;
             }
             .widget .info {
               display: flex;
@@ -76,7 +83,6 @@ class EditableWidget extends React.Component {
               font-family: 'Open Sans', sans-serif;
               text-transform: uppercase;
               font-size: 16px;
-              margin-bottom: 16px;
             }
             .widget .info .name {
               color: white;
@@ -84,8 +90,18 @@ class EditableWidget extends React.Component {
               text-transform: uppercase;
               font-size: 12px;
             }
-            .widget .delete {
+            .widget .controls {
               position: absolute;
+              font-family: 'Open Sans', sans-serif;
+              top: 8px;
+              right: 8px;
+              justify-content: center;
+              align-items: center;
+              display: none;
+            }
+            .widget .delete,
+            .widget .edit {
+              display: flex;
               font-family: 'Open Sans', sans-serif;
               top: 8px;
               right: 8px;
@@ -94,12 +110,20 @@ class EditableWidget extends React.Component {
               justify-content: center;
               align-items: center;
               color: white;
-              background: rgba(0, 0, 0, 0.6);
               border-radius: 50%;
               cursor: pointer;
-              display: none;
             }
-            .widget:hover .delete {
+
+            .widget .edit {
+              background: rgba(0, 0, 0, 0.6);
+              margin-right: 8px;
+            }
+
+            .widget .delete {
+              background: rgba(252, 50, 50, 0.6);
+            }
+
+            .widget:hover .controls {
               display: flex;
             }
           `}
