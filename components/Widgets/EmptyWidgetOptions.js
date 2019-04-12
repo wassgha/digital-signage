@@ -12,6 +12,8 @@ class EmptyWidgetOptions extends React.Component {
               flex-direction: column;
               justify-content: center;
               text-align: center;
+              padding: 20px;
+              font-family: 'Open Sans', sans-serif;
             }
           `}
         </style>

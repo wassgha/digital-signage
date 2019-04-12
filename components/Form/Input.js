@@ -19,7 +19,7 @@ class Input extends React.Component {
   }
 
   render() {
-    const { label, type = 'text', placeholder = '' } = this.props
+    const { label, inline = true, type = 'text', placeholder = '', choices = [] } = this.props
     const { value = '' } = this.state
 
     return (
@@ -32,6 +32,15 @@ class Input extends React.Component {
             value={value}
             onChange={this.handleInputChange}
           />
+        ) : type == 'select' ? (
+          <select onChange={this.handleInputChange}>
+            <option value={''}>Choose an option...</option>
+            {choices.map(choice => (
+              <option key={choice.id} value={choice.id} selected={value == choice.id}>
+                {choice.label}
+              </option>
+            ))}
+          </select>
         ) : (
           <textarea onChange={this.handleInputChange} value={value} />
         )}
@@ -39,7 +48,7 @@ class Input extends React.Component {
           .inputGroup {
             margin-bottom: 16px;
             display: flex;
-            flex-direction: row;
+            flex-direction: ${inline ? 'row' : 'column'};
             justify-content: flex-start;
           }
 
@@ -48,13 +57,15 @@ class Input extends React.Component {
             color: #878787;
             font-family: 'Open Sans', sans-serif;
             min-width: 100px;
-            max-width: 100px;
+            max-width: ${inline ? '100px' : 'none'};
             display: inline-block;
             padding-top: 16px;
+            padding-bottom: ${inline ? '0px' : '16px'};
           }
 
           input,
-          textarea {
+          textarea,
+          select {
             background-color: #f7f7f7;
             min-height: 40px;
             min-width: 450px;
@@ -70,6 +81,12 @@ class Input extends React.Component {
           textarea {
             resize: vertical;
             min-height: 100px;
+          }
+
+          select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
           }
 
           input[type='number'] {

@@ -23,11 +23,13 @@ class Dialog extends React.Component {
     }
   }
 
-  open = () => {
+  open = e => {
+    if (e) e.stopPropagation()
     this.setState({ modalIsOpen: true })
   }
 
-  close = () => {
+  close = e => {
+    if (e) e.stopPropagation()
     this.setState({ modalIsOpen: false })
   }
 

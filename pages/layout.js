@@ -2,7 +2,7 @@ import React from 'react'
 import GridLayout from 'react-grid-layout'
 
 import Frame from '../components/Admin/Frame.js'
-import EditableWidget from '../components/Widgets/EditableWidget'
+import EditableWidget from '../components/Admin/EditableWidget'
 import WidthProvider from '../components/Widgets/WidthProvider'
 import DropdownButton from '../components/DropdownButton'
 
@@ -83,10 +83,12 @@ class Layout extends React.Component {
           layout={layout}
           cols={6}
           onLayoutChange={this.onLayoutChange}
+          draggableCancel={'.ReactModalPortal'}
         >
           {widgets.map(widget => (
             <div key={widget._id}>
               <EditableWidget
+                id={widget._id}
                 type={widget.type}
                 onDelete={this.deleteWidget.bind(this, widget._id)}
               />
