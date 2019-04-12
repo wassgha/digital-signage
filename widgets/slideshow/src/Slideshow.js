@@ -59,7 +59,7 @@ const DEFAULT_SLIDES = [
 ]
 /* eslint-enable */
 
-class SlideshowRenderer extends Component {
+class Slideshow extends Component {
   constructor(props) {
     super(props)
 
@@ -197,4 +197,4 @@ class SlideshowRenderer extends Component {
   }
 }
 
-export default SlideshowRenderer
+export default Slideshow

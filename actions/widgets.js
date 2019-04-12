@@ -21,3 +21,11 @@ export const deleteWidget = (id, host = '') => {
 export const updateWidget = (id, data, host = '') => {
   return axios.put(host + '/api/v1/widgets/' + id, data)
 }
+
+export const getWidget = (id, host = '') => {
+  return axios.get(host + '/api/v1/widgets/' + id).then(res => {
+    if (res && res.data) {
+      return res.data
+    }
+  })
+}

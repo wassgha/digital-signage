@@ -1,20 +1,20 @@
 import { Component } from 'react'
 import React from 'react'
 import Dropzone from 'react-dropzone'
-import Dialog from './Dialog.js'
+import SlideEditDialog from './Admin/SlideEditDialog.js'
 import axios from 'axios'
 
 class Upload extends Component {
   constructor(props) {
     super(props)
-    this.modal = React.createRef()
+    this.dialog = React.createRef()
   }
 
   handleOnDropAccepted = acceptedFiles => {
     const formData = new FormData()
     formData.append('data', acceptedFiles[acceptedFiles.length - 1])
-    
-    this.modal && this.modal.current.openModal()
+
+    this.dialog && this.dialog.current.open()
 
     axios.post('/api/v1/slide', formData, {
       headers: {
@@ -32,7 +32,7 @@ class Upload extends Component {
   render() {
     return (
       <div>
-        <Dialog ref={this.modal} />
+        <SlideEditDialog ref={this.dialog} />
         <Dropzone
           accept='image/*'
           onDropAccepted={this.handleOnDropAccepted}
@@ -52,7 +52,6 @@ class Upload extends Component {
             )
           }}
         </Dropzone>
-        <Dialog ref={this.modal} />
         <style jsx>
           {`
             .upload {

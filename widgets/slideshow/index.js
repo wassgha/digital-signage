@@ -1,5 +1,6 @@
 import BaseWidget from '../base_widget'
-import SlideshowRenderer from './src/SlideshowRenderer.js'
+import SlideshowContent from './src/Slideshow.js'
+import SlideshowOptions from './src/SlideshowOptions.js'
 
 export default class Slideshow extends BaseWidget {
   constructor() {
@@ -11,6 +12,10 @@ export default class Slideshow extends BaseWidget {
   }
 
   get Widget() {
-    return SlideshowRenderer
+    return SlideshowContent
+  }
+
+  get Options() {
+    return SlideshowOptions
   }
 }

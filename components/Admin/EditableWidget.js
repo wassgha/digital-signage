@@ -20,13 +20,23 @@ library.add(faCloudSun)
 library.add(faCalendar)
 
 import Widgets from '../../widgets'
+import WidgetEditDialog from './WidgetEditDialog'
 
 class EditableWidget extends React.Component {
+  constructor(props) {
+    super(props)
+    this.dialog = React.createRef()
+  }
+
+  open = () => {
+    this.dialog && this.dialog.current.open()
+  }
+
   render() {
-    const { type = 'slideshow', onDelete = () => {} } = this.props
+    const { type = 'slideshow', id, onDelete = () => {} } = this.props
     const widget = Widgets[type] || {}
     return (
-      <div className={'widget'}>
+      <div className={'widget'} onClick={this.open}>
         <div className={'delete'} onClick={onDelete}>
           <FontAwesomeIcon icon={faTimes} size={'xs'} fixedWidth />
         </div>
@@ -37,6 +47,7 @@ class EditableWidget extends React.Component {
           <span className={'type'}>{widget.name || 'Broken Widget'}</span>
           {/* <span className={'name'}>NEWS</span> */}
         </div>
+        <WidgetEditDialog ref={this.dialog} OptionsComponent={widget.Options} id={id} />
         <style jsx>
           {`
             .widget {
@@ -47,6 +58,7 @@ class EditableWidget extends React.Component {
               display: flex;
               flex-direction: column;
               justify-content: center;
+              cursor: pointer;
             }
             .widget .info {
               display: flex;

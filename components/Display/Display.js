@@ -46,13 +46,7 @@ class Display extends React.Component {
     return (
       <Frame>
         <div className={'gridContainer'} ref={ref => (this.container = ref)}>
-          <GridLayoutWithHeight
-            className='layout'
-            isDraggable={false}
-            isResizable={false}
-            layout={layout}
-            cols={6}
-          >
+          <GridLayoutWithHeight className='layout' static={true} layout={layout} cols={6}>
             {widgets.map(widget => {
               const Widget = Widgets[widget.type] ? Widgets[widget.type].Widget : EmptyWidget
               return (

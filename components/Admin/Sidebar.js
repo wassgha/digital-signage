@@ -42,7 +42,7 @@ const Sidebar = ({ router }) => (
     </div>
     <ul className='menu'>
       {MENU.map(item => (
-        <Link href={item.path}>
+        <Link href={item.path} key={item.path}>
           <li className={item.path == router.pathname && 'active'}>
             <a>
               <FontAwesomeIcon icon={item.icon} fixedWidth />
