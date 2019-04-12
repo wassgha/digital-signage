@@ -33,10 +33,10 @@ class Input extends React.Component {
             onChange={this.handleInputChange}
           />
         ) : type == 'select' ? (
-          <select onChange={this.handleInputChange}>
+          <select onChange={this.handleInputChange} selected={value || ''}>
             <option value={''}>Choose an option...</option>
             {choices.map(choice => (
-              <option key={choice.id} value={choice.id} selected={value == choice.id}>
+              <option key={choice.id} value={choice.id}>
                 {choice.label}
               </option>
             ))}
