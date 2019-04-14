@@ -1,7 +1,11 @@
 import { Component } from 'react'
 import React from 'react'
-import Dropzone from 'react-dropzone'
 import SlideEditDialog from './Admin/SlideEditDialog.js'
+import dynamic from 'next/dynamic'
+
+const DropzoneWithNoSSR = dynamic(() => require('react-dropzone'), {
+  ssr: false
+})
 
 class Upload extends Component {
   constructor(props) {
@@ -27,7 +31,7 @@ class Upload extends Component {
     return (
       <div>
         <SlideEditDialog slideshow={slideshow} upload={lastFile} ref={this.dialog} />
-        <Dropzone
+        <DropzoneWithNoSSR
           accept='image/*'
           onDropAccepted={this.handleOnDropAccepted}
           onDropRejected={this.handleOnDropRejected}
@@ -45,7 +49,7 @@ class Upload extends Component {
               </div>
             )
           }}
-        </Dropzone>
+        </DropzoneWithNoSSR>
         <style jsx>
           {`
             .upload {
