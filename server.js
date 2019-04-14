@@ -7,7 +7,8 @@ const mongoose = require('mongoose')
 const dev = process.env.NODE_ENV !== 'production'
 const port = process.env.PORT || 3000
 const app = next({ dev })
-const handle = app.getRequestHandler()
+const routes = require('./routes')
+const handle = routes.getRequestHandler(app)
 
 const Keys = require('./keys')
 

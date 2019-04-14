@@ -24,7 +24,7 @@ router
         if (!slideshow) {
           next(new Error('Slideshow not created'))
         }
-        return slideshow
+        return res.json(slideshow)
       })
       .catch(err => next(err))
   })

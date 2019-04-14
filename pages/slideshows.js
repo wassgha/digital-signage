@@ -1,19 +1,32 @@
 import React from 'react'
 
 import Frame from '../components/Admin/Frame.js'
-import Upload from '../components/Upload.js'
-import SlideList from '../components/SlideList.js'
+import SlideshowList from '../components/SlideshowList.js'
 import Dialog from '../components/Dialog.js'
+import { Button } from '../components/Form'
+
+import { addSlideshow } from '../actions/slideshow'
 
 class Slideshows extends React.Component {
+  constructor(props) {
+    super(props)
+    this.slideshowList = React.createRef()
+  }
+
+  add = () => {
+    addSlideshow().then(() => {
+      this.slideshowList && this.slideshowList.refresh()
+    })
+  }
+
   render() {
     return (
       <Frame>
         <h1>Slideshows</h1>
         <div className='wrapper'>
-          <Upload slideshow={'5cae4a5f2b01de1d78357f7f'} />
-          <SlideList slideshow={'5cae4a5f2b01de1d78357f7f'} />
+          <SlideshowList ref={this.slideshowList} />
           <Dialog />
+          <Button text={'+ Add new slideshow'} color={'#8bc34a'} onClick={this.add} />
         </div>
         <style jsx>
           {`
