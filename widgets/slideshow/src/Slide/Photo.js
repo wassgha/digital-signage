@@ -55,7 +55,8 @@ class PhotoSlide extends GenericSlide {
           .slide-content.photo {
             width: 100%;
             height: 100%;
-            background-size: cover;
+            background-color: rgb(122, 122, 122);
+            background-size: contain;
             background-repeat: no-repeat;
             background-position: 50% 50%;
           }
