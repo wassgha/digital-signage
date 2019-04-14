@@ -8,31 +8,38 @@ class Upload extends Component {
   constructor(props) {
     super(props)
     this.dialog = React.createRef()
+    this.state = {
+      uploaded : false
+    }
   }
 
   handleOnDropAccepted = acceptedFiles => {
-    const formData = new FormData()
-    formData.append('data', acceptedFiles[acceptedFiles.length - 1])
-
     this.dialog && this.dialog.current.open()
-
-    axios.post('/api/v1/slide', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-
-    const fileName = acceptedFiles[acceptedFiles.length - 1].name
+    this.setState({uploaded:true})
   }
 
   handleOnDropRejected = rejectedFiles => {
     alert('This file type is not allowed:' + rejectedFiles[rejectedFiles.length - 1].name)
   }
 
+  upload = acceptedFiles => {
+    const formData = new FormData()
+    formData.append('data', acceptedFiles[acceptedFiles.length - 1])
+    const fileName = acceptedFiles[acceptedFiles.length - 1].name
+    axios.post('/api/v1/slide', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  }
+
+
+  }
+
   render() {
     return (
       <div>
-        <SlideEditDialog ref={this.dialog} />
+        <SlideEditDialog upload={this.upload} ref={this.dialog} />
         <Dropzone
           accept='image/*'
           onDropAccepted={this.handleOnDropAccepted}

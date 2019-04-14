@@ -236,17 +236,8 @@ const SortableList = SortableContainer(({ items }) => {
 })
 
 class List extends Component {
-  /*
-   * constructor(props) {
-   *   super(props)
-   *   this.state = {
-   *     widgets: props.widgets || []
-   *   }
-   * }
-   */
-
   state = {
-    items: [] //MOCK_SLIDES.sort((a, b) => a.order - b.order)
+    items: []
   }
   onSortEnd = ({ oldIndex, newIndex }) => {
     this.setState(({ items }) => ({

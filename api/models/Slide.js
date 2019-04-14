@@ -8,8 +8,8 @@ const Slide = new Schema({
     default: 'photo',
     enum: ['photo', 'web', 'youtube', 'video']
   },
-  title: { type: String },
-  description: { type: String },
+  title: { type: String, default: 'Unnamed Slide' },
+  description: { type: String, default: 'Undescribed Slide' },
   duration: { type: Number, default: 5, min: 1 },
   slideshow: { type: Schema.Types.ObjectId, ref: 'Slideshow' },
   order: { type: Number }

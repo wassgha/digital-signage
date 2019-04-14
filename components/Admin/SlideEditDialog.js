@@ -1,6 +1,7 @@
 import React from 'react'
 import Dialog from '../Dialog'
 import { Form, Input, Button, ButtonGroup } from '../Form'
+import axios from 'axios'
 
 class SlideEditDialog extends React.Component {
   constructor() {
@@ -44,7 +45,7 @@ class SlideEditDialog extends React.Component {
           />
         </Form>
         <ButtonGroup>
-          <Button text={'Save'} color={'#8bc34a'} onClick={this.close} />
+          <Button text={'Save'} color={'#8bc34a'} onClick={this.save} />
           <Button text={'Cancel'} color={'#e85454'} onClick={this.close} />
         </ButtonGroup>
       </Dialog>
