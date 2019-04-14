@@ -3,7 +3,7 @@ import React from 'react'
 import SlideEditDialog from './Admin/SlideEditDialog.js'
 import dynamic from 'next/dynamic'
 
-const DropzoneWithNoSSR = dynamic(() => require('react-dropzone'), {
+const DropzoneWithNoSSR = dynamic(() => import('react-dropzone'), {
   ssr: false
 })
 

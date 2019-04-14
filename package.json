@@ -7,8 +7,7 @@
     "dev": "NODE_ENV=dev node server.js",
     "build": "next build",
     "lint": "eslint --color ./ *.js",
-    "startbkp": "NODE_ENV=production node server.js",
-    "start": "NODE_ENV=dev node server.js",
+    "start": "NODE_ENV=production node server.js",
     "test": "echo \"No test specified yet.\" && exit 0",
     "heroku-postbuild": "next build"
   },

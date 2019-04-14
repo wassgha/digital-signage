@@ -79,7 +79,7 @@ router
         if (!slide) return next(new Error('Slide not found'))
 
         // Either the uploaded file if found or the text data field
-        const data = req.file && req.file.path ? Keys.HOST_URL + req.file.path : req.body.data
+        const data = req.file && req.file.path ? '/' + req.file.path : req.body.data
 
         if (data) slide.data = data
         if ('type' in req.body) slide.type = req.body.type
