@@ -9,13 +9,13 @@ class Upload extends Component {
     super(props)
     this.dialog = React.createRef()
     this.state = {
-      uploaded : false
+      uploaded: false
     }
   }
 
   handleOnDropAccepted = acceptedFiles => {
     this.dialog && this.dialog.current.open()
-    this.setState({uploaded:true})
+    this.setState({ uploaded: true })
   }
 
   handleOnDropRejected = rejectedFiles => {
@@ -31,9 +31,6 @@ class Upload extends Component {
         'Content-Type': 'multipart/form-data'
       }
     })
-  }
-
-
   }
 
   render() {

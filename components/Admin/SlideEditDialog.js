@@ -1,7 +1,6 @@
 import React from 'react'
 import Dialog from '../Dialog'
 import { Form, Input, Button, ButtonGroup } from '../Form'
-import axios from 'axios'
 
 class SlideEditDialog extends React.Component {
   constructor() {
