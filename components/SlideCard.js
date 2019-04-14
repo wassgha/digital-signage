@@ -65,7 +65,7 @@ class SlideCard extends Component {
             />
           </div>
         </div>
-        <SlideEditDialog ref={this.dialog} />
+        <SlideEditDialog ref={this.dialog} slide={value._id} refresh={refresh} />
         <style jsx>
           {`
             .card {

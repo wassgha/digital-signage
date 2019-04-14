@@ -16,7 +16,7 @@ router
   })
   .post('/', (req, res, next) => {
     const newSlideShow = new Slideshow({
-      title: req.body.title,
+      title: req.body.title
     })
     return newSlideShow
       .save()
@@ -37,6 +37,15 @@ router
       .populate('slides')
       .then(slideshow => {
         return res.json(slideshow)
+      })
+      .catch(err => next(err))
+  })
+  .get('/:id/slides', (req, res, next) => {
+    const { id } = req.params
+    return Slideshow.findById(id)
+      .populate('slides')
+      .then(slideshow => {
+        return res.json(slideshow.slides)
       })
       .catch(err => next(err))
   })

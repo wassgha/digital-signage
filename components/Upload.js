@@ -2,41 +2,31 @@ import { Component } from 'react'
 import React from 'react'
 import Dropzone from 'react-dropzone'
 import SlideEditDialog from './Admin/SlideEditDialog.js'
-import axios from 'axios'
 
 class Upload extends Component {
   constructor(props) {
     super(props)
     this.dialog = React.createRef()
     this.state = {
-      uploaded: false
+      lastFile: null
     }
   }
 
   handleOnDropAccepted = acceptedFiles => {
     this.dialog && this.dialog.current.open()
-    this.setState({ uploaded: true })
+    this.setState({ lastFile: acceptedFiles[acceptedFiles.length - 1] })
   }
 
   handleOnDropRejected = rejectedFiles => {
     alert('This file type is not allowed:' + rejectedFiles[rejectedFiles.length - 1].name)
   }
 
-  upload = acceptedFiles => {
-    const formData = new FormData()
-    formData.append('data', acceptedFiles[acceptedFiles.length - 1])
-    const fileName = acceptedFiles[acceptedFiles.length - 1].name
-    axios.post('/api/v1/slide', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-  }
-
   render() {
+    const { slideshow } = this.props
+    const { lastFile } = this.state
     return (
       <div>
-        <SlideEditDialog upload={this.upload} ref={this.dialog} />
+        <SlideEditDialog slideshow={slideshow} upload={lastFile} ref={this.dialog} />
         <Dropzone
           accept='image/*'
           onDropAccepted={this.handleOnDropAccepted}

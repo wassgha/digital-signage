@@ -11,8 +11,9 @@ import GenericSlide from './Slide/Generic'
 import PhotoSlide from './Slide/Photo'
 import YoutubeSlide from './Slide/Youtube'
 import WebSlide from './Slide/Web'
-
 import Progress from './Progress'
+
+import { getSlides } from '../../../actions/slide'
 
 const DEFAULT_DURATION = 5000
 
@@ -67,12 +68,16 @@ class Slideshow extends Component {
 
     this.state = {
       current: null,
+      slides: [],
       ready: false
     }
   }
 
   componentDidMount() {
-    this.setState({ current: 0 }, this.waitForNextSlide)
+    const { data } = this.props
+    getSlides(data).then(slides => {
+      this.setState({ current: 0, slides }, this.waitForNextSlide)
+    })
   }
 
   /**
@@ -81,8 +86,8 @@ class Slideshow extends Component {
    * @return {Array}
    */
   get orderedSlides() {
-    const { data = DEFAULT_SLIDES } = this.props
-    return _.sortBy(data, 'order')
+    const { slides } = this.state
+    return _.sortBy(slides, 'order')
   }
 
   /**
@@ -90,16 +95,15 @@ class Slideshow extends Component {
    * @return {Promise}
    */
   nextSlide = () => {
-    const { current } = this.state
-    const { data = DEFAULT_SLIDES } = this.props
+    const { current, slides } = this.state
     return new Promise(resolve => {
       this.setState(
         {
-          current: (current + 1) % data.length
+          current: (current + 1) % slides.length
         },
         () => {
           const { current } = this.state
-          const prev = (((current - 1) % data.length) + data.length) % data.length
+          const prev = (((current - 1) % slides.length) + slides.length) % slides.length
           this.slideRefs[prev].stop()
           this.slideRefs[current].play()
           resolve()

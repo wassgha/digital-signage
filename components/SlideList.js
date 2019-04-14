@@ -46,7 +46,8 @@ class SlideList extends Component {
   }
 
   componentDidMount() {
-    getSlides().then(slides => {
+    const { slideshow } = this.props
+    getSlides(slideshow).then(slides => {
       this.setState({
         slides: slides.sort((a, b) => a.order - b.order)
       })
@@ -60,7 +61,8 @@ class SlideList extends Component {
   }
 
   refresh = () => {
-    getSlides().then(slides => {
+    const { slideshow } = this.props
+    getSlides(slideshow).then(slides => {
       this.setState({
         slides: slides.sort((a, b) => a.order - b.order)
       })

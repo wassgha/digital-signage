@@ -11,8 +11,8 @@ class Slideshows extends React.Component {
       <Frame>
         <h1>Slideshows</h1>
         <div className='wrapper'>
-          <Upload />
-          <SlideList />
+          <Upload slideshow={'5cae4a5f2b01de1d78357f7f'} />
+          <SlideList slideshow={'5cae4a5f2b01de1d78357f7f'} />
           <Dialog />
         </div>
         <style jsx>

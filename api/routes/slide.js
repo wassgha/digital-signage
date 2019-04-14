@@ -25,13 +25,14 @@ router
       .then(slides => {
         if (!slides) {
           res.sendStatus(500)
-          return res.send('NO slides found')
+          return res.send('No slides found')
         }
         return res.json(slides)
       })
       .catch(err => next(err))
   })
   .post('/', upload.single('data'), (req, res, next) => {
+    console.log('req.body', req.body)
     if (req.body.slideshow == undefined)
       return next(new Error('Missing Slideshow ID, slide not added'))
 
