@@ -1,6 +1,19 @@
 const express = require('express')
 const router = express.Router()
-const formidable = require('formidable')
+const multer = require('multer')
+const path = require('path')
+
+const Keys = require('../../keys')
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './uploads/')
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname))
+  }
+})
+const upload = multer({ storage: storage })
 
 const Slide = require('../models/Slide')
 const SlideHelper = require('../helpers/slide_helper')
@@ -18,12 +31,15 @@ router
       })
       .catch(err => next(err))
   })
-  .post('/', (req, res, next) => {
+  .post('/', upload.single('data'), (req, res, next) => {
     if (req.body.slideshow == undefined)
       return next(new Error('Missing Slideshow ID, slide not added'))
 
+    // Either the uploaded file if found or the text data field
+    const data = req.file && req.file.path ? Keys.HOST_URL + req.file.path : req.body.data
+
     const newSlide = new Slide({
-      data: req.body.data,
+      data: data,
       type: req.body.type,
       title: req.body.title,
       description: req.body.description,
@@ -32,18 +48,7 @@ router
       order: req.body.order
     })
 
-    const form = new formidable.IncomingForm()
-    form.uploadDir = '../../uploads'
-    form.keepExtensions = true
-    form.multiples = false
-
-    return form.parse(req, (err, fields, files) => {
-      if (err) {
-        return next(new Error('Cannot upload file, Error: ${err}'))
-      }
-      newSlide.data = files.data.path
-      return SlideHelper.addSlide(newSlide, res, next)
-    })
+    return SlideHelper.addSlide(newSlide, res, next)
   })
 
 // Route: /api/v1/slide/:id
@@ -66,13 +71,16 @@ router
       })
       .catch(err => next(err))
   })
-  .patch('/:id', (req, res, next) => {
+  .patch('/:id', upload.single('data'), (req, res, next) => {
     const { id } = req.params
     return Slide.findById(id)
       .then(slide => {
         if (!slide) return next(new Error('Slide not found'))
 
-        if ('data' in req.body) slide.data = req.body.data
+        // Either the uploaded file if found or the text data field
+        const data = req.file && req.file.path ? Keys.HOST_URL + req.file.path : req.body.data
+
+        if (data) slide.data = data
         if ('type' in req.body) slide.type = req.body.type
         if ('title' in req.body) slide.title = req.body.title
         if ('description' in req.body) slide.description = req.body.description

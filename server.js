@@ -35,6 +35,7 @@ app
     db.on('error', console.error.bind(console, 'connection error:'))
 
     server.use(bodyParser.json())
+    server.use(bodyParser.urlencoded({ extended: true }))
     // API routes
     server.use('/api/v1', apiRoutes)
 
