@@ -28,7 +28,8 @@ router
       title: req.body.title,
       description: req.body.description,
       duration: req.body.duration,
-      slideshow: req.body.slideshow
+      slideshow: req.body.slideshow,
+      order: req.body.order
     })
 
     const form = new formidable.IncomingForm()

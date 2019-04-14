@@ -11,7 +11,8 @@ const Slide = new Schema({
   title: { type: String },
   description: { type: String },
   duration: { type: Number, default: 5, min: 1 },
-  slideshow: { type: Schema.Types.ObjectId, ref: 'Slideshow' }
+  slideshow: { type: Schema.Types.ObjectId, ref: 'Slideshow' },
+  order: { type: Number }
 })
 
 module.exports = mongoose.model('Slide', Slide)
