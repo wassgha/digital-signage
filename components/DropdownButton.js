@@ -7,6 +7,7 @@ import {
   faList,
   faMousePointer,
   faCloudSun,
+  faGifts,
   faPlus
 } from '@fortawesome/free-solid-svg-icons'
 
@@ -17,6 +18,7 @@ library.add(faPlay)
 library.add(faFont)
 library.add(faMousePointer)
 library.add(faCloudSun)
+library.add(faGifts)
 
 class DropdownButton extends Component {
   constructor() {
@@ -127,13 +129,14 @@ class DropdownButton extends Component {
               font-size: 14px;
               border: none;
               border-bottom: 1px solid #ddd;
-              display: inline-block;
+              display: flex;
               padding: 16px;
               padding-left: 24px;
               padding-right: 24px;
               text-align: left;
               outline: none;
               cursor: pointer;
+              flex-direction: row;
             }
           `}
         </style>
