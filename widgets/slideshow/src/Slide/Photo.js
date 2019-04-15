@@ -66,15 +66,15 @@ class PhotoSlide extends GenericSlide {
             position: relative;
           }
           .photocover {
-            width: 100%;
-            height: 100%;
+            width: 110%;
+            height: 110%;
             background-size: cover;
             background-repeat: no-repeat;
             background-position: 50% 50%;
             filter: blur(20px);
             position: absolute;
-            top: 0;
-            left: 0;
+            top: -5%;
+            left: -5%;
           }
           .photo {
             width: 100%;
