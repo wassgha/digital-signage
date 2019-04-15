@@ -8,6 +8,13 @@ class Input extends React.Component {
       value
     }
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.value !== this.props.value) {
+      this.setState({ value: nextProps.value })
+    }
+  }
+
   handleInputChange = event => {
     const { onChange = () => {}, name = '' } = this.props
     const target = event.target

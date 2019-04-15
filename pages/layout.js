@@ -36,8 +36,6 @@ class Layout extends React.Component {
 
   addWidget = type => {
     const widgetDefinition = Widgets[type]
-    console.log('Widgets', Widgets)
-    console.log('widgetDefinition', widgetDefinition)
     return addWidget(type, widgetDefinition && widgetDefinition.defaultData).then(this.refresh)
   }
 
