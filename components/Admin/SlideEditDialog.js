@@ -2,6 +2,8 @@ import React from 'react'
 import Dialog from '../Dialog'
 import { Form, Input, Button, ButtonGroup } from '../Form'
 
+import { getSlide, addSlide, updateSlide } from '../../actions/slide'
+
 class SlideEditDialog extends React.Component {
   constructor() {
     super()
@@ -9,12 +11,28 @@ class SlideEditDialog extends React.Component {
     this.state = {}
   }
 
+  componentDidMount() {
+    this.refresh()
+  }
+
+  refresh = () => {
+    const { slide } = this.props
+    if (slide) {
+      getSlide(slide).then(data => {
+        this.setState(data)
+      })
+    }
+  }
+
   open = () => {
+    this.refresh()
     this.dialog && this.dialog.open()
   }
 
   close = () => {
+    const { refresh } = this.props
     this.dialog && this.dialog.close()
+    if (refresh) refresh()
   }
 
   handleChange = (name, value) => {
@@ -23,28 +41,77 @@ class SlideEditDialog extends React.Component {
     })
   }
 
+  save = () => {
+    const { slide, slideshow, upload } = this.props
+    if (slideshow) {
+      addSlide(slideshow, upload, this.state).then(() => {
+        this.close()
+      })
+    } else {
+      updateSlide(slide, upload, this.state).then(() => {
+        this.close()
+      })
+    }
+  }
+
   render() {
+    const { order, data, title, description, duration, type } = this.state
     return (
       <Dialog ref={ref => (this.dialog = ref)}>
         <Form>
-          <Input type={'text'} label={'Position'} name={'position'} onChange={this.handleChange} />
-          <Input type={'text'} label={'Media'} name={'media'} onChange={this.handleChange} />
+          <Input
+            type={'number'}
+            label={'Order'}
+            name={'order'}
+            value={order}
+            placeholder={'0'}
+            onChange={this.handleChange}
+            disabled
+          />
+          {type == 'photo' ? (
+            <Input
+              type={'photo'}
+              label={'Photo'}
+              name={'data'}
+              value={data}
+              onChange={this.handleChange}
+            />
+          ) : (
+            <Input
+              type={'text'}
+              label={'Data'}
+              name={'data'}
+              value={data}
+              onChange={this.handleChange}
+            />
+          )}
           <Input
             type={'number'}
             label={'Duration'}
             name={'duration'}
+            value={duration}
+            placeholder={'5'}
             onChange={this.handleChange}
           />
-          <Input type={'text'} label={'Title'} name={'title'} onChange={this.handleChange} />
+          <Input
+            type={'text'}
+            label={'Title'}
+            name={'title'}
+            value={title}
+            placeholder={'Header title...'}
+            onChange={this.handleChange}
+          />
           <Input
             type={'textarea'}
             label={'Description'}
             name={'description'}
+            value={description}
+            placeholder={'Short content description...'}
             onChange={this.handleChange}
           />
         </Form>
         <ButtonGroup>
-          <Button text={'Save'} color={'#8bc34a'} onClick={this.close} />
+          <Button text={'Save'} color={'#8bc34a'} onClick={this.save} />
           <Button text={'Cancel'} color={'#e85454'} onClick={this.close} />
         </ButtonGroup>
       </Dialog>

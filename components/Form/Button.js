@@ -2,9 +2,14 @@ import React from 'react'
 
 class Button extends React.Component {
   render() {
-    const { onClick = () => {}, text = 'Submit', color = 'gray' } = this.props
+    const {
+      onClick = () => {},
+      text = 'Submit',
+      color = 'gray',
+      style = { marginLeft: 16 }
+    } = this.props
     return (
-      <button className={'btn save'} onClick={onClick}>
+      <button className={'btn save'} onClick={onClick} style={style}>
         {text}
         <style jsx>{`
           .btn {
@@ -17,12 +22,12 @@ class Button extends React.Component {
             border-radius: 4px;
             border: none;
             display: inline-block;
-            margin-left: 16px;
             padding: 16px;
             padding-left: 24px;
             padding-right: 24px;
             outline: none;
             background: ${color};
+            cursor: pointer;
           }
         `}</style>
       </button>

@@ -1,28 +1,31 @@
 import { Component } from 'react'
 import React from 'react'
-import Dropzone from 'react-dropzone'
+import ContentLoader from 'react-content-loader'
+import dynamic from 'next/dynamic'
+
 import SlideEditDialog from './Admin/SlideEditDialog.js'
-import axios from 'axios'
+
+const DropzoneWithNoSSR = dynamic(() => import('react-dropzone'), {
+  ssr: false,
+  loading: () => (
+    <ContentLoader height={120} width={640}>
+      <rect x='0' y='0' rx='5' ry='5' width='100%' height='100' />
+    </ContentLoader>
+  )
+})
 
 class Upload extends Component {
   constructor(props) {
     super(props)
     this.dialog = React.createRef()
+    this.state = {
+      lastFile: null
+    }
   }
 
   handleOnDropAccepted = acceptedFiles => {
-    const formData = new FormData()
-    formData.append('data', acceptedFiles[acceptedFiles.length - 1])
-
     this.dialog && this.dialog.current.open()
-
-    axios.post('/api/v1/slide', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-
-    const fileName = acceptedFiles[acceptedFiles.length - 1].name
+    this.setState({ lastFile: acceptedFiles[acceptedFiles.length - 1] })
   }
 
   handleOnDropRejected = rejectedFiles => {
@@ -30,10 +33,12 @@ class Upload extends Component {
   }
 
   render() {
+    const { slideshow } = this.props
+    const { lastFile } = this.state
     return (
       <div>
-        <SlideEditDialog ref={this.dialog} />
-        <Dropzone
+        <SlideEditDialog slideshow={slideshow} upload={lastFile} ref={this.dialog} />
+        <DropzoneWithNoSSR
           accept='image/*'
           onDropAccepted={this.handleOnDropAccepted}
           onDropRejected={this.handleOnDropRejected}
@@ -51,7 +56,7 @@ class Upload extends Component {
               </div>
             )
           }}
-        </Dropzone>
+        </DropzoneWithNoSSR>
         <style jsx>
           {`
             .upload {

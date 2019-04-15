@@ -16,7 +16,7 @@ router
   })
   .post('/', (req, res, next) => {
     const newSlideShow = new Slideshow({
-      title: req.body.title,
+      title: req.body.title
     })
     return newSlideShow
       .save()
@@ -24,7 +24,7 @@ router
         if (!slideshow) {
           next(new Error('Slideshow not created'))
         }
-        return slideshow
+        return res.json(slideshow)
       })
       .catch(err => next(err))
   })
@@ -40,12 +40,23 @@ router
       })
       .catch(err => next(err))
   })
+  .get('/:id/slides', (req, res, next) => {
+    const { id } = req.params
+    return Slideshow.findById(id)
+      .populate('slides')
+      .then(slideshow => {
+        return res.json(slideshow.slides)
+      })
+      .catch(err => next(err))
+  })
   .delete('/:id', (req, res, next) => {
     const { id } = req.params
     return Slideshow.findByIdAndDelete(id)
       .then(slideshow => {
         if (!slideshow) return next('Slideshow not found')
-        return SlideshowHelper.deleteSlides(slideshow.slides)
+        return SlideshowHelper.deleteSlides(slideshow.slides).then(() => {
+          return res.json({ success: true })
+        })
       })
       .catch(err => next(err))
   })

@@ -1,31 +1,55 @@
-import Frame from '../components/Admin/Frame.js'
-import Upload from '../components/Upload.js'
-import List from '../components/List.js'
-import Dialog from '../components/Dialog.js'
+import React from 'react'
 
-const Slideshows = () => (
-  <Frame>
-    <h1>Slideshows</h1>
-    <div className='wrapper'>
-      <Upload />
-      <List />
-      <Dialog />
-    </div>
-    <style jsx>
-      {`
-        h1 {
-          font-family: 'Open Sans', sans-serif;
-          font-size: 24px;
-          color: #4f4f4f;
-          margin: 0px;
-        }
-        .wrapper {
-          margin: 40px auto;
-          max-width: 640px;
-        }
-      `}
-    </style>
-  </Frame>
-)
+import Frame from '../components/Admin/Frame.js'
+import SlideshowList from '../components/Admin/SlideshowList.js'
+import Dialog from '../components/Dialog.js'
+import { Button } from '../components/Form'
+
+import { addSlideshow } from '../actions/slideshow'
+
+class Slideshows extends React.Component {
+  constructor(props) {
+    super(props)
+    this.slideshowList = React.createRef()
+  }
+
+  add = () => {
+    addSlideshow().then(() => {
+      this.slideshowList && this.slideshowList.current && this.slideshowList.current.refresh()
+    })
+  }
+
+  render() {
+    return (
+      <Frame>
+        <h1>Slideshows</h1>
+        <div className='wrapper'>
+          <SlideshowList ref={this.slideshowList} />
+          <Dialog />
+          <Button
+            text={'+ Add new slideshow'}
+            color={'#8bc34a'}
+            onClick={this.add}
+            style={{ marginLeft: 0, width: '100%' }}
+          />
+        </div>
+        <style jsx>
+          {`
+            h1 {
+              font-family: 'Open Sans', sans-serif;
+              font-size: 24px;
+              color: #4f4f4f;
+              margin: 0px;
+            }
+            .wrapper {
+              margin: 40px auto;
+              max-width: 640px;
+            }
+          `}
+        </style>
+      </Frame>
+    )
+  }
+}
 
 export default Slideshows

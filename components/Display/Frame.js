@@ -11,7 +11,7 @@ const Frame = ({ children }) => (
   <div className='display'>
     <div className={'status'}>
       <div className={'left'}>
-        <Clock ticking={true} format={'dddd, MMMM Mo.'} />
+        <Clock ticking={true} format={'dddd, MMMM Do.'} />
       </div>
       <div className={'right'}>
         <div className={'wifi'}>
