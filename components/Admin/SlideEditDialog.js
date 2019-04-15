@@ -56,6 +56,8 @@ class SlideEditDialog extends React.Component {
 
   render() {
     const { order, data, title, description, duration, type } = this.state
+    const { upload } = this.props
+
     return (
       <Dialog ref={ref => (this.dialog = ref)}>
         <Form>
@@ -68,12 +70,12 @@ class SlideEditDialog extends React.Component {
             onChange={this.handleChange}
             disabled
           />
-          {type == 'photo' ? (
+          {type == 'photo' || upload ? (
             <Input
               type={'photo'}
               label={'Photo'}
               name={'data'}
-              value={data}
+              value={upload ? upload.preview : data}
               onChange={this.handleChange}
             />
           ) : (
