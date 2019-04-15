@@ -38,29 +38,55 @@ class PhotoSlide extends GenericSlide {
    */
   renderSlideContent(data) {
     return (
-      <div
-        className='slide-content photo'
-        style={{
-          backgroundImage: `url(${data})`
-        }}
-      >
+      <div className='slide-content'>
+        <div
+          className='photocover'
+          style={{
+            backgroundImage: `url(${data})`
+          }}
+        />
+        <div
+          className='photo'
+          style={{
+            backgroundImage: `url(${data})`
+          }}
+        />
         <img
           src={data}
-          className='slide-content invisible'
+          className='invisible'
           onLoad={this.handleImageLoaded.bind(this)}
           onError={this.handleImageErrored.bind(this)}
           ref={this.image}
         />
         <style jsx>{`
-          .slide-content.photo {
+          .slide-content {
             width: 100%;
             height: 100%;
             background-color: #212121;
+            position: relative;
+          }
+          .photocover {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            filter: blur(20px);
+            position: absolute;
+            top: 0;
+            left: 0;
+          }
+          .photo {
+            width: 100%;
+            height: 100%;
             background-size: contain;
             background-repeat: no-repeat;
             background-position: 50% 50%;
+            position: absolute;
+            top: 0;
+            left: 0;
           }
-          .slide-content.invisible {
+          .invisible {
             width: 1px;
             height: 1px;
             display: none;
