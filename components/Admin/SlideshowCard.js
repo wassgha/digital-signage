@@ -5,11 +5,12 @@ import { faClock } from '@fortawesome/free-regular-svg-icons'
 import { faTrash, faEdit, faPlay } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 
-import { deleteSlideshow } from '../../actions/slideshow'
+import { deleteSlideshow, updateSlideshowName } from '../../actions/slideshow'
 
 class SlideshowCard extends Component {
   constructor(props) {
     super(props)
+    this.state = { editSlide: false }
   }
 
   render() {
@@ -29,7 +30,38 @@ class SlideshowCard extends Component {
             </div>
           </div>
           <div className='middle'>
-            <div className='title'>{value.title || 'Untitled Slideshow'}</div>
+            <div className='title'>
+              {value.title || 'Untitled Slideshow'}
+              {'  '}
+              <FontAwesomeIcon
+                icon={faEdit}
+                fixedWidth
+                color='#828282'
+                onClick={e => {
+                  if (e) e.preventDefault()
+                  this.setState(prevState => ({
+                    editSlide: !prevState.editSlide
+                  }))
+                }}
+              />
+            </div>
+            {this.state.editSlide && (
+              <input
+                className='title'
+                placeholder='Enter New Name Here'
+                onKeyDown={event => {
+                  if (event.key == 'Enter') {
+                    this.setState(prevState => ({
+                      editSlide: false
+                    }))
+                    updateSlideshowName(value._id, this.value).then(refresh)
+                  }
+                }}
+                onClick={e => {
+                  if (e) e.stopPropagation()
+                }}
+              />
+            )}
             <div className='duration'>
               <div className='icon'>
                 <FontAwesomeIcon icon={faClock} fixedWidth color='#878787' />
