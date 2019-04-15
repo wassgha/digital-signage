@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Frame from '../components/Admin/Frame.js'
-import SlideshowList from '../components/SlideshowList.js'
+import SlideshowList from '../components/Admin/SlideshowList.js'
 import Dialog from '../components/Dialog.js'
 import { Button } from '../components/Form'
 
@@ -15,7 +15,7 @@ class Slideshows extends React.Component {
 
   add = () => {
     addSlideshow().then(() => {
-      this.slideshowList && this.slideshowList.refresh()
+      this.slideshowList && this.slideshowList.current && this.slideshowList.current.refresh()
     })
   }
 
@@ -26,7 +26,12 @@ class Slideshows extends React.Component {
         <div className='wrapper'>
           <SlideshowList ref={this.slideshowList} />
           <Dialog />
-          <Button text={'+ Add new slideshow'} color={'#8bc34a'} onClick={this.add} />
+          <Button
+            text={'+ Add new slideshow'}
+            color={'#8bc34a'}
+            onClick={this.add}
+            style={{ marginLeft: 0, width: '100%' }}
+          />
         </div>
         <style jsx>
           {`

@@ -1,11 +1,12 @@
 import { Component } from 'react'
 import React from 'react'
-import SlideEditDialog from './Admin/SlideEditDialog'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClock } from '@fortawesome/free-regular-svg-icons'
 import { faTrash, faEdit, faPlay, faGlobe } from '@fortawesome/free-solid-svg-icons'
 
-import { deleteSlide } from '../actions/slide'
+import SlideEditDialog from './SlideEditDialog'
+
+import { deleteSlide } from '../../actions/slide'
 
 class SlideCard extends Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class SlideCard extends Component {
           </div>
         </div>
         <div className='middle'>
-          <div className='title'>{value.title}</div>
+          <div className='title'>{value.title ? value.title : 'Untitled slide'}</div>
           <div className='duration'>
             <div className='icon'>
               <FontAwesomeIcon icon={faClock} fixedWidth color='#878787' />
@@ -83,16 +84,6 @@ class SlideCard extends Component {
               z-index: 1;
             }
 
-            .order {
-              font-family: 'Open Sans', sans-serif;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              padding-left: 8px;
-              padding-right: 8px;
-              color: #878787;
-            }
-
             .title {
               font-family: 'Open Sans', sans-serif;
               font-size: 16px;
@@ -105,7 +96,6 @@ class SlideCard extends Component {
             .left {
               font-family: 'Open Sans', sans-serif;
               justify-content: center;
-              padding-left: 8px;
               padding-right: 8px;
             }
 

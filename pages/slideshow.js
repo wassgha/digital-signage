@@ -1,8 +1,8 @@
 import React from 'react'
 
 import Frame from '../components/Admin/Frame.js'
+import SlideList from '../components/Admin/SlideList.js'
 import Upload from '../components/Upload.js'
-import SlideList from '../components/SlideList.js'
 import Dialog from '../components/Dialog.js'
 
 import { getSlideshow } from '../actions/slideshow'

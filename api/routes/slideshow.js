@@ -54,7 +54,9 @@ router
     return Slideshow.findByIdAndDelete(id)
       .then(slideshow => {
         if (!slideshow) return next('Slideshow not found')
-        return SlideshowHelper.deleteSlides(slideshow.slides)
+        return SlideshowHelper.deleteSlides(slideshow.slides).then(() => {
+          return res.json({ success: true })
+        })
       })
       .catch(err => next(err))
   })

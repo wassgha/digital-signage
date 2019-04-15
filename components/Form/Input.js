@@ -19,7 +19,14 @@ class Input extends React.Component {
   }
 
   render() {
-    const { label, inline = true, type = 'text', placeholder = '', choices = [] } = this.props
+    const {
+      label,
+      inline = true,
+      type = 'text',
+      placeholder = '',
+      choices = [],
+      disabled = false
+    } = this.props
     const { value = '' } = this.state
 
     return (
@@ -31,6 +38,7 @@ class Input extends React.Component {
             placeholder={placeholder}
             value={value}
             onChange={this.handleInputChange}
+            disabled={disabled}
           />
         ) : type == 'select' ? (
           <select onChange={this.handleInputChange} value={value || ''}>
@@ -41,8 +49,18 @@ class Input extends React.Component {
               </option>
             ))}
           </select>
+        ) : type == 'photo' ? (
+          <div className={'photo'}>
+            <div
+              className={'thumbnail'}
+              style={{
+                backgroundImage: `url(${value})`
+              }}
+            />
+            <span className={'link'}>{value}</span>
+          </div>
         ) : (
-          <textarea onChange={this.handleInputChange} value={value} />
+          <textarea onChange={this.handleInputChange} value={value} placeholder={placeholder} />
         )}
         <style jsx>{`
           .inputGroup {
@@ -65,7 +83,10 @@ class Input extends React.Component {
 
           input,
           textarea,
-          select {
+          select,
+          .photo {
+            font-family: 'Open Sans', sans-serif;
+            color: #333;
             background-color: #f7f7f7;
             min-height: 40px;
             min-width: 450px;
@@ -76,6 +97,13 @@ class Input extends React.Component {
             padding-left: 16px;
             padding-right: 16px;
             font-size: 16px;
+          }
+
+          input:disabled,
+          textarea:disabled,
+          select:disabled {
+            background-color: #d7d7d7;
+            cursor: not-allowed;
           }
 
           textarea {
@@ -92,6 +120,31 @@ class Input extends React.Component {
           input[type='number'] {
             min-width: 50px !important;
             max-width: 50px !important;
+            text-align: center;
+          }
+
+          .photo {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 8px;
+          }
+
+          .photo .link {
+            margin-left: 16px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+
+          .photo .thumbnail {
+            height: 40px;
+            width: 40px;
+            border-radius: 2px;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
           }
         `}</style>
       </div>

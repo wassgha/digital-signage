@@ -55,29 +55,42 @@ class SlideEditDialog extends React.Component {
   }
 
   render() {
-    const { order, data, title, description, duration } = this.state
+    const { order, data, title, description, duration, type } = this.state
     return (
       <Dialog ref={ref => (this.dialog = ref)}>
         <Form>
           <Input
-            type={'text'}
+            type={'number'}
             label={'Order'}
             name={'order'}
             value={order}
+            placeholder={'0'}
             onChange={this.handleChange}
+            disabled
           />
-          <Input
-            type={'text'}
-            label={'Media'}
-            name={'data'}
-            value={data}
-            onChange={this.handleChange}
-          />
+          {type == 'photo' ? (
+            <Input
+              type={'photo'}
+              label={'Photo'}
+              name={'data'}
+              value={data}
+              onChange={this.handleChange}
+            />
+          ) : (
+            <Input
+              type={'text'}
+              label={'Data'}
+              name={'data'}
+              value={data}
+              onChange={this.handleChange}
+            />
+          )}
           <Input
             type={'number'}
             label={'Duration'}
             name={'duration'}
             value={duration}
+            placeholder={'5'}
             onChange={this.handleChange}
           />
           <Input
@@ -85,6 +98,7 @@ class SlideEditDialog extends React.Component {
             label={'Title'}
             name={'title'}
             value={title}
+            placeholder={'Header title...'}
             onChange={this.handleChange}
           />
           <Input
@@ -92,6 +106,7 @@ class SlideEditDialog extends React.Component {
             label={'Description'}
             name={'description'}
             value={description}
+            placeholder={'Short content description...'}
             onChange={this.handleChange}
           />
         </Form>

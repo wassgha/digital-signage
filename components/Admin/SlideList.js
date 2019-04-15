@@ -1,9 +1,11 @@
 import { Component } from 'react'
 import React from 'react'
+import ContentLoader from 'react-content-loader'
 import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc'
+
 import SlideCard from './SlideCard'
 
-import { getSlides } from '../actions/slide'
+import { getSlides } from '../../actions/slide'
 
 const SortableItem = SortableElement(SlideCard)
 
@@ -41,7 +43,7 @@ class SlideList extends Component {
     super(props)
 
     this.state = {
-      slides: []
+      slides: null
     }
   }
 
@@ -71,7 +73,7 @@ class SlideList extends Component {
 
   render() {
     const { slides } = this.state
-    return (
+    return slides ? (
       <SortableList
         items={slides}
         refresh={this.refresh}
@@ -79,6 +81,14 @@ class SlideList extends Component {
         distance={2}
         lockAxis='y'
       />
+    ) : (
+      Array(4)
+        .fill()
+        .map(() => (
+          <ContentLoader height={120} width={640}>
+            <rect x='0' y='0' rx='5' ry='5' width='100%' height='100' />
+          </ContentLoader>
+        ))
     )
   }
 }
