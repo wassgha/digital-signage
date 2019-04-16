@@ -14,7 +14,7 @@ class InlineInputGroup extends React.Component {
           .inputGroup {
             display: flex;
             flex-direction: row;
-            justify-content: flex-end;
+            justify-content: flex-start;
             flex: 1;
           }
           .notlast {

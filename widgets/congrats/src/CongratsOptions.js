@@ -37,7 +37,7 @@ class CongratsOptions extends Component {
             <Input
               inline={false}
               label={'Background color'}
-              type={'text'}
+              type={'color'}
               name={'color'}
               value={color}
               onChange={this.handleChange}
@@ -45,21 +45,26 @@ class CongratsOptions extends Component {
             <Input
               inline={false}
               label={'Text color'}
-              type={'text'}
+              type={'color'}
               name={'textColor'}
               value={textColor}
               onChange={this.handleChange}
             />
+            <Input
+              inline={false}
+              label={'Animation'}
+              type={'select'}
+              name={'animation'}
+              value={animation}
+              choices={[
+                { id: 'confetti', label: 'Confetti' },
+                { id: 'balloons', label: 'Balloons' }
+              ]}
+              onChange={this.handleChange}
+              expand={false}
+            />
           </InlineInputGroup>
-          <Input
-            inline={false}
-            label={'Animation'}
-            type={'select'}
-            name={'animation'}
-            value={animation}
-            choices={[{ id: 'confetti', label: 'Confetti' }, { id: 'balloons', label: 'Balloons' }]}
-            onChange={this.handleChange}
-          />
+
           <Input
             inline={false}
             label={'Text to be displayed'}
