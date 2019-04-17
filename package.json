@@ -45,6 +45,7 @@
     "next": "^8.0.1",
     "next-routes": "^1.4.2",
     "react": "^16.8.6",
+    "react-color": "^2.17.0",
     "react-content-loader": "^4.2.1",
     "react-dom": "^16.8.2",
     "react-dropzone": "^10.0.0",
