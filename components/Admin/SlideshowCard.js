@@ -47,6 +47,7 @@ class SlideshowCard extends Component {
             </div>
             {this.state.editSlide && (
               <input
+                ref='changeTitle'
                 className='title'
                 placeholder='Enter New Name Here'
                 onKeyDown={event => {
@@ -54,7 +55,7 @@ class SlideshowCard extends Component {
                     this.setState(prevState => ({
                       editSlide: false
                     }))
-                    updateSlideshowName(value._id, this.value).then(refresh)
+                    updateSlideshowName(value._id, this.refs.changeTitle.value).then(refresh)
                   }
                 }}
                 onClick={e => {

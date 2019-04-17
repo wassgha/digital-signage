@@ -62,11 +62,12 @@ router
   })
   .patch('/:id', (req, res, next) => {
     const { id } = req.params
+    const { title } = req.title
     return Slideshow.findById(id)
       .then(slideshow => {
         if (!slideshow) return next(new Error('Slideshow not found'))
 
-        if ('title' in req.body) slideshow.title = req.body.title
+        if ('title' in req.body || title) slideshow.title = req.body.title || title
 
         return slideshow.save().then(() => {
           return res.json({ success: true })

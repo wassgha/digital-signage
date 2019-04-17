@@ -33,7 +33,7 @@ export const deleteSlideshow = (id, host = '') => {
 }
 
 export const updateSlideshowName = (id, host = '', title) => {
-  return axios.patch(host + '/api/v1/slideshow/' + id).then(res => {
+  return axios.patch(host + '/api/v1/slideshow/' + id, { title: title }).then(res => {
     if (res && res.data) {
       return res.data
     }
