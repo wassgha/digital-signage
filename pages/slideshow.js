@@ -1,13 +1,21 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
 
 import Frame from '../components/Admin/Frame.js'
 import SlideList from '../components/Admin/SlideList.js'
 import Upload from '../components/Upload.js'
 import Dialog from '../components/Dialog.js'
+import { Input } from '../components/Form'
 
-import { getSlideshow } from '../actions/slideshow'
+import { getSlideshow, updateSlideshow } from '../actions/slideshow'
 
 class Slideshow extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { slideshow: props.slideshow, editingTitle: false }
+  }
+
   static async getInitialProps({ query, req }) {
     const id = query && query.id
     const host =
@@ -16,11 +24,57 @@ class Slideshow extends React.Component {
     return { slideshow: slideshow }
   }
 
+  refresh = () => {
+    const { _id: id } = this.props.slideshow
+    return getSlideshow(id).then(slideshow => {
+      this.setState({ slideshow })
+    })
+  }
+
   render() {
-    const { slideshow } = this.props
+    const { editingTitle, slideshow } = this.state
     return (
       <Frame>
-        <h1>Slideshow: {(slideshow && slideshow.title) || 'Untitled Slideshow'}</h1>
+        <h1 className='title'>Slideshow:</h1>
+
+        {editingTitle ? (
+          <Input
+            className='title'
+            placeholder='Enter New Name Here'
+            value={slideshow && slideshow.title}
+            onKeyDown={event => {
+              if (event.key == 'Enter') {
+                updateSlideshow(slideshow._id, { title: event.target.value })
+                  .then(() => {
+                    this.setState({
+                      editingTitle: false
+                    })
+                  })
+                  .then(this.refresh)
+              }
+            }}
+            onClick={e => {
+              if (e) e.stopPropagation()
+            }}
+            expand={false}
+          />
+        ) : (
+          <div className='title'>
+            <h1 className='title-text'>{(slideshow && slideshow.title) || 'Untitled Slideshow'}</h1>
+            {'  '}
+            <FontAwesomeIcon
+              icon={faEdit}
+              fixedWidth
+              color='#828282'
+              onClick={e => {
+                if (e) e.preventDefault()
+                this.setState(prevState => ({
+                  editingTitle: !prevState.editingTitle
+                }))
+              }}
+            />
+          </div>
+        )}
         <div className='wrapper'>
           <Upload slideshow={slideshow && slideshow._id} />
           <SlideList slideshow={slideshow && slideshow._id} />
@@ -33,6 +87,12 @@ class Slideshow extends React.Component {
               font-size: 24px;
               color: #4f4f4f;
               margin: 0px;
+            }
+            .title {
+              display: inline-block;
+            }
+            .title-text {
+              display: inline-block;
             }
             .wrapper {
               margin: 40px auto;

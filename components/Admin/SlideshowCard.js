@@ -2,17 +2,12 @@ import { Component } from 'react'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClock } from '@fortawesome/free-regular-svg-icons'
-import { faTrash, faEdit, faPlay } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faPlay } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 
-import { deleteSlideshow, updateSlideshow } from '../../actions/slideshow'
+import { deleteSlideshow } from '../../actions/slideshow'
 
 class SlideshowCard extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { editSlide: false }
-  }
-
   render() {
     const { value, refresh = () => {} } = this.props
     return (
@@ -30,39 +25,7 @@ class SlideshowCard extends Component {
             </div>
           </div>
           <div className='middle'>
-            <div className='title'>
-              {value.title || 'Untitled Slideshow'}
-              {'  '}
-              <FontAwesomeIcon
-                icon={faEdit}
-                fixedWidth
-                color='#828282'
-                onClick={e => {
-                  if (e) e.preventDefault()
-                  this.setState(prevState => ({
-                    editSlide: !prevState.editSlide
-                  }))
-                }}
-              />
-            </div>
-            {this.state.editSlide && (
-              <input
-                ref='changeTitle'
-                className='title'
-                placeholder='Enter New Name Here'
-                onKeyDown={event => {
-                  if (event.key == 'Enter') {
-                    this.setState(prevState => ({
-                      editSlide: false
-                    }))
-                    updateSlideshow(value._id, { title: this.refs.changeTitle.value }).then(refresh)
-                  }
-                }}
-                onClick={e => {
-                  if (e) e.stopPropagation()
-                }}
-              />
-            )}
+            <div className='title'>{value.title || 'Untitled Slideshow'}</div>
             <div className='duration'>
               <div className='icon'>
                 <FontAwesomeIcon icon={faClock} fixedWidth color='#878787' />
