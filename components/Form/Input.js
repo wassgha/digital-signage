@@ -1,4 +1,5 @@
 import React from 'react'
+import ColorPicker from './ColorPicker'
 
 class Input extends React.Component {
   constructor(props) {
@@ -8,11 +9,21 @@ class Input extends React.Component {
       value
     }
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.value !== this.props.value) {
+      this.setState({ value: nextProps.value })
+    }
+  }
+
   handleInputChange = event => {
-    const { onChange = () => {}, name = '' } = this.props
     const target = event.target
     const value = target.value
+    this.handleChange(value)
+  }
 
+  handleChange = value => {
+    const { onChange = () => {}, name = '' } = this.props
     this.setState({ value }, () => {
       onChange(name, value)
     })
@@ -22,6 +33,7 @@ class Input extends React.Component {
     const {
       label,
       inline = true,
+      expand = true,
       type = 'text',
       placeholder = '',
       choices = [],
@@ -53,6 +65,8 @@ class Input extends React.Component {
               </option>
             ))}
           </select>
+        ) : type == 'color' ? (
+          <ColorPicker color={value} onChange={this.handleChange} />
         ) : type == 'photo' ? (
           <div className={'photo'} className={className}>
             <div
@@ -98,7 +112,7 @@ class Input extends React.Component {
             color: #333;
             background-color: #f7f7f7;
             min-height: 40px;
-            min-width: 450px;
+            min-width: ${expand ? '450px' : '0px'};
             border-radius: 2px;
             border: none;
             outline: none;

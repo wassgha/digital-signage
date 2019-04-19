@@ -25,7 +25,15 @@ class Upload extends Component {
 
   handleOnDropAccepted = acceptedFiles => {
     this.dialog && this.dialog.current.open()
-    this.setState({ lastFile: acceptedFiles[acceptedFiles.length - 1] })
+    const file = Object.assign(acceptedFiles[acceptedFiles.length - 1], {
+      preview:
+        URL && URL.createObjectURL
+          ? URL.createObjectURL(acceptedFiles[acceptedFiles.length - 1])
+          : typeof window !== 'undefined' && window.webkitURL
+          ? window.webkitURL.createObjectURL(acceptedFiles[acceptedFiles.length - 1])
+          : null
+    })
+    this.setState({ lastFile: file })
   }
 
   handleOnDropRejected = rejectedFiles => {
@@ -33,11 +41,16 @@ class Upload extends Component {
   }
 
   render() {
-    const { slideshow } = this.props
+    const { slideshow, refresh } = this.props
     const { lastFile } = this.state
     return (
       <div>
-        <SlideEditDialog slideshow={slideshow} upload={lastFile} ref={this.dialog} />
+        <SlideEditDialog
+          slideshow={slideshow}
+          upload={lastFile}
+          refresh={refresh}
+          ref={this.dialog}
+        />
         <DropzoneWithNoSSR
           accept='image/*'
           onDropAccepted={this.handleOnDropAccepted}

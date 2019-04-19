@@ -14,6 +14,7 @@ class Slideshow extends React.Component {
   constructor(props) {
     super(props)
     this.state = { slideshow: props.slideshow, editingTitle: false }
+    this.slideList = React.createRef()
   }
 
   static async getInitialProps({ query, req }) {
@@ -27,7 +28,9 @@ class Slideshow extends React.Component {
   refresh = () => {
     const { _id: id } = this.props.slideshow
     return getSlideshow(id).then(slideshow => {
-      this.setState({ slideshow })
+      this.setState({ slideshow }, () => {
+        this.slideList && this.slideList.current && this.slideList.current.refresh()
+      })
     })
   }
 
@@ -76,8 +79,8 @@ class Slideshow extends React.Component {
           </div>
         )}
         <div className='wrapper'>
-          <Upload slideshow={slideshow && slideshow._id} />
-          <SlideList slideshow={slideshow && slideshow._id} />
+          <Upload slideshow={slideshow && slideshow._id} refresh={this.refresh} />
+          <SlideList ref={this.slideList} slideshow={slideshow && slideshow._id} />
           <Dialog />
         </div>
         <style jsx>
