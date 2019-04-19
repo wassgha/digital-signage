@@ -1,19 +1,19 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 
 import Frame from '../components/Admin/Frame.js'
 import SlideList from '../components/Admin/SlideList.js'
 import Upload from '../components/Upload.js'
 import Dialog from '../components/Dialog.js'
-import { Input } from '../components/Form'
 
 import { getSlideshow, updateSlideshow } from '../actions/slideshow'
 
 class Slideshow extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { slideshow: props.slideshow, editingTitle: false }
+    const { slideshow } = props
+    this.state = { slideshow }
     this.slideList = React.createRef()
   }
 
@@ -35,49 +35,39 @@ class Slideshow extends React.Component {
   }
 
   render() {
-    const { editingTitle, slideshow } = this.state
+    const { slideshow } = this.state
     return (
       <Frame>
-        <h1 className='title'>Slideshow:</h1>
-
-        {editingTitle ? (
-          <Input
-            className='title'
-            placeholder='Enter New Name Here'
-            value={slideshow && slideshow.title}
-            onKeyDown={event => {
-              if (event.key == 'Enter') {
-                updateSlideshow(slideshow._id, { title: event.target.value })
-                  .then(() => {
-                    this.setState({
-                      editingTitle: false
-                    })
-                  })
-                  .then(this.refresh)
-              }
+        <h1 className='title'>Slideshow: </h1>{' '}
+        <div className='editable-title'>
+          <input
+            className='input'
+            placeholder='Enter slideshow name...'
+            value={(slideshow && slideshow.title) || 'Untitled Slideshow'}
+            onChange={event => {
+              const target = event.target
+              const title = target && target.value
+              this.setState(
+                {
+                  slideshow: {
+                    ...slideshow,
+                    title
+                  }
+                },
+                () => {
+                  updateSlideshow(slideshow._id, { title }).then(this.refresh)
+                }
+              )
             }}
             onClick={e => {
               if (e) e.stopPropagation()
             }}
-            expand={false}
+            size={slideshow && slideshow.title && slideshow.title.length}
           />
-        ) : (
-          <div className='title'>
-            <h1 className='title-text'>{(slideshow && slideshow.title) || 'Untitled Slideshow'}</h1>
-            {'  '}
-            <FontAwesomeIcon
-              icon={faEdit}
-              fixedWidth
-              color='#828282'
-              onClick={e => {
-                if (e) e.preventDefault()
-                this.setState(prevState => ({
-                  editingTitle: !prevState.editingTitle
-                }))
-              }}
-            />
+          <div className='icon'>
+            <FontAwesomeIcon icon={faPencilAlt} fixedWidth color='#828282' />
           </div>
-        )}
+        </div>
         <div className='wrapper'>
           <Upload slideshow={slideshow && slideshow._id} refresh={this.refresh} />
           <SlideList ref={this.slideList} slideshow={slideshow && slideshow._id} />
@@ -94,8 +84,29 @@ class Slideshow extends React.Component {
             .title {
               display: inline-block;
             }
-            .title-text {
+            .editable-title {
               display: inline-block;
+              position: relative;
+              margin-left: 16px;
+              margin-right: 16px;
+              border-bottom: 3px solid #aaa;
+            }
+            .editable-title .input {
+              font-family: 'Open Sans', sans-serif;
+              color: #666;
+              background-color: transparent;
+              min-height: 40px;
+              border: none;
+              outline: none;
+              margin-right: 24px;
+              font-size: 24px;
+              font-weight: 600;
+            }
+            .editable-title .icon {
+              position: absolute;
+              right: 8px;
+              top: 50%;
+              margin-top: -8px;
             }
             .wrapper {
               margin: 40px auto;

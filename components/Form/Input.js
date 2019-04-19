@@ -88,7 +88,7 @@ class Input extends React.Component {
         <style jsx>{`
           .inputGroup {
             margin-bottom: 16px;
-            display: flex;
+            display: ${expand ? 'flex' : 'inline-block'};
             flex-direction: ${inline ? 'row' : 'column'};
             justify-content: flex-start;
           }
