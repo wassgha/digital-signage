@@ -2,16 +2,12 @@ import { Component } from 'react'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClock } from '@fortawesome/free-regular-svg-icons'
-import { faTrash, faEdit, faPlay } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faPlay } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 
 import { deleteSlideshow } from '../../actions/slideshow'
 
 class SlideshowCard extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const { value, refresh = () => {} } = this.props
     return (

@@ -31,3 +31,11 @@ export const deleteSlideshow = (id, host = '') => {
     }
   })
 }
+
+export const updateSlideshow = (id, data, host = '') => {
+  return axios.patch(host + '/api/v1/slideshow/' + id, data).then(res => {
+    if (res && res.data) {
+      return res.data
+    }
+  })
+}

@@ -37,7 +37,9 @@ class Input extends React.Component {
       type = 'text',
       placeholder = '',
       choices = [],
-      disabled = false
+      disabled = false,
+      onKeyDown = () => {},
+      className
     } = this.props
     const { value = '' } = this.state
 
@@ -46,14 +48,16 @@ class Input extends React.Component {
         {label && <label>{label}</label>}
         {type == 'text' || type == 'password' || type == 'number' ? (
           <input
+            className={className}
             type={type}
             placeholder={placeholder}
             value={value}
             onChange={this.handleInputChange}
             disabled={disabled}
+            onKeyDown={onKeyDown}
           />
         ) : type == 'select' ? (
-          <select onChange={this.handleInputChange} value={value || ''}>
+          <select onChange={this.handleInputChange} value={value || ''} className={className}>
             <option value={''}>Choose an option...</option>
             {choices.map(choice => (
               <option key={choice.id} value={choice.id}>
@@ -64,7 +68,7 @@ class Input extends React.Component {
         ) : type == 'color' ? (
           <ColorPicker color={value} onChange={this.handleChange} />
         ) : type == 'photo' ? (
-          <div className={'photo'}>
+          <div className={'photo'} className={className}>
             <div
               className={'thumbnail'}
               style={{
@@ -74,12 +78,17 @@ class Input extends React.Component {
             <span className={'link'}>{value}</span>
           </div>
         ) : (
-          <textarea onChange={this.handleInputChange} value={value} placeholder={placeholder} />
+          <textarea
+            onChange={this.handleInputChange}
+            value={value}
+            placeholder={placeholder}
+            className={className}
+          />
         )}
         <style jsx>{`
           .inputGroup {
             margin-bottom: 16px;
-            display: flex;
+            display: ${expand ? 'flex' : 'inline-block'};
             flex-direction: ${inline ? 'row' : 'column'};
             justify-content: flex-start;
           }
