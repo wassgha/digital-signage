@@ -37,7 +37,7 @@ router
       return next(new Error('Missing Slideshow ID, slide not added'))
 
     // Either the uploaded file if found or the text data field
-    const data = req.file && req.file.path ? Keys.HOST_URL + req.file.path : req.body.data
+    const data = req.file && req.file.path ? '/' + req.file.path : req.body.data
 
     const newSlide = new Slide({
       data: data,

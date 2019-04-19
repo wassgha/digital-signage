@@ -8,6 +8,11 @@ import Dialog from '../components/Dialog.js'
 import { getSlideshow } from '../actions/slideshow'
 
 class Slideshow extends React.Component {
+  constructor(props) {
+    super(props)
+    this.slideList = React.createRef()
+  }
+
   static async getInitialProps({ query, req }) {
     const id = query && query.id
     const host =
@@ -16,14 +21,18 @@ class Slideshow extends React.Component {
     return { slideshow: slideshow }
   }
 
+  refresh = () => {
+    this.slideList && this.slideList.current && this.slideList.current.refresh()
+  }
+
   render() {
     const { slideshow } = this.props
     return (
       <Frame>
         <h1>Slideshow: {(slideshow && slideshow.title) || 'Untitled Slideshow'}</h1>
         <div className='wrapper'>
-          <Upload slideshow={slideshow && slideshow._id} />
-          <SlideList slideshow={slideshow && slideshow._id} />
+          <Upload slideshow={slideshow && slideshow._id} refresh={this.refresh} />
+          <SlideList ref={this.slideList} slideshow={slideshow && slideshow._id} />
           <Dialog />
         </div>
         <style jsx>
