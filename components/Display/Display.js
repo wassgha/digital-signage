@@ -5,6 +5,7 @@
 
 import React from 'react'
 import GridLayout from 'react-grid-layout'
+import socketIOClient from 'socket.io-client'
 
 import Frame from './Frame.js'
 import HeightProvider from '../Widgets/HeightProvider'
@@ -23,6 +24,9 @@ class Display extends React.Component {
 
   componentDidMount() {
     this.refresh()
+    const { host = 'http://localhost' } = this.props
+    const socket = socketIOClient(host)
+    socket.on('admin:update', () => this.refresh())
   }
 
   refresh = () => {

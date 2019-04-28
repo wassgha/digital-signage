@@ -1,4 +1,5 @@
 const Slideshow = require('../models/Slideshow')
+const CommonHelper = require('./common_helper')
 
 function addSlide(slide, res, next) {
   return Slideshow.findById(slide.slideshow)
@@ -9,7 +10,7 @@ function addSlide(slide, res, next) {
         slideshow.slides.push(slide._id)
         return slideshow.save().then(slideshow => {
           if (!slideshow) return next(new Error('Slideshow not saved'))
-          return res.json({ success: true })
+          return CommonHelper.broadcastUpdate().then(() => res.json({ success: true }))
         })
       })
     })
@@ -22,9 +23,12 @@ function deleteSlide(slide, next, res) {
     slideshow.slides = slideshow.slides.filter(function(value) {
       return value != slide._id
     })
-    return slideshow.save().then(() => {
-      return res.json({ success: true })
-    })
+    return slideshow
+      .save()
+      .then(CommonHelper.broadcastUpdate)
+      .then(() => {
+        return res.json({ success: true })
+      })
   })
 }
 

@@ -22,7 +22,7 @@ class Slideshow extends React.Component {
     const host =
       req && req.headers && req.headers.host ? 'http://' + req.headers.host : window.location.origin
     const slideshow = id && (await getSlideshow(id, host))
-    return { slideshow: slideshow }
+    return { slideshow: slideshow, host: host }
   }
 
   refresh = () => {

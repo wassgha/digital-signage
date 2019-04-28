@@ -26,6 +26,7 @@ class AppDocument extends Document {
             href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'
             rel='stylesheet'
           />
+          <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js' />
           {this.props.styleTags}
         </Head>
         <body>

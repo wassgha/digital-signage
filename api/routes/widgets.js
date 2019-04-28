@@ -3,6 +3,7 @@ const router = express.Router()
 const mongooseCrudify = require('mongoose-crudify')
 
 const Widget = require('../models/Widget')
+const CommonHelper = require('../helpers/common_helper')
 
 /**
  *  list    - GET /widgets/
@@ -14,7 +15,13 @@ const Widget = require('../models/Widget')
 router.use(
   '/',
   mongooseCrudify({
-    Model: Widget
+    Model: Widget,
+    afterActions: [
+      {
+        middlewares: [CommonHelper.broadcastUpdate],
+        only: ['update', 'create', 'delete']
+      }
+    ]
   })
 )
 
