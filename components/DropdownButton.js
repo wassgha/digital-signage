@@ -1,24 +1,12 @@
 import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library, config } from '@fortawesome/fontawesome-svg-core'
-import {
-  faPlay,
-  faFont,
-  faList,
-  faMousePointer,
-  faCloudSun,
-  faGifts,
-  faPlus
-} from '@fortawesome/free-solid-svg-icons'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
 
 config.autoAddCss = false
-library.add(faPlus)
-library.add(faList)
-library.add(faPlay)
-library.add(faFont)
-library.add(faMousePointer)
-library.add(faCloudSun)
-library.add(faGifts)
+library.add(fas)
+library.add(fab)
 
 class DropdownButton extends Component {
   constructor() {
@@ -73,7 +61,7 @@ class DropdownButton extends Component {
                 }}
               >
                 <div className={'btnIcon'}>
-                  {choice.icon && <FontAwesomeIcon icon={choice.icon} />}
+                  {choice.icon && <FontAwesomeIcon icon={choice.icon} prefix={'fab'} />}
                 </div>
                 {choice.name}
               </button>
