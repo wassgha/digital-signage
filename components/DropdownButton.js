@@ -8,6 +8,7 @@ import {
   faMousePointer,
   faCloudSun,
   faGifts,
+  faGlobe,
   faPlus
 } from '@fortawesome/free-solid-svg-icons'
 
@@ -19,6 +20,7 @@ library.add(faFont)
 library.add(faMousePointer)
 library.add(faCloudSun)
 library.add(faGifts)
+library.add(faGlobe)
 
 class DropdownButton extends Component {
   constructor() {
