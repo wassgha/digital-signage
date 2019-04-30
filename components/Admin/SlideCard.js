@@ -12,9 +12,15 @@ class SlideCard extends Component {
   constructor(props) {
     super(props)
     this.dialog = React.createRef()
+    this.state = {
+      loading: false
+    }
   }
+
   render() {
     const { value, refresh = () => {} } = this.props
+    const { loading = false } = this.state
+
     return (
       <div className='card'>
         <div className='order'>{value.order}</div>
@@ -62,7 +68,18 @@ class SlideCard extends Component {
               icon={faTrash}
               fixedWidth
               color='#828282'
-              onClick={() => deleteSlide(value._id).then(refresh)}
+              onClick={
+                loading
+                  ? () =>
+                      this.setState({ loading: true }, () =>
+                        deleteSlide(value._id)
+                          .then(refresh)
+                          .then(() => {
+                            this.setState({ loading: false })
+                          })
+                      )
+                  : () => {}
+              }
             />
           </div>
         </div>
