@@ -18,7 +18,9 @@ class WidgetEditDialog extends React.Component {
 
   close = e => {
     if (e) e.stopPropagation()
-    this.dialog && this.dialog.current && this.dialog.current.close()
+    return Promise.resolve().then(
+      () => this.dialog && this.dialog.current && this.dialog.current.close()
+    )
   }
 
   handleChange = data => {
@@ -30,7 +32,7 @@ class WidgetEditDialog extends React.Component {
   saveData = () => {
     const { id } = this.props
     const { data } = this.state
-    updateWidget(id, { data }).then(() => {
+    return updateWidget(id, { data }).then(() => {
       this.close()
     })
   }

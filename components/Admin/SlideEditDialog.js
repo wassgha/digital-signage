@@ -18,9 +18,11 @@ class SlideEditDialog extends React.Component {
   refresh = () => {
     const { slide } = this.props
     if (slide) {
-      getSlide(slide).then(data => {
+      return getSlide(slide).then(data => {
         this.setState(data)
       })
+    } else {
+      return Promise.resolve()
     }
   }
 
@@ -32,7 +34,8 @@ class SlideEditDialog extends React.Component {
   close = () => {
     const { refresh } = this.props
     this.dialog && this.dialog.close()
-    if (refresh) refresh()
+    if (refresh) return refresh()
+    return Promise.resolve()
   }
 
   handleChange = (name, value) => {
@@ -44,11 +47,11 @@ class SlideEditDialog extends React.Component {
   save = () => {
     const { slide, slideshow, upload } = this.props
     if (slideshow) {
-      addSlide(slideshow, upload, this.state).then(() => {
+      return addSlide(slideshow, upload, this.state).then(() => {
         this.close()
       })
     } else {
-      updateSlide(slide, upload, this.state).then(() => {
+      return updateSlide(slide, upload, this.state).then(() => {
         this.close()
       })
     }
