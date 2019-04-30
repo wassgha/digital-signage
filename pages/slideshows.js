@@ -14,7 +14,7 @@ class Slideshows extends React.Component {
   }
 
   add = () => {
-    addSlideshow().then(() => {
+    return addSlideshow().then(() => {
       this.slideshowList && this.slideshowList.current && this.slideshowList.current.refresh()
     })
   }

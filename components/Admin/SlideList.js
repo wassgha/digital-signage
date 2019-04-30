@@ -64,8 +64,8 @@ class SlideList extends Component {
 
   refresh = () => {
     const { slideshow } = this.props
-    getSlides(slideshow).then(slides => {
-      this.setState({
+    return getSlides(slideshow).then(slides => {
+      return this.setState({
         slides: slides.sort((a, b) => a.order - b.order)
       })
     })
