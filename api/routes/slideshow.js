@@ -3,6 +3,7 @@ const router = express.Router()
 
 const Slideshow = require('../models/Slideshow')
 const SlideshowHelper = require('../helpers/slideshow_helper')
+const CommonHelper = require('../helpers/common_helper')
 
 // Route: /api/v1/slideshow
 router
@@ -24,7 +25,7 @@ router
         if (!slideshow) {
           next(new Error('Slideshow not created'))
         }
-        return res.json(slideshow)
+        return CommonHelper.broadcastUpdate().then(() => res.json(slideshow))
       })
       .catch(err => next(err))
   })
@@ -68,9 +69,12 @@ router
 
         if ('title' in req.body) slideshow.title = req.body.title
 
-        return slideshow.save().then(() => {
-          return res.json({ success: true })
-        })
+        return slideshow
+          .save()
+          .then(CommonHelper.broadcastUpdate)
+          .then(() => {
+            return res.json({ success: true })
+          })
       })
       .catch(err => next(err))
   })

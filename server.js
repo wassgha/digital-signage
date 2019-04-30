@@ -3,6 +3,7 @@ const express = require('express')
 var bodyParser = require('body-parser')
 const next = require('next')
 const mongoose = require('mongoose')
+const socketIo = require('socket.io')
 
 const dev = process.env.NODE_ENV !== 'production'
 const port = process.env.PORT || 3000
@@ -37,6 +38,13 @@ app
 
     server.use(bodyParser.json())
     server.use(bodyParser.urlencoded({ extended: true }))
+
+    let io
+    server.use(function(req, res, next) {
+      res.io = io
+      next()
+    })
+
     // API routes
     server.use('/api/v1', apiRoutes)
 
@@ -48,11 +56,14 @@ app
       return handle(req, res)
     })
 
-    server.listen(port, err => {
+    const finalServer = server.listen(port, err => {
       if (err) throw err
       // eslint-disable-next-line
       console.log('> Ready on http://localhost:' + port)
     })
+
+    // Socket.io
+    io = socketIo.listen(finalServer)
   })
   .catch(ex => {
     // eslint-disable-next-line

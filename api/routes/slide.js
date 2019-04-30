@@ -3,7 +3,9 @@ const router = express.Router()
 const multer = require('multer')
 const path = require('path')
 
-const Keys = require('../../keys')
+const CommonHelper = require('../helpers/common_helper')
+const Slide = require('../models/Slide')
+const SlideHelper = require('../helpers/slide_helper')
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -14,9 +16,6 @@ const storage = multer.diskStorage({
   }
 })
 const upload = multer({ storage: storage })
-
-const Slide = require('../models/Slide')
-const SlideHelper = require('../helpers/slide_helper')
 
 // Route: /api/v1/slide
 router
@@ -32,7 +31,6 @@ router
       .catch(err => next(err))
   })
   .post('/', upload.single('data'), (req, res, next) => {
-    console.log('req.body', req.body)
     if (req.body.slideshow == undefined)
       return next(new Error('Missing Slideshow ID, slide not added'))
 
@@ -87,9 +85,12 @@ router
         if ('description' in req.body) slide.description = req.body.description
         if ('duration' in req.body) slide.duration = req.body.duration
 
-        return slide.save().then(() => {
-          return res.json({ success: true })
-        })
+        return slide
+          .save()
+          .then(CommonHelper.broadcastUpdate)
+          .then(() => {
+            return res.json({ success: true })
+          })
       })
       .catch(err => next(err))
   })
