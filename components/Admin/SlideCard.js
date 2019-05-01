@@ -70,7 +70,8 @@ class SlideCard extends Component {
               color='#828282'
               onClick={
                 loading
-                  ? () =>
+                  ? () => {}
+                  : () =>
                       this.setState({ loading: true }, () =>
                         deleteSlide(value._id)
                           .then(refresh)
@@ -78,7 +79,6 @@ class SlideCard extends Component {
                             this.setState({ loading: false })
                           })
                       )
-                  : () => {}
               }
             />
           </div>

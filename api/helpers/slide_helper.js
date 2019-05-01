@@ -10,7 +10,7 @@ function addSlide(slide, res, next) {
         slideshow.slides.push(slide._id)
         return slideshow.save().then(slideshow => {
           if (!slideshow) return next(new Error('Slideshow not saved'))
-          return CommonHelper.broadcastUpdate().then(() => res.json({ success: true }))
+          return CommonHelper.broadcastUpdate(res.io).then(() => res.json({ success: true }))
         })
       })
     })
@@ -25,7 +25,7 @@ function deleteSlide(slide, next, res) {
     })
     return slideshow
       .save()
-      .then(CommonHelper.broadcastUpdate)
+      .then(() => CommonHelper.broadcastUpdate(res.io))
       .then(() => {
         return res.json({ success: true })
       })

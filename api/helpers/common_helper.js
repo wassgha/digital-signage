@@ -1,8 +1,13 @@
-function broadcastUpdate(req, res) {
-  res.io.emit('admin:update')
+function broadcastUpdate(io) {
+  io.emit('admin:update')
   return Promise.resolve()
 }
 
+function broadcastUpdateMiddleware(req, res) {
+  return broadcastUpdate(res.io)
+}
+
 module.exports = {
-  broadcastUpdate
+  broadcastUpdate,
+  broadcastUpdateMiddleware
 }
