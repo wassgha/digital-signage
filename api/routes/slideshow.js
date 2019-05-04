@@ -25,7 +25,7 @@ router
         if (!slideshow) {
           next(new Error('Slideshow not created'))
         }
-        return CommonHelper.broadcastUpdate().then(() => res.json(slideshow))
+        return CommonHelper.broadcastUpdate(res.io).then(() => res.json(slideshow))
       })
       .catch(err => next(err))
   })
@@ -55,7 +55,7 @@ router
     return Slideshow.findByIdAndDelete(id)
       .then(slideshow => {
         if (!slideshow) return next('Slideshow not found')
-        return SlideshowHelper.deleteSlides(slideshow.slides).then(() => {
+        return SlideshowHelper.deleteSlides(slideshow.slides, res).then(() => {
           return res.json({ success: true })
         })
       })
@@ -71,7 +71,7 @@ router
 
         return slideshow
           .save()
-          .then(CommonHelper.broadcastUpdate)
+          .then(() => CommonHelper.broadcastUpdate(res.io))
           .then(() => {
             return res.json({ success: true })
           })
