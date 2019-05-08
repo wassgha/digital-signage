@@ -2,7 +2,7 @@ import React from 'react'
 
 class InlineInputGroup extends React.Component {
   render() {
-    const { children } = this.props
+    const { children = [] } = this.props
     return (
       <div className={'inputGroup'}>
         {children.map((child, index) => (

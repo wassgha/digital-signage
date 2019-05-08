@@ -4,7 +4,9 @@ import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 
 import Frame from '../components/Admin/Frame.js'
 import SlideList from '../components/Admin/SlideList.js'
+import SlideEditDialog from '../components/Admin/SlideEditDialog'
 import Upload from '../components/Upload.js'
+import Button from '../components/Form/Button.js'
 import Dialog from '../components/Dialog.js'
 
 import { getSlideshow, updateSlideshow } from '../actions/slideshow'
@@ -15,6 +17,7 @@ class Slideshow extends React.Component {
     const { slideshow } = props
     this.state = { slideshow }
     this.slideList = React.createRef()
+    this.dialog = React.createRef()
   }
 
   static async getInitialProps({ query, req }) {
@@ -32,6 +35,10 @@ class Slideshow extends React.Component {
         this.slideList && this.slideList.current && this.slideList.current.refresh()
       })
     })
+  }
+
+  openAddDialog = () => {
+    return Promise.resolve(this.dialog && this.dialog.current.open())
   }
 
   render() {
@@ -70,6 +77,17 @@ class Slideshow extends React.Component {
         </div>
         <div className='wrapper'>
           <Upload slideshow={slideshow && slideshow._id} refresh={this.refresh} />
+          <SlideEditDialog
+            slideshow={slideshow && slideshow._id}
+            refresh={this.refresh}
+            ref={this.dialog}
+          />
+          <Button
+            text='Add a slide'
+            color='#7bc043'
+            style={{ flex: 1, margin: 0, width: '100%', marginTop: 20 }}
+            onClick={this.openAddDialog}
+          />
           <SlideList ref={this.slideList} slideshow={slideshow && slideshow._id} />
           <Dialog />
         </div>

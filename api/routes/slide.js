@@ -50,6 +50,13 @@ router
     return SlideHelper.addSlide(newSlide, res, next)
   })
 
+// Route: /api/v1/slide/standalone_upload
+router.post('/standalone_upload', upload.single('data'), (req, res, next) => {
+  if (!req.file || !req.file.path) return next(new Error('Missing file upload'))
+
+  return '/' + req.file.path
+})
+
 // Route: /api/v1/slide/:id
 router
   .get('/:id', (req, res, next) => {
