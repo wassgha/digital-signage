@@ -23,7 +23,7 @@ class Button extends React.Component {
     const { loading = false } = this.state
     return (
       <button
-        className={'btn save'}
+        className={'btn'}
         onClick={loading ? () => {} : this.onClickWrapper}
         style={style}
         disabled={loading}

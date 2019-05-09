@@ -5,14 +5,24 @@ import { Form, Input, Button, ButtonGroup } from '../Form'
 import { getSlide, addSlide, updateSlide } from '../../actions/slide'
 
 class SlideEditDialog extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
-    this.state = {}
+    this.state = {
+      upload: props.upload
+    }
   }
 
   componentDidMount() {
     this.refresh()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.upload != prevProps.upload) {
+      this.setState({
+        upload: this.props.upload
+      })
+    }
   }
 
   refresh = () => {
@@ -40,26 +50,28 @@ class SlideEditDialog extends React.Component {
 
   handleChange = (name, value) => {
     this.setState({
-      [name]: value
+      [name]: value,
+      // Clean up data if the type of slide changed
+      ...(name == 'type' ? { data: '' } : {})
     })
   }
 
   save = () => {
-    const { slide, slideshow, upload } = this.props
+    const { slide, slideshow } = this.props
+    const { upload, ...otherProps } = this.state
     if (slideshow) {
-      return addSlide(slideshow, upload, this.state).then(() => {
+      return addSlide(slideshow, upload, otherProps).then(() => {
         this.close()
       })
     } else {
-      return updateSlide(slide, upload, this.state).then(() => {
+      return updateSlide(slide, upload, otherProps).then(() => {
         this.close()
       })
     }
   }
 
   render() {
-    const { order, data, title, description, duration, type } = this.state
-    const { upload } = this.props
+    const { order, data, title, description, duration, type = 'photo', upload } = this.state
 
     return (
       <Dialog ref={ref => (this.dialog = ref)}>
@@ -73,18 +85,30 @@ class SlideEditDialog extends React.Component {
             onChange={this.handleChange}
             disabled
           />
+          <Input
+            type={'select'}
+            name={'type'}
+            label={'Slide Type'}
+            value={type}
+            choices={[
+              { id: 'youtube', label: 'Youtube Video' },
+              { id: 'web', label: 'Web Page' },
+              { id: 'photo', label: 'Photo' }
+            ]}
+            onChange={this.handleChange}
+          />
           {type == 'photo' || upload ? (
             <Input
               type={'photo'}
               label={'Photo'}
-              name={'data'}
+              name={'upload'}
               value={upload ? upload.preview : data}
               onChange={this.handleChange}
             />
           ) : (
             <Input
               type={'text'}
-              label={'Data'}
+              label={type == 'web' ? 'Web URL' : type == 'youtube' ? 'Youtube URL' : 'Data'}
               name={'data'}
               value={data}
               onChange={this.handleChange}

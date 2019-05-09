@@ -2,10 +2,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const Slide = new Schema({
-  data: { type: String, default: 'https://i.imgur.com/3MlKktU.jpg' },
+  data: { type: String, default: '' },
   type: {
     type: String,
-    default: 'photo',
+    default: 'web',
     enum: ['photo', 'web', 'youtube', 'video']
   },
   title: { type: String },
