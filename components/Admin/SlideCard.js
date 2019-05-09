@@ -2,7 +2,7 @@ import { Component } from 'react'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClock } from '@fortawesome/free-regular-svg-icons'
-import { faTrash, faEdit, faPlay, faGlobe } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faEdit, faPlay, faGlobe, faShapes } from '@fortawesome/free-solid-svg-icons'
 
 import SlideEditDialog from './SlideEditDialog'
 
@@ -34,6 +34,8 @@ class SlideCard extends Component {
                   ? '#c23616'
                   : value.type == 'web'
                   ? '#0097e6'
+                  : value.type == 'freeform'
+                  ? '#E68300'
                   : 'transparent'
             }}
           >
@@ -42,6 +44,9 @@ class SlideCard extends Component {
             )}
             {value.type == 'web' && (
               <FontAwesomeIcon icon={faGlobe} fixedWidth size='lg' color='#FFFFFF' />
+            )}
+            {value.type == 'freeform' && (
+              <FontAwesomeIcon icon={faShapes} fixedWidth size='lg' color='#FFFFFF' />
             )}
           </div>
         </div>

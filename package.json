@@ -48,6 +48,7 @@
     "react": "^16.8.6",
     "react-color": "^2.17.0",
     "react-content-loader": "^4.2.1",
+    "react-designer": "git+https://github.com/fatiherikli/react-designer.git",
     "react-dom": "^16.8.2",
     "react-dropzone": "^10.0.0",
     "react-grid-layout": "^0.16.6",
@@ -59,7 +60,9 @@
     "react-youtube": "^7.9.0",
     "socket.io": "^2.2.0",
     "socket.io-client": "^2.2.0",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.2.0",
+    "superagent": "^5.0.5",
+    "webfontloader": "^1.6.28"
   },
   "devDependencies": {
     "cross-env": "^5.2.0"
