@@ -34,13 +34,13 @@ class Dialog extends React.Component {
   }
 
   render() {
-    const { children } = this.props
+    const { children, style = {} } = this.props
     return (
       <div className='container'>
         <Modal
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.close}
-          style={modalStyles}
+          style={{ ...modalStyles, ...style }}
           ariaHideApp={false}
         >
           <div className='form'>{children}</div>

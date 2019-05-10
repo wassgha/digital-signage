@@ -2,7 +2,7 @@ import React from 'react'
 
 class ButtonGroup extends React.Component {
   render() {
-    const { children } = this.props
+    const { children, align = 'right' } = this.props
     return (
       <div className={'btnGroup'}>
         {children}
@@ -10,7 +10,11 @@ class ButtonGroup extends React.Component {
           .btnGroup {
             display: flex;
             flex-direction: row;
-            justify-content: flex-end;
+            justify-content: ${align == 'right'
+              ? 'flex-end'
+              : align == 'center'
+              ? 'center'
+              : 'flex-start'};
             flex: 1;
           }
         `}</style>
