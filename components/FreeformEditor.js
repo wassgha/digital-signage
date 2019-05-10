@@ -49,20 +49,23 @@ export default class FreeformEditor extends Component {
             top: 0,
             left: 0,
             right: 0,
-            bottom: 0
+            bottom: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center'
           }
         }}
       >
-        <div style={{ marginLeft: 40 }}>
-          <DesignerWithNoSSR
-            width={600}
-            height={350}
-            onUpdate={objects => this.setState({ objects })}
-            objects={objects}
-          />
-        </div>
-        <ButtonGroup>
-          <Button text={'Save'} color={'#8bc34a'} onClick={this.save} />
+        <DesignerWithNoSSR
+          width={640}
+          height={480}
+          onUpdate={objects => this.setState({ objects })}
+          objects={objects}
+        />
+        <br />
+        <ButtonGroup align='center'>
+          <Button text={'Finish Editing'} color={'#8bc34a'} onClick={this.save} />
           <Button text={'Cancel'} color={'#e85454'} onClick={this.closeDialog} />
         </ButtonGroup>
       </Dialog>

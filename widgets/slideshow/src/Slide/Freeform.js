@@ -31,7 +31,7 @@ class FreeformSlide extends GenericSlide {
     return (
       <div className='slide-content'>
         {DesignerPreviewWithNoSSR ? (
-          <DesignerPreviewWithNoSSR objects={data} height={'100%'} width={'100%'} />
+          <DesignerPreviewWithNoSSR objects={data} width={640} height={480} responsive />
         ) : (
           <div />
         )}
