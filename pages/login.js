@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTv, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+import { faTv, faCheck, faTimes, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 
 import Frame from '../components/Admin/Frame.js'
 import { login } from '../helpers/auth.js'
@@ -12,13 +12,21 @@ class Login extends Component {
 
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      alert: null
     }
   }
 
   performLogin = () => {
     const { username, password } = this.state
     login({ username, password })
+      .then(resp => {
+        if (!resp.success) throw Error()
+        this.setState({ alert: 'success' })
+      })
+      .catch(() => {
+        this.setState({ alert: 'error' })
+      })
   }
 
   usernameChangeHandler = event => {
@@ -35,6 +43,7 @@ class Login extends Component {
 
   render() {
     const { loggedIn } = this.props
+    const { alert } = this.state
     return (
       <Frame loggedIn={loggedIn}>
         <h1>Login</h1>
@@ -52,6 +61,21 @@ class Login extends Component {
               return false
             }}
           >
+            {alert && (
+              <div className={`alert-${alert}`}>
+                <FontAwesomeIcon
+                  icon={alert == 'success' ? faCheck : faTimes}
+                  fixedWidth
+                  size='sm'
+                  color='white'
+                />
+                <span className={'alert-text'}>
+                  {alert == 'success'
+                    ? 'Successfully logged in to your account.'
+                    : 'Username or password unrecognized.'}
+                </span>
+              </div>
+            )}
             <label for='username'>Username</label>
             <input
               type='text'
@@ -160,6 +184,22 @@ class Login extends Component {
               color: #6f6e6e;
               font-size: 14;
               cursor: pointer;
+            }
+            .alert-error {
+              background: #e74c3c;
+              border-radius: 2px;
+              margin-bottom: 16px;
+              padding: 16px;
+            }
+            .alert-success {
+              background: #7bc043;
+              border-radius: 2px;
+              margin-bottom: 16px;
+              padding: 16px;
+            }
+            .alert-text {
+              color: white;
+              margin-left: 8px;
             }
           `}
         </style>

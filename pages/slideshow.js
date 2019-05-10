@@ -10,6 +10,7 @@ import Button from '../components/Form/Button.js'
 import Dialog from '../components/Dialog.js'
 
 import { getSlideshow, updateSlideshow } from '../actions/slideshow'
+import { protect } from '../helpers/auth.js'
 
 class Slideshow extends React.Component {
   constructor(props) {
@@ -42,9 +43,10 @@ class Slideshow extends React.Component {
   }
 
   render() {
+    const { loggedIn } = this.props
     const { slideshow } = this.state
     return (
-      <Frame>
+      <Frame loggedIn={loggedIn}>
         <h1 className='title'>Slideshow: </h1>{' '}
         <div className='editable-title'>
           <input
@@ -137,4 +139,4 @@ class Slideshow extends React.Component {
   }
 }
 
-export default Slideshow
+export default protect(Slideshow)

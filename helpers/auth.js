@@ -5,10 +5,10 @@ import React from 'react'
 export const login = ({ username, password }) => {
   return axios.post('/api/v1/user/login', { username, password }).then(res => {
     if (res.data && res.data.success) {
-      return Router.push('/layout')
-    } else {
-      return res.data
+      Router.push('/layout')
+      window.location.href = '/layout'
     }
+    return res.data
   })
 }
 
