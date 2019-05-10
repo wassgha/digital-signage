@@ -86,7 +86,7 @@ router
         // Either the uploaded file if found or the text data field
         const data = req.file && req.file.path ? '/' + req.file.path : req.body.data
 
-        if (data) slide.data = data
+        if (data != null && typeof data != undefined) slide.data = data
         if ('type' in req.body) slide.type = req.body.type
         if ('title' in req.body) slide.title = req.body.title
         if ('description' in req.body) slide.description = req.body.description
