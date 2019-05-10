@@ -5,10 +5,12 @@ const REQUIRED_DEF_FIELDS = ['name', 'version', 'icon']
 
 export default class BaseWidget {
   constructor(definition) {
-    for (const defField of REQUIRED_DEF_FIELDS) {
-      if (!(defField in definition)) {
-        throw new Error(`${defField} is a required property of new widgets.`)
+    for (const reqField of REQUIRED_DEF_FIELDS) {
+      if (!(reqField in definition)) {
+        throw new Error(`${reqField} is a required property of new widgets.`)
       }
+    }
+    for (const defField of Object.keys(definition)) {
       this[defField] = definition[defField]
     }
   }

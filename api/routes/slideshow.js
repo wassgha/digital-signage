@@ -3,6 +3,7 @@ const router = express.Router()
 
 const Slideshow = require('../models/Slideshow')
 const SlideshowHelper = require('../helpers/slideshow_helper')
+const CommonHelper = require('../helpers/common_helper')
 
 // Route: /api/v1/slideshow
 router
@@ -16,7 +17,7 @@ router
   })
   .post('/', (req, res, next) => {
     const newSlideShow = new Slideshow({
-      title: req.body.title,
+      title: req.body.title
     })
     return newSlideShow
       .save()
@@ -24,7 +25,7 @@ router
         if (!slideshow) {
           next(new Error('Slideshow not created'))
         }
-        return slideshow
+        return CommonHelper.broadcastUpdate(res.io).then(() => res.json(slideshow))
       })
       .catch(err => next(err))
   })
@@ -40,12 +41,23 @@ router
       })
       .catch(err => next(err))
   })
+  .get('/:id/slides', (req, res, next) => {
+    const { id } = req.params
+    return Slideshow.findById(id)
+      .populate('slides')
+      .then(slideshow => {
+        return res.json(slideshow.slides)
+      })
+      .catch(err => next(err))
+  })
   .delete('/:id', (req, res, next) => {
     const { id } = req.params
     return Slideshow.findByIdAndDelete(id)
       .then(slideshow => {
         if (!slideshow) return next('Slideshow not found')
-        return SlideshowHelper.deleteSlides(slideshow.slides)
+        return SlideshowHelper.deleteSlides(slideshow.slides, res).then(() => {
+          return res.json({ success: true })
+        })
       })
       .catch(err => next(err))
   })
@@ -57,9 +69,12 @@ router
 
         if ('title' in req.body) slideshow.title = req.body.title
 
-        return slideshow.save().then(() => {
-          return res.json({ success: true })
-        })
+        return slideshow
+          .save()
+          .then(() => CommonHelper.broadcastUpdate(res.io))
+          .then(() => {
+            return res.json({ success: true })
+          })
       })
       .catch(err => next(err))
   })

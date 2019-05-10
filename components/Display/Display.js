@@ -5,6 +5,7 @@
 
 import React from 'react'
 import GridLayout from 'react-grid-layout'
+import socketIOClient from 'socket.io-client'
 
 import Frame from './Frame.js'
 import HeightProvider from '../Widgets/HeightProvider'
@@ -23,6 +24,9 @@ class Display extends React.Component {
 
   componentDidMount() {
     this.refresh()
+    const { host = 'http://localhost' } = this.props
+    const socket = socketIOClient(host)
+    socket.on('admin:update', () => this.refresh())
   }
 
   refresh = () => {
@@ -46,7 +50,13 @@ class Display extends React.Component {
     return (
       <Frame>
         <div className={'gridContainer'} ref={ref => (this.container = ref)}>
-          <GridLayoutWithHeight className='layout' static={true} layout={layout} cols={6}>
+          <GridLayoutWithHeight
+            className='layout'
+            isDraggable={false}
+            isResizable={false}
+            layout={layout}
+            cols={6}
+          >
             {widgets.map(widget => {
               const Widget = Widgets[widget.type] ? Widgets[widget.type].Widget : EmptyWidget
               return (

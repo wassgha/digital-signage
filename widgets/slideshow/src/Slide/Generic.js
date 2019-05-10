@@ -84,15 +84,15 @@ class GenericSlide extends Component {
    */
   render() {
     const { slide, show = false } = this.props
-    const { data, title, desc } = slide
+    const { data, title, description } = slide
     const { loaded } = this.state
     return (
       <div className='slide'>
         {this.renderSlideContent(data)}
-        {(title || desc) && (
+        {(title || description) && (
           <div className='info'>
             {title && <h1>{title}</h1>}
-            {desc && <p>{desc}</p>}
+            {description && <p>{description}</p>}
           </div>
         )}
         <style jsx>{`

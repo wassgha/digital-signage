@@ -1,61 +1,26 @@
 import { Component } from 'react'
 import React from 'react'
-import SlideEditDialog from './Admin/SlideEditDialog'
-import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClock } from '@fortawesome/free-regular-svg-icons'
 import { faTrash, faEdit, faPlay, faGlobe } from '@fortawesome/free-solid-svg-icons'
 
-/* eslint-disable */
-const MOCK_SLIDES = [
-  {
-    type: 'photo',
-    data:
-      'https://compsci.lafayette.edu/wp-content/uploads/sites/66/2010/05/computerSci-homepage.jpg',
-    title: 'Welcome to the Computer Science Department',
-    desc:
-      'Welcome to the fifth floor of the Acopian Engineering Center, home of the Computer Science department!',
-    duration: 3, // In seconds
-    order: 2
-  },
-  {
-    type: 'photo',
-    data:
-      'https://news.lafayette.edu/wp-content/blogs.dir/2/files/2018/12/STEM-professors-470x264.jpg',
-    title: 'Hidden Figures Week',
-    desc:
-      'Hidden Figures Week explored issues related to women in STEM through a roundtable faculty discussion.',
-    duration: 2, // In seconds
-    order: 1
-  },
-  {
-    type: 'web',
-    data: 'https://compsci.lafayette.edu/courses/',
-    title: 'Classes Website Example',
-    desc: '',
-    duration: 4, // In seconds
-    order: 3
-  },
+import SlideEditDialog from './SlideEditDialog'
 
-  {
-    type: 'youtube',
-    data: 'https://www.youtube.com/watch?v=xcs-xnc25-I',
-    title: "The President's Challenge: Bring the Best",
-    desc:
-      "Saeed Malami '20 and Lillian Kennedy '21 talk about the impact Lafayette College has had on their lives and the role donors have played in making this possible.",
-    duration: 10, // In seconds
-    order: 4
-  }
-]
-/* eslint-enable */
+import { deleteSlide } from '../../actions/slide'
 
-class Card extends Component {
+class SlideCard extends Component {
   constructor(props) {
     super(props)
     this.dialog = React.createRef()
+    this.state = {
+      loading: false
+    }
   }
+
   render() {
-    const { value } = this.props
+    const { value, refresh = () => {} } = this.props
+    const { loading = false } = this.state
+
     return (
       <div className='card'>
         <div className='order'>{value.order}</div>
@@ -81,7 +46,7 @@ class Card extends Component {
           </div>
         </div>
         <div className='middle'>
-          <div className='title'>{value.title}</div>
+          <div className='title'>{value.title ? value.title : 'Untitled slide'}</div>
           <div className='duration'>
             <div className='icon'>
               <FontAwesomeIcon icon={faClock} fixedWidth color='#878787' />
@@ -99,10 +64,26 @@ class Card extends Component {
             />
           </div>
           <div className='actionIcon'>
-            <FontAwesomeIcon icon={faTrash} fixedWidth color='#828282' />
+            <FontAwesomeIcon
+              icon={faTrash}
+              fixedWidth
+              color='#828282'
+              onClick={
+                loading
+                  ? () => {}
+                  : () =>
+                      this.setState({ loading: true }, () =>
+                        deleteSlide(value._id)
+                          .then(refresh)
+                          .then(() => {
+                            this.setState({ loading: false })
+                          })
+                      )
+              }
+            />
           </div>
         </div>
-        <SlideEditDialog ref={this.dialog} />
+        <SlideEditDialog ref={this.dialog} slide={value._id} refresh={refresh} />
         <style jsx>
           {`
             .card {
@@ -120,16 +101,6 @@ class Card extends Component {
               z-index: 1;
             }
 
-            .order {
-              font-family: 'Open Sans', sans-serif;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              padding-left: 8px;
-              padding-right: 8px;
-              color: #878787;
-            }
-
             .title {
               font-family: 'Open Sans', sans-serif;
               font-size: 16px;
@@ -142,7 +113,6 @@ class Card extends Component {
             .left {
               font-family: 'Open Sans', sans-serif;
               justify-content: center;
-              padding-left: 8px;
               padding-right: 8px;
             }
 
@@ -204,51 +174,4 @@ class Card extends Component {
   }
 }
 
-const SortableItem = SortableElement(Card)
-
-const SortableList = SortableContainer(({ items }) => {
-  return (
-    <div className={'list'}>
-      <div className={'timeline'} />
-      {items.map((value, index) => (
-        <SortableItem key={`item-${index}`} index={index} value={value} />
-      ))}
-      <style jsx>
-        {`
-          .list {
-            position: relative;
-          }
-          .timeline {
-            width: 4px;
-            height: calc(100% - 20px);
-            border-radius: 2px;
-            position: absolute;
-            left: 50%;
-            top: 10px;
-            margin-left: -2px;
-            background: #cccccc;
-            z-index: 0;
-          }
-        `}
-      </style>
-    </div>
-  )
-})
-
-class List extends Component {
-  state = {
-    items: MOCK_SLIDES.sort((a, b) => a.order - b.order)
-  }
-  onSortEnd = ({ oldIndex, newIndex }) => {
-    this.setState(({ items }) => ({
-      items: arrayMove(items, oldIndex, newIndex)
-    }))
-  }
-  render() {
-    return (
-      <SortableList items={this.state.items} onSortEnd={this.onSortEnd} distance={2} lockAxis='y' />
-    )
-  }
-}
-
-export default List
+export default SlideCard

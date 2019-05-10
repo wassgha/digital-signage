@@ -36,7 +36,8 @@ class Layout extends React.Component {
   }
 
   addWidget = type => {
-    return addWidget(type).then(this.refresh)
+    const widgetDefinition = Widgets[type]
+    return addWidget(type, widgetDefinition && widgetDefinition.defaultData).then(this.refresh)
   }
 
   deleteWidget = id => {
@@ -80,23 +81,24 @@ class Layout extends React.Component {
             }))}
           />
         </div>
-        <GridLayoutWithWidth
-          className='layout'
-          layout={layout}
-          cols={6}
-          onLayoutChange={this.onLayoutChange}
-          draggableCancel={'.ReactModalPortal'}
-        >
-          {widgets.map(widget => (
-            <div key={widget._id}>
-              <EditableWidget
-                id={widget._id}
-                type={widget.type}
-                onDelete={this.deleteWidget.bind(this, widget._id)}
-              />
-            </div>
-          ))}
-        </GridLayoutWithWidth>
+        <div className='layout'>
+          <GridLayoutWithWidth
+            layout={layout}
+            cols={6}
+            onLayoutChange={this.onLayoutChange}
+            draggableCancel={'.ReactModalPortal,.controls'}
+          >
+            {widgets.map(widget => (
+              <div key={widget._id}>
+                <EditableWidget
+                  id={widget._id}
+                  type={widget.type}
+                  onDelete={this.deleteWidget.bind(this, widget._id)}
+                />
+              </div>
+            ))}
+          </GridLayoutWithWidth>
+        </div>
         <style jsx>
           {`
             h1 {
@@ -112,6 +114,10 @@ class Layout extends React.Component {
               display: flex;
               flex-direction: row;
               align-items: center;
+            }
+            .layout {
+              background: #dfdfdf;
+              border-radius: 8px;
             }
           `}
         </style>

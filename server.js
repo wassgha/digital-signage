@@ -6,11 +6,13 @@ const passport = require('passport')
 const cookieParser = require('cookie-parser')
 const session = require('cookie-session')
 const bodyParser = require('body-parser')
+const socketIo = require('socket.io')
 
 const dev = process.env.NODE_ENV !== 'production'
 const port = process.env.PORT || 3000
 const app = next({ dev })
-const handle = app.getRequestHandler()
+const routes = require('./routes')
+const handle = routes.getRequestHandler(app)
 
 const Keys = require('./keys')
 
@@ -42,6 +44,7 @@ app
     server.use(bodyParser.urlencoded({ extended: false }))
     // Parse application/json
     server.use(bodyParser.json())
+    server.use(bodyParser.urlencoded({ extended: true }))
     // Parse cookies
     server.use(cookieParser())
     // Sessions
@@ -60,6 +63,12 @@ app
     server.use(passport.initialize())
     server.use(passport.session())
 
+    let io
+    server.use(function(req, res, next) {
+      res.io = io
+      next()
+    })
+
     // API routes
     server.use('/api/v1', apiRoutes)
 
@@ -71,11 +80,14 @@ app
       return handle(req, res)
     })
 
-    server.listen(port, err => {
+    const finalServer = server.listen(port, err => {
       if (err) throw err
       // eslint-disable-next-line
       console.log('> Ready on http://localhost:' + port)
     })
+
+    // Socket.io
+    io = socketIo.listen(finalServer)
   })
   .catch(ex => {
     // eslint-disable-next-line
