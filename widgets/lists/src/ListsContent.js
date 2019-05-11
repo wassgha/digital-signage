@@ -17,12 +17,7 @@ const DEFAULT_TEXT = 'List stuff here'
 class ListsContent extends Component {
   render() {
     const {
-      data: {
-        text = DEFAULT_TEXT,
-        textColor = DEFAULT_TEXT_COLOR,
-        color = DEFAULT_COLOR,
-        list = []
-      } = {}
+      data: { textColor = DEFAULT_TEXT_COLOR, color = DEFAULT_COLOR, list } = {}
     } = this.props
     return (
       <div className='congrats'>
@@ -36,11 +31,13 @@ class ListsContent extends Component {
               }
             }}
           />
-          <div>
-            <li>list</li>
-          </div>
         </div>
-        <div className='text'>{text}</div>
+
+        <div className='list'>
+          {list.map(listElement => (
+            <div className='element'>{listElement}</div>
+          ))}
+        </div>
         <style jsx>
           {`
             .congrats {
@@ -73,6 +70,13 @@ class ListsContent extends Component {
               font-weight: 600;
               text-align: center;
               z-index: 1;
+            }
+
+            .element {
+              background: #000000aa;
+              padding: 8px;
+              margin-bottom: 8px;
+              border-radius: 4px;
             }
           `}
         </style>

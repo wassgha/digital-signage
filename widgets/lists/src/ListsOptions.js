@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Form, Input, InlineInputGroup, Button } from '../../../components/Form'
 
 import ListsContent from './ListsContent'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 class ListsOptions extends Component {
   constructor(props) {
@@ -26,17 +28,35 @@ class ListsOptions extends Component {
     )
   }
 
-  addField = () => {
-    // list.add('hi')
+  handleChange2 = (index, value) => {
+    const { onChange = () => {} } = this.props
+    this.state.list[index] = value
+    this.setState(
+      {
+        ...this.state
+      },
+      () => {
+        onChange(this.state)
+      }
+    )
+  }
+
+  addEntry = () => {
     this.setState({
-      list: [...this.state.list, <Input />]
+      list: [...this.state.list, '']
     })
 
     return Promise.resolve()
   }
+  deleteEntry = i => {
+    this.setState(state => {
+      state.list.filter((item, j) => i !== j)
+    })
+    return Promise.resolve()
+  }
 
   render() {
-    const { text, color, textColor, list = [] } = this.state
+    const { color, textColor, list = [] } = this.state
     return (
       <div className={'container'}>
         <Form>
@@ -60,21 +80,25 @@ class ListsOptions extends Component {
               onChange={this.handleChange}
             />
           </InlineInputGroup>
-          <Input
-            inline={false}
-            label={'Text to be displayed'}
-            type={'textarea'}
-            name={'text'}
-            value={text}
-            onChange={this.handleChange}
-          />
           <div className='list'>
-            {list.map(listElement => (
-              <div>{listElement}</div>
+            {list.map((listElement, index) => (
+              <div className='element'>
+                <Input
+                  inline={false}
+                  name={index}
+                  value={listElement}
+                  onChange={this.handleChange2}
+                />
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  fixedWidth
+                  color='#828282'
+                  onClick={this.deleteEntry}
+                />
+              </div>
             ))}
           </div>
-
-          <Button text={'Add Field'} color={'#8bc34a'} onClick={this.addField} />
+          <Button text={'Add Entry'} color={'#8bc34a'} onClick={this.addEntry} />
         </Form>
         <div className={'previewContainer'}>
           <p>Preview</p>
@@ -103,9 +127,10 @@ class ListsOptions extends Component {
               margin-left: 16px;
               width: 240px;
             }
-            .list {
-              height: 200px;
-              width: 240px;
+            .element {
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
             }
           `}
         </style>
