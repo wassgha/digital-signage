@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Form, Input, InlineInputGroup } from '../../../components/Form'
 import { standaloneUpload } from '../../../actions/slide'
 
-class WebOptions extends Component {
+class ImageOptions extends Component {
   constructor(props) {
     super(props)
     const { title, color, fit, url } = props.data || {}
@@ -99,4 +99,4 @@ class WebOptions extends Component {
   }
 }
 
-export default WebOptions
+export default ImageOptions
