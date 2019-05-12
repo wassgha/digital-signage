@@ -30,8 +30,8 @@ export default class ColorPicker extends React.Component {
     const styles = reactCSS({
       default: {
         color: {
-          width: '46px',
-          height: '30px',
+          width: '64px',
+          height: '42px',
           borderRadius: '2px',
           background: this.state.color
         },

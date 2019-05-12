@@ -54,7 +54,7 @@ router
 router.post('/standalone_upload', upload.single('data'), (req, res, next) => {
   if (!req.file || !req.file.path) return next(new Error('Missing file upload'))
 
-  return '/' + req.file.path
+  return res.json({ success: true, url: '/' + req.file.path })
 })
 
 // Route: /api/v1/slide/:id
