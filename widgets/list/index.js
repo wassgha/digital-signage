@@ -1,15 +1,15 @@
 import BaseWidget from '../base_widget'
-import ListsContent from './src/ListsContent'
-import ListsOptions from './src/ListsOptions'
+import ListContent from './src/ListContent'
+import ListOptions from './src/ListOptions'
 
-export default class Lists extends BaseWidget {
+export default class List extends BaseWidget {
   constructor() {
     super({
       name: 'List',
       version: '0.1',
       icon: 'list',
       defaultData: {
-        text: 'List Stuff',
+        title: null,
         color: '#34495e',
         textColor: '#ffffff',
         list: []
@@ -18,10 +18,10 @@ export default class Lists extends BaseWidget {
   }
 
   get Widget() {
-    return ListsContent
+    return ListContent
   }
 
   get Options() {
-    return ListsOptions
+    return ListOptions
   }
 }

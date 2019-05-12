@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import { Form, Input, InlineInputGroup, Button } from '../../../components/Form'
 
-import ListsContent from './ListsContent'
+import ListContent from './ListContent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
-class ListsOptions extends Component {
+class ListOptions extends Component {
   constructor(props) {
     super(props)
-    const { text, color, textColor, list = [] } = props.data || {}
+    const { title, color, textColor, list = [] } = props.data || {}
     this.state = {
-      text,
+      title,
       color,
       textColor,
       list
@@ -28,12 +28,25 @@ class ListsOptions extends Component {
     )
   }
 
-  handleChange2 = (index, value) => {
+  elementTextChange = (index, value) => {
     const { onChange = () => {} } = this.props
-    this.state.list[index] = value
+    this.state.list[index].text = value
     this.setState(
       {
-        ...this.state
+        list: this.state.list
+      },
+      () => {
+        onChange(this.state)
+      }
+    )
+  }
+
+  elementLabelChange = (index, value) => {
+    const { onChange = () => {} } = this.props
+    this.state.list[index].label = value
+    this.setState(
+      {
+        list: this.state.list
       },
       () => {
         onChange(this.state)
@@ -43,26 +56,40 @@ class ListsOptions extends Component {
 
   addEntry = () => {
     this.setState({
-      list: [...this.state.list, '']
+      list: [...this.state.list, { text: '', label: null }]
     })
 
     return Promise.resolve()
   }
-  deleteEntry = i => {
-    this.setState(state => {
-      state.list.filter((item, j) => i !== j)
-    })
+  deleteEntry = index => {
+    const { onChange = () => {} } = this.props
+    this.setState(
+      {
+        list: this.state.list.filter((el, i) => i != index)
+      },
+      () => {
+        onChange(this.state)
+      }
+    )
     return Promise.resolve()
   }
 
   render() {
-    const { color, textColor, list = [] } = this.state
+    const { title, color, textColor, list = [] } = this.state
     return (
       <div className={'container'}>
         <Form>
           <h3>Widget: List</h3>
           <p>Choose your preferences for the list widget.</p>
           <InlineInputGroup>
+            <Input
+              inline={false}
+              label={'Widget title'}
+              type={'text'}
+              name={'title'}
+              value={title}
+              onChange={this.handleChange}
+            />
             <Input
               inline={false}
               label={'Background color'}
@@ -81,29 +108,46 @@ class ListsOptions extends Component {
             />
           </InlineInputGroup>
           <div className='list'>
-            {list.map((listElement, index) => (
-              <div className='element'>
+            {list.map(({ label, text }, index) => (
+              <InlineInputGroup>
                 <Input
                   inline={false}
                   name={index}
-                  value={listElement}
-                  onChange={this.handleChange2}
+                  value={text}
+                  onChange={this.elementTextChange}
+                  placeholder={'Write some text...'}
+                  expand
                 />
-                <FontAwesomeIcon
-                  icon={faTrash}
-                  fixedWidth
-                  color='#828282'
-                  onClick={this.deleteEntry}
+                <Input
+                  inline={false}
+                  name={index}
+                  value={label}
+                  onChange={this.elementLabelChange}
+                  placeholder={'Label...'}
+                  expand={false}
                 />
-              </div>
+                <div className={'deleteBtn'}>
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    fixedWidth
+                    color='#828282'
+                    onClick={() => this.deleteEntry(index)}
+                  />
+                </div>
+              </InlineInputGroup>
             ))}
           </div>
-          <Button text={'Add Entry'} color={'#8bc34a'} onClick={this.addEntry} />
+          <Button
+            text={' + Add Entry'}
+            color={'#8bc34a'}
+            onClick={this.addEntry}
+            style={{ margin: 0 }}
+          />
         </Form>
         <div className={'previewContainer'}>
           <p>Preview</p>
           <div className={'preview'}>
-            <ListsContent data={this.state} />
+            <ListContent data={this.state} />
           </div>
         </div>
         <style jsx>
@@ -127,10 +171,13 @@ class ListsOptions extends Component {
               margin-left: 16px;
               width: 240px;
             }
-            .element {
+            .deleteBtn {
+              padding: 8px;
               display: flex;
-              flex-direction: row;
+              flex-direction: column;
+              min-height: 40px;
               justify-content: center;
+              align-items: center;
             }
           `}
         </style>
@@ -139,4 +186,4 @@ class ListsOptions extends Component {
   }
 }
 
-export default ListsOptions
+export default ListOptions

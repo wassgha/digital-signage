@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const widgetList = require('../../widgets/list')
+const widgetList = require('../../widgets/widget_list')
 const Schema = mongoose.Schema
 
 const Widget = new Schema({
