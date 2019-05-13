@@ -6,11 +6,12 @@ import CongratsContent from './CongratsContent'
 class CongratsOptions extends Component {
   constructor(props) {
     super(props)
-    const { animation, text, color, textColor } = props.data || {}
+    const { animation, text, fontSize, color, textColor } = props.data || {}
     this.state = {
       animation,
       text,
       color,
+      fontSize,
       textColor
     }
   }
@@ -27,7 +28,7 @@ class CongratsOptions extends Component {
   }
 
   render() {
-    const { animation, text, color, textColor } = this.state
+    const { animation, text, color, fontSize, textColor } = this.state
     return (
       <div className={'container'}>
         <Form>
@@ -60,6 +61,15 @@ class CongratsOptions extends Component {
                 { id: 'confetti', label: 'Confetti' },
                 { id: 'balloons', label: 'Balloons' }
               ]}
+              onChange={this.handleChange}
+              expand={false}
+            />
+            <Input
+              inline={false}
+              label={'Font Size'}
+              type={'number'}
+              name={'fontSize'}
+              value={fontSize}
               onChange={this.handleChange}
               expand={false}
             />

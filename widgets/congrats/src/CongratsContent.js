@@ -14,6 +14,7 @@ const DEFAULT_COLOR = '#34495e'
 const DEFAULT_TEXT_COLOR = '#ffffff'
 const DEFAULT_ANIMATION = 'confetti'
 const DEFAULT_TEXT = 'Congratulations!'
+const DEFAULT_FONT_SIZE = 16
 
 class CongratsContent extends Component {
   render() {
@@ -22,6 +23,7 @@ class CongratsContent extends Component {
         text = DEFAULT_TEXT,
         textColor = DEFAULT_TEXT_COLOR,
         animation = DEFAULT_ANIMATION,
+        fontSize = DEFAULT_FONT_SIZE,
         color = DEFAULT_COLOR
       } = {}
     } = this.props
@@ -39,7 +41,11 @@ class CongratsContent extends Component {
             }}
           />
         </div>
-        <div className='text'>{text}</div>
+        <div className='text'>
+          {text.split('\n').map(line => (
+            <div>{line || <br />}</div>
+          ))}
+        </div>
         <style jsx>
           {`
             .congrats {
@@ -50,7 +56,6 @@ class CongratsContent extends Component {
               background: ${color};
               color: ${textColor};
               flex: 1;
-              padding: 16px;
               font-family: 'Open Sans', sans-serif;
               display: flex;
               flex-direction: row;
@@ -67,11 +72,12 @@ class CongratsContent extends Component {
             }
             .congrats .text {
               font-family: 'Open Sans', sans-serif;
-              font-size: 1.3em;
+              font-size: ${fontSize}px;
               padding: 16px;
               font-weight: 600;
               text-align: center;
               z-index: 1;
+              word-break: break-word;
             }
           `}
         </style>
