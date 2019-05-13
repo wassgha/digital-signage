@@ -39,7 +39,11 @@ class CongratsContent extends Component {
             }}
           />
         </div>
-        <div className='text'>{text}</div>
+        <div className='text'>
+          {text.split('\n').map(line => (
+            <div>{line || <br />}</div>
+          ))}
+        </div>
         <style jsx>
           {`
             .congrats {
@@ -72,6 +76,7 @@ class CongratsContent extends Component {
               font-weight: 600;
               text-align: center;
               z-index: 1;
+              word-break: break-word;
             }
           `}
         </style>
