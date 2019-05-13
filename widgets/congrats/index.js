@@ -12,7 +12,8 @@ export default class Congrats extends BaseWidget {
         animation: 'confetti',
         text: 'Congratulations!',
         color: '#34495e',
-        textColor: '#ffffff'
+        textColor: '#ffffff',
+        fontSize: 16
       }
     })
   }
