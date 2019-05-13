@@ -43,8 +43,7 @@ router
       title: req.body.title,
       description: req.body.description,
       duration: req.body.duration,
-      slideshow: req.body.slideshow,
-      order: req.body.order
+      slideshow: req.body.slideshow
     })
 
     return SlideHelper.addSlide(newSlide, res, next)

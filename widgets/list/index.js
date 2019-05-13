@@ -12,7 +12,7 @@ export default class List extends BaseWidget {
         title: null,
         color: '#34495e',
         textColor: '#ffffff',
-        list: []
+        list: [{ text: '', label: null }]
       }
     })
   }

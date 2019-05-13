@@ -53,6 +53,7 @@ class ImageOptions extends Component {
               label={'Title (Optional)'}
               type={'text'}
               name={'title'}
+              placeholder={'Optional title...'}
               value={title}
               onChange={this.handleChange}
               expand={true}
