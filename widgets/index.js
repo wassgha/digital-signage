@@ -1,4 +1,4 @@
-import widgetList from './list'
+import widgetList from './widget_list'
 
 const widgets = {}
 for (const widget of widgetList) {

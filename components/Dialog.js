@@ -9,7 +9,9 @@ const modalStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    border: 'none'
+    border: 'none',
+    maxHeight: '80vh',
+    overflowY: 'auto'
   },
   overlay: { zIndex: 3, backgroundColor: 'rgba(0,0, 0, 0.6)' }
 }
