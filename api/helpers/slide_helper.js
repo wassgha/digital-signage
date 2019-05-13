@@ -21,8 +21,12 @@ function deleteSlide(slide, next, res) {
   return Slideshow.findById(slide.slideshow).then(slideshow => {
     if (!slideshow) return next(new Error('Slideshow not found'))
     slideshow.slides = slideshow.slides.filter(function(value) {
+      console.log('value', value, 'typeof ', typeof value)
+      console.log('slide._id', slide._id, 'typeof ', typeof slide._id)
+      console.log('different?', value != slide._id)
       return value != slide._id
     })
+    console.log('slideshow.slides after deletion ', slideshow.slides)
     return slideshow
       .save()
       .then(() => CommonHelper.broadcastUpdate(res.io))

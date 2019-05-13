@@ -71,20 +71,11 @@ class SlideEditDialog extends React.Component {
   }
 
   render() {
-    const { order, data, title, description, duration, type = 'photo', upload } = this.state
+    const { data, title, description, duration, type = 'photo', upload } = this.state
 
     return (
       <Dialog ref={ref => (this.dialog = ref)}>
         <Form>
-          <Input
-            type={'number'}
-            label={'Order'}
-            name={'order'}
-            value={order}
-            placeholder={'0'}
-            onChange={this.handleChange}
-            disabled
-          />
           <Input
             type={'select'}
             name={'type'}
@@ -105,6 +96,7 @@ class SlideEditDialog extends React.Component {
               name={'upload'}
               value={upload ? upload.preview : data}
               onChange={this.handleChange}
+              inline={true}
             />
           ) : type == 'freeform' || upload ? (
             <Input

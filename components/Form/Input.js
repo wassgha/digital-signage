@@ -197,6 +197,10 @@ class Input extends React.Component {
             text-align: center;
           }
 
+          .upload {
+            display: ${inline ? 'inline-block' : 'flex'};
+          }
+
           .photo {
             display: flex;
             flex-direction: row;

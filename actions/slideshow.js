@@ -39,3 +39,13 @@ export const updateSlideshow = (id, data, host = '') => {
     }
   })
 }
+
+export const reorderSlides = (id, oldIndex, newIndex, host = '') => {
+  return axios
+    .patch(host + '/api/v1/slideshow/' + id + '/reorder', { oldIndex, newIndex })
+    .then(res => {
+      if (res && res.data) {
+        return res.data
+      }
+    })
+}
