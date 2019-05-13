@@ -71,7 +71,7 @@ class SlideEditDialog extends React.Component {
   }
 
   render() {
-    const { order, data, title, description, duration, type = 'choose a type', upload } = this.state
+    const { order, data, title, description, duration, type = '', upload } = this.state
 
     return (
       <Dialog ref={ref => (this.dialog = ref)}>
