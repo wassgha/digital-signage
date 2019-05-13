@@ -66,12 +66,14 @@ class EditableWidget extends React.Component {
             .widget {
               background-color: rgba(108, 108, 108, 1);
               border-radius: 6px;
-              width: 100%;
-              height: 100%;
+              width: calc(100% - 16px);
+              height: calc(100% - 16px);
+              padding: 8px;
               display: flex;
               flex-direction: column;
               justify-content: center;
               cursor: move;
+              overflow: hidden;
             }
             .widget .info {
               display: flex;
@@ -88,7 +90,11 @@ class EditableWidget extends React.Component {
               color: white;
               font-family: 'Open Sans', sans-serif;
               text-transform: uppercase;
-              font-size: 16px;
+              font-size: 14px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              max-width: 100%;
             }
             .widget .info .name {
               color: white;

@@ -139,7 +139,7 @@ const Sidebar = ({ router }) => (
           line-height: 16px;
           padding-right: 4px;
         }
-        @media only screen and (max-width: 600px) {
+        @media only screen and (max-width: 900px) {
           .sidebar {
             min-width: 0px;
           }
