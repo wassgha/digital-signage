@@ -1,6 +1,7 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import _ from 'lodash'
 
 import Frame from '../components/Admin/Frame.js'
 import SlideList from '../components/Admin/SlideList.js'
@@ -10,6 +11,10 @@ import Button from '../components/Form/Button.js'
 import Dialog from '../components/Dialog.js'
 
 import { getSlideshow, updateSlideshow } from '../actions/slideshow'
+
+const updateSlideshowThrottled = _.debounce((id, data) => {
+  return updateSlideshow(id, data)
+}, 300)
 
 class Slideshow extends React.Component {
   constructor(props) {
@@ -49,8 +54,8 @@ class Slideshow extends React.Component {
         <div className='editable-title'>
           <input
             className='input'
-            placeholder='Enter slideshow name...'
-            value={(slideshow && slideshow.title) || 'Untitled Slideshow'}
+            placeholder='Untitled Slideshow'
+            value={slideshow && slideshow.title}
             onChange={event => {
               const target = event.target
               const title = target && target.value
@@ -62,7 +67,7 @@ class Slideshow extends React.Component {
                   }
                 },
                 () => {
-                  updateSlideshow(slideshow._id, { title }).then(this.refresh)
+                  updateSlideshowThrottled(slideshow._id, { title })
                 }
               )
             }}
