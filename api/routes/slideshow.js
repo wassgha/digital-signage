@@ -70,10 +70,7 @@ router
 
         const oldIndex = req.body.oldIndex
         const newIndex = req.body.newIndex
-        console.log('moving from ', oldIndex, ' to ', newIndex)
-        console.log('old slideshow.slides', slideshow.slides)
         slideshow.slides = arrayMove(slideshow.slides, oldIndex, newIndex)
-        console.log('new slideshow.slides', slideshow.slides)
 
         return slideshow
           .save()
