@@ -9,7 +9,8 @@ class SlideEditDialog extends React.Component {
     super(props)
 
     this.state = {
-      upload: props.upload
+      upload: props.upload,
+      ...(props.upload ? { type: 'photo' } : {})
     }
   }
 
@@ -20,7 +21,8 @@ class SlideEditDialog extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.upload != prevProps.upload) {
       this.setState({
-        upload: this.props.upload
+        upload: this.props.upload,
+        ...(this.props.upload ? { type: 'photo' } : {})
       })
     }
   }
@@ -71,7 +73,7 @@ class SlideEditDialog extends React.Component {
   }
 
   render() {
-    const { data, title, description, duration, type = '', upload } = this.state
+    const { data, title, description, duration, type = upload ? 'photo' : '', upload } = this.state
 
     return (
       <Dialog ref={ref => (this.dialog = ref)}>
