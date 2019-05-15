@@ -2,6 +2,7 @@ import React from 'react'
 
 import Frame from '../components/Admin/Frame.js'
 import Display from '../components/Display/Display.js'
+import { protect } from '../helpers/auth.js'
 
 class Preview extends React.Component {
   constructor(props) {
@@ -15,9 +16,9 @@ class Preview extends React.Component {
   }
 
   render() {
-    const { host = 'http://localhost' } = this.props
+    const { host = 'http://localhost', loggedIn } = this.props
     return (
-      <Frame>
+      <Frame loggedIn={loggedIn}>
         <h1>Preview</h1>
         <p>Below is a preview of the display as it will appear on the TV.</p>
         <div className='preview'>
@@ -55,4 +56,4 @@ class Preview extends React.Component {
     )
   }
 }
-export default Preview
+export default protect(Preview)

@@ -6,6 +6,7 @@ import Dialog from '../components/Dialog.js'
 import { Button } from '../components/Form'
 
 import { addSlideshow } from '../actions/slideshow'
+import { protect } from '../helpers/auth.js'
 
 class Slideshows extends React.Component {
   constructor(props) {
@@ -20,8 +21,9 @@ class Slideshows extends React.Component {
   }
 
   render() {
+    const { loggedIn } = this.props
     return (
-      <Frame>
+      <Frame loggedIn={loggedIn}>
         <h1>Slideshows</h1>
         <div className='wrapper'>
           <SlideshowList ref={this.slideshowList} />
@@ -52,4 +54,4 @@ class Slideshows extends React.Component {
   }
 }
 
-export default Slideshows
+export default protect(Slideshows)

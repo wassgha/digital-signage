@@ -9,6 +9,7 @@ import DropdownButton from '../components/DropdownButton'
 import Widgets from '../widgets'
 
 import { addWidget, getWidgets, deleteWidget, updateWidget } from '../actions/widgets'
+import { protect } from '../helpers/auth.js'
 
 const GridLayoutWithWidth = WidthProvider(GridLayout)
 
@@ -56,6 +57,7 @@ class Layout extends React.Component {
 
   render() {
     const { widgets } = this.state
+    const { loggedIn } = this.props
     const layout = widgets.map(widget => ({
       i: widget._id,
       x: widget.x || 0,
@@ -65,7 +67,7 @@ class Layout extends React.Component {
     }))
 
     return (
-      <Frame>
+      <Frame loggedIn={loggedIn}>
         <div className={'head'}>
           <h1>Layout</h1>
           <DropdownButton
@@ -124,4 +126,4 @@ class Layout extends React.Component {
   }
 }
 
-export default Layout
+export default protect(Layout)
