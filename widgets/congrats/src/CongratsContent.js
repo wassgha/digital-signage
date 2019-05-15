@@ -7,6 +7,7 @@
 import React, { Component } from 'react'
 import Lottie from 'react-lottie'
 import { config } from '@fortawesome/fontawesome-svg-core'
+import AutoScroll from '../../../components/AutoScroll'
 
 config.autoAddCss = false
 
@@ -41,11 +42,13 @@ class CongratsContent extends Component {
             }}
           />
         </div>
-        <div className='text'>
-          {text.split('\n').map(line => (
-            <div>{line || <br />}</div>
-          ))}
-        </div>
+        <AutoScroll style={{ justifyContent: 'center', display: 'flex', flexDirection: 'column' }}>
+          <div className='text'>
+            {text.split('\n').map(line => (
+              <div>{line || <br />}</div>
+            ))}
+          </div>
+        </AutoScroll>
         <style jsx>
           {`
             .congrats {
@@ -78,6 +81,7 @@ class CongratsContent extends Component {
               text-align: center;
               z-index: 1;
               word-break: break-word;
+              flex: 1;
             }
           `}
         </style>

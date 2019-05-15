@@ -1,4 +1,6 @@
 import React from 'react'
+import _ from 'lodash'
+
 import Dialog from '../Dialog'
 import { Form, Input, Button, ButtonGroup } from '../Form'
 
@@ -9,7 +11,8 @@ class SlideEditDialog extends React.Component {
     super(props)
 
     this.state = {
-      upload: props.upload
+      upload: props.upload,
+      ...(props.upload ? { type: 'photo' } : {})
     }
   }
 
@@ -20,18 +23,37 @@ class SlideEditDialog extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.upload != prevProps.upload) {
       this.setState({
-        upload: this.props.upload
+        upload: this.props.upload,
+        ...(this.props.upload ? { type: 'photo' } : {})
       })
     }
   }
 
   refresh = () => {
-    const { slide } = this.props
+    const { slide, upload } = this.props
     if (slide) {
       return getSlide(slide).then(data => {
-        this.setState(data)
+        this.setState({
+          data: undefined,
+          title: undefined,
+          description: undefined,
+          type: undefined,
+          duration: undefined,
+          ...data,
+          upload,
+          ...(upload ? { type: 'photo' } : {})
+        })
       })
     } else {
+      this.setState({
+        data: undefined,
+        title: undefined,
+        description: undefined,
+        type: undefined,
+        duration: undefined,
+        upload,
+        ...(upload ? { type: 'photo' } : {})
+      })
       return Promise.resolve()
     }
   }
@@ -60,18 +82,18 @@ class SlideEditDialog extends React.Component {
     const { slide, slideshow } = this.props
     const { upload, ...otherProps } = this.state
     if (slideshow) {
-      return addSlide(slideshow, upload, otherProps).then(() => {
+      return addSlide(slideshow, upload, _.pickBy(otherProps, v => v !== undefined)).then(() => {
         this.close()
       })
     } else {
-      return updateSlide(slide, upload, otherProps).then(() => {
+      return updateSlide(slide, upload, _.pickBy(otherProps, v => v !== undefined)).then(() => {
         this.close()
       })
     }
   }
 
   render() {
-    const { data, title, description, duration, type = '', upload } = this.state
+    const { data, title, description, duration, type = 'photo', upload } = this.state
 
     return (
       <Dialog ref={ref => (this.dialog = ref)}>

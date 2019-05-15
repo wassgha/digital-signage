@@ -21,7 +21,7 @@ function deleteSlide(slide, next, res) {
   return Slideshow.findById(slide.slideshow).then(slideshow => {
     if (!slideshow) return next(new Error('Slideshow not found'))
     slideshow.slides = slideshow.slides.filter(function(value) {
-      return value != slide._id
+      return !slide._id.equals(value)
     })
     return slideshow
       .save()

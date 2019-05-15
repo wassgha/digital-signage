@@ -3,8 +3,9 @@
  */
 
 import React, { Component } from 'react'
-import Lottie from 'react-lottie'
 import { config } from '@fortawesome/fontawesome-svg-core'
+
+import AutoScroll from '../../../components/AutoScroll'
 
 config.autoAddCss = false
 
@@ -24,12 +25,20 @@ class ListContent extends Component {
           </div>
         )}
         <div className='list'>
-          {list.map(({ text, label }) => (
-            <div className='element'>
-              <span className='text'>{text || 'Insert some text ...'}</span>
-              {label && <div className='label'>{label}</div>}
-            </div>
-          ))}
+          <AutoScroll
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start'
+            }}
+          >
+            {list.map(({ text, label }) => (
+              <div className='element'>
+                <span className='text'>{text || 'Insert some text ...'}</span>
+                {label && <div className='label'>{label}</div>}
+              </div>
+            ))}
+          </AutoScroll>
         </div>
         <style jsx>
           {`

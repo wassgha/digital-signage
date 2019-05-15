@@ -199,6 +199,9 @@ class Input extends React.Component {
 
           .upload {
             display: ${inline ? 'inline-block' : 'flex'};
+            cursor: pointer;
+            outline: none;
+            max-width: 100%;
           }
 
           .photo {
@@ -217,9 +220,7 @@ class Input extends React.Component {
             text-align: center;
             border-radius: 4px;
             border: 2px dashed #adadad;
-            cursor: pointer;
             background: white;
-            outline: none;
             height: 40px;
           }
 
@@ -228,6 +229,7 @@ class Input extends React.Component {
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+            max-width: 400px;
           }
 
           .photo .thumbnail {
