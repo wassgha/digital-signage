@@ -72,7 +72,7 @@ class Login extends Component {
                 <span className={'alert-text'}>
                   {alert == 'success'
                     ? 'Successfully logged in to your account.'
-                    : 'Username or password unrecognized.'}
+                    : 'Username or password not recognized.'}
                 </span>
               </div>
             )}
