@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faClock } from '@fortawesome/free-regular-svg-icons'
+import { faClock, faImages } from '@fortawesome/free-regular-svg-icons'
 import { faTrash, faPlay } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 
@@ -26,13 +26,21 @@ class SlideshowCard extends Component {
           </div>
           <div className='middle'>
             <div className='title'>{value.title || 'Untitled Slideshow'}</div>
-            <div className='duration'>
-              <div className='icon'>
-                <FontAwesomeIcon icon={faClock} fixedWidth color='#878787' />
+            <div className='info'>
+              <div className='duration'>
+                <div className='icon'>
+                  <FontAwesomeIcon icon={faClock} fixedWidth color='#878787' />
+                </div>
+                <span className='text'>
+                  {value.slides.reduce((acc, slide) => acc + slide.duration, 0)}s
+                </span>
               </div>
-              <span className='text'>
-                {value.slides.reduce((acc, slide) => acc + slide.duration, 0)}s
-              </span>
+              <div className='slidenum'>
+                <div className='icon'>
+                  <FontAwesomeIcon icon={faImages} fixedWidth color='#878787' />
+                </div>
+                <span className='text'>{value.slides.length}</span>
+              </div>
             </div>
           </div>
           <div className='right'>
@@ -72,6 +80,7 @@ class SlideshowCard extends Component {
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 color: #4f4f4f;
+                margin-bottom: 8px;
               }
 
               .left {
@@ -81,20 +90,32 @@ class SlideshowCard extends Component {
                 padding-right: 8px;
               }
 
-              .duration {
+              .info {
+                display: flex;
+                flex-direction: row;
+              }
+
+              .duration,
+              .slidenum {
                 font-family: 'Open Sans', sans-serif;
                 font-size: 14px;
                 color: #878787;
               }
 
-              .duration .icon {
+              .duration .icon,
+              .slidenum .icon {
                 margin-right: 4px;
                 display: inline;
                 vertical-align: middle;
               }
 
-              .duration .text {
+              .duration .text,
+              .slidenum .text {
                 vertical-align: middle;
+              }
+
+              .duration {
+                margin-right: 12px;
               }
 
               .middle {

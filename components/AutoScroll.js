@@ -32,9 +32,7 @@ class AutoScroll extends React.Component {
     const { children, style = {} } = this.props
     return (
       <div className='container' ref={this.container} style={style}>
-        <span ref={this.top} />
         {children}
-        <span ref={this.bottom} />
         <style jsx>{`
           .container {
             display: flex;
