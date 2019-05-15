@@ -31,6 +31,17 @@ class DisplayPage extends React.Component {
             }
           `}
         </style>
+        <style>
+          {`
+            * {
+              -ms-overflow-style: none;
+              scrollbar-width: none;
+            }
+            *::-webkit-scrollbar {
+                display: none;  // Safari and Chrome
+            }
+          `}
+        </style>
       </div>
     )
   }

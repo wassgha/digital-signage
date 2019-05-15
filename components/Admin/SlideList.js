@@ -1,11 +1,13 @@
 import { Component } from 'react'
 import React from 'react'
 import ContentLoader from 'react-content-loader'
-import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc'
+import { SortableContainer, SortableElement } from 'react-sortable-hoc'
+import arrayMove from 'array-move'
 
 import SlideCard from './SlideCard'
 
 import { getSlides } from '../../actions/slide'
+import { reorderSlides } from '../../actions/slideshow'
 
 const SortableItem = SortableElement(SlideCard)
 
@@ -14,7 +16,13 @@ const SortableList = SortableContainer(({ items, refresh }) => {
     <div className={'list'}>
       <div className={'timeline'} />
       {items.map((value, index) => (
-        <SortableItem key={`item-${index}`} index={index} value={value} refresh={refresh} />
+        <SortableItem
+          key={`item-${index}`}
+          index={index}
+          id={index}
+          value={value}
+          refresh={refresh}
+        />
       ))}
       <style jsx>
         {`
@@ -51,22 +59,28 @@ class SlideList extends Component {
     const { slideshow } = this.props
     getSlides(slideshow).then(slides => {
       this.setState({
-        slides: slides.sort((a, b) => a.order - b.order)
+        slides: slides
       })
     })
   }
 
   onSortEnd = ({ oldIndex, newIndex }) => {
-    this.setState(({ slides }) => ({
-      slides: arrayMove(slides, oldIndex, newIndex)
-    }))
+    const { slideshow } = this.props
+    this.setState(
+      {
+        slides: [...arrayMove(this.state.slides, oldIndex, newIndex)]
+      },
+      () => {
+        reorderSlides(slideshow, oldIndex, newIndex)
+      }
+    )
   }
 
   refresh = () => {
     const { slideshow } = this.props
     return getSlides(slideshow).then(slides => {
       return this.setState({
-        slides: slides.sort((a, b) => a.order - b.order)
+        slides: slides
       })
     })
   }
@@ -84,8 +98,8 @@ class SlideList extends Component {
     ) : (
       Array(4)
         .fill()
-        .map(() => (
-          <ContentLoader height={120} width={640}>
+        .map((i, index) => (
+          <ContentLoader height={120} width={640} key={`loading-${index}`}>
             <rect x='0' y='0' rx='5' ry='5' width='100%' height='100' />
           </ContentLoader>
         ))

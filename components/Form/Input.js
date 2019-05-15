@@ -107,7 +107,7 @@ class Input extends React.Component {
               return (
                 <div {...getRootProps()} className='upload'>
                   <input {...getInputProps()} />
-                  {isDragActive || value == '' ? (
+                  {isDragActive || (!value || value == '') ? (
                     <div className={'photo-upload'}>Drop a photo here...</div>
                   ) : (
                     <div className={'photo'}>
@@ -137,7 +137,7 @@ class Input extends React.Component {
         <style jsx>{`
           .inputGroup {
             margin-bottom: 16px;
-            display: ${expand ? 'flex' : 'inline-block'};
+            display: ${!inline ? 'flex' : 'inline-block'};
             flex-direction: ${inline ? 'row' : 'column'};
             justify-content: flex-start;
           }
@@ -188,12 +188,20 @@ class Input extends React.Component {
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
+            padding: 16px;
           }
 
           input[type='number'] {
             min-width: 50px !important;
             max-width: 50px !important;
             text-align: center;
+          }
+
+          .upload {
+            display: ${inline ? 'inline-block' : 'flex'};
+            cursor: pointer;
+            outline: none;
+            max-width: 100%;
           }
 
           .photo {
@@ -212,9 +220,7 @@ class Input extends React.Component {
             text-align: center;
             border-radius: 4px;
             border: 2px dashed #adadad;
-            cursor: pointer;
             background: white;
-            outline: none;
             height: 40px;
           }
 
@@ -223,6 +229,7 @@ class Input extends React.Component {
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+            max-width: 400px;
           }
 
           .photo .thumbnail {

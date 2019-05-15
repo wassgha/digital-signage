@@ -29,6 +29,8 @@
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "@zeit/next-css": "^1.0.1",
+    "animated-scroll-to": "^1.2.2",
+    "array-move": "^2.1.0",
     "axios": "^0.18.0",
     "babel-eslint": "^10.0.1",
     "body-parser": "^1.18.3",

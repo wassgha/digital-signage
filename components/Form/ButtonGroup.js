@@ -2,9 +2,9 @@ import React from 'react'
 
 class ButtonGroup extends React.Component {
   render() {
-    const { children, align = 'right' } = this.props
+    const { children, align = 'right', style = {} } = this.props
     return (
-      <div className={'btnGroup'}>
+      <div className={'btnGroup'} style={style}>
         {children}
         <style jsx>{`
           .btnGroup {
