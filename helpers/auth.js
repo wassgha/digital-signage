@@ -1,12 +1,24 @@
 import Router from 'next/router'
 import axios from 'axios'
 import React from 'react'
+import { parseCookies, setCookie, destroyCookie } from 'nookies'
 
-export const login = ({ username, password }) => {
-  return axios.post('/api/v1/user/login', { username, password }).then(res => {
-    if (res.data && res.data.success) {
+export const login = ({ username, password }, host = '') => {
+  return axios.post(host + '/api/v1/user/login', { username, password }).then(res => {
+    if (res && res.data && res.data.success) {
       Router.push('/layout')
       window.location.href = '/layout'
+    }
+    return res.data
+  })
+}
+
+export const logout = (host = '') => {
+  return axios.get(host + '/api/v1/user/logout').then(res => {
+    if (res && res.data) {
+      destroyCookie({}, 'loggedIn')
+      Router.push('/login')
+      window.location.href = '/login'
     }
     return res.data
   })
@@ -16,7 +28,14 @@ export const protect = Component =>
   class ProtectedPage extends React.Component {
     static async getInitialProps(ctx) {
       const { req, res } = ctx
-      if (req && req.user) {
+      const alreadyLoggedIn = parseCookies(ctx).loggedIn
+      if ((req && req.user) || alreadyLoggedIn) {
+        if (!alreadyLoggedIn) {
+          setCookie(ctx, 'loggedIn', true, {
+            maxAge: 30 * 24 * 60 * 60,
+            path: '/'
+          })
+        }
         const props = Component.getInitialProps ? await Component.getInitialProps({ ...ctx }) : {}
         return {
           ...props,

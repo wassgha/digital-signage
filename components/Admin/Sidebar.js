@@ -9,6 +9,8 @@ import { withRouter } from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faKey, faTv, faThLarge, faImages, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
+import { logout } from '../../helpers/auth'
+
 class Sidebar extends Component {
   render() {
     const { router, loggedIn } = this.props
@@ -68,14 +70,12 @@ class Sidebar extends Component {
           ))}
         </ul>
         {loggedIn && (
-          <Link href='/api/v1/user/logout'>
-            <div className='logout'>
-              <a>
-                <FontAwesomeIcon icon={faSignOutAlt} fixedWidth />
-                <span className={'text'}>{'   Logout'}</span>
-              </a>
-            </div>
-          </Link>
+          <div className='logout' onClick={() => logout()}>
+            <a>
+              <FontAwesomeIcon icon={faSignOutAlt} fixedWidth />
+              <span className={'text'}>{'   Logout'}</span>
+            </a>
+          </div>
         )}
         <style jsx>
           {`
