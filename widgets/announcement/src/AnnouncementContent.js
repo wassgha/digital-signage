@@ -18,7 +18,7 @@ library.add(fab)
 
 const DEFAULT_COLOR = '#708090'
 const DEFAULT_TEXT_COLOR = '#ffffff'
-const DEFAULT_ACCENT_COLOR = '#FFC273'
+const DEFAULT_ACCENT_COLOR = '#EDC951'
 const DEFAULT_TEXT = ''
 const DEFAULT_TITLE_TEXT_COLOR = '#fff0f0'
 
