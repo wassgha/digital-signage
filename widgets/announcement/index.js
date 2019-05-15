@@ -9,11 +9,11 @@ export default class Announcement extends BaseWidget {
       version: '0.1',
       icon: 'exclamation-triangle',
       defaultData: {
-        text: 'You did not fill this out',
-        color: '#34495e',
+        text: '',
+        color: '#708090',
         textColor: '#ffffff',
         titleColor: '#fff0f0',
-        accentColor: '#e95420'
+        accentColor: '#FFC273'
       }
     })
   }

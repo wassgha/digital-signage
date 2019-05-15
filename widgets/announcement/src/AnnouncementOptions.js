@@ -72,6 +72,7 @@ class AnnouncementOptions extends Component {
           <Input
             inline={false}
             label={'Text to be displayed'}
+            placeholder={'Enter an announcement here ...'}
             type={'textarea'}
             name={'text'}
             value={text}
