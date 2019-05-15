@@ -29,7 +29,9 @@ class ListContent extends Component {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'flex-start'
+              alignItems: 'flex-start',
+              paddingTop: 12,
+              paddingBottom: 12
             }}
           >
             {list.map(({ text, label }) => (
@@ -67,7 +69,8 @@ class ListContent extends Component {
               z-index: 1;
             }
             .list {
-              padding: 12px;
+              padding-right: 12px;
+              padding-left: 12px;
               display: flex;
               flex-direction: column;
               justify-content: center;
