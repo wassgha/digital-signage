@@ -42,7 +42,7 @@ class CongratsContent extends Component {
             }}
           />
         </div>
-        <AutoScroll style={{ justifyContent: 'center', display: 'flex', flexDirection: 'column' }}>
+        <AutoScroll style={{ display: 'block' }}>
           <div className='text'>
             {text.split('\n').map(line => (
               <div>{line || <br />}</div>
@@ -81,7 +81,11 @@ class CongratsContent extends Component {
               text-align: center;
               z-index: 1;
               word-break: break-word;
-              flex: 1;
+              min-height: 100%;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              box-sizing: border-box;
             }
           `}
         </style>
