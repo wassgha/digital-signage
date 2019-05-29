@@ -20,7 +20,7 @@ Administrator Panel: Slides inside a slideshow
 
 Use the demo website at [http://digitaldisplay.herokuapp.com](http://digitaldisplay.herokuapp.com) (username: **demo**, password: **demo**)
 
-#### How to Run:
+### How to Run:
 
 1. Set up a MongoDB installation locally and create a `digitaldisplay` database
 
@@ -34,3 +34,20 @@ Use the demo website at [http://digitaldisplay.herokuapp.com](http://digitaldisp
 npm install
 npm run dev
 ```
+
+### Features
+
+- ✅ Automatic refresh on content change (you should never need to touch a display once set up!)
+- ✅ Totally modular, with a comprehensive widget management system (adding a widget is very simple!)
+- ✅ Multiple built-in widgets to get you started:
+  - Slideshow widget
+  - Weather widget
+  - "Congratulations" widget
+  - Youtube embed widget
+  - Web (iframe) widget
+  - Standalone image widget
+  - Announcements widget
+  - List widget (can be used a directory, time sheet, etc.)
+- ✅ Flexible, responsive widget grid that allows you to drag, drop and resize widgets
+- ✅ Versatile slideshow system that allows multiple slideshows, multiple slide types (images, videos, youtube, web, etc.) inside the same display with variable durations, titles and descriptions for each slide!
+- ✖ Support for multiple displays (in progress)
