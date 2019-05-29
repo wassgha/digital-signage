@@ -18,7 +18,7 @@ Administrator Panel: Slides inside a slideshow
 
 ### Demo
 
-Use the demo website at [http://digitaldisplay.herokuapp.com](http://digitaldisplay.herokuapp.com)
+Use the demo website at [http://digitaldisplay.herokuapp.com](http://digitaldisplay.herokuapp.com) (username: **demo**, password: **demo**)
 
 #### How to Run:
 
