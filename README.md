@@ -42,32 +42,32 @@ npm run dev
 - ✅ Multiple built-in widgets to get you started:
   - ✅ Slideshow widget
 
-  ![Animated screencast of the slideshow widget](assets/slideshow.gif?raw=true)<!-- .element width="150" -->
+    <img src="assets/slideshow.gif?raw=true" height="200" alt="Animated screencast of the slideshow widget" />
 
   - ✅ Weather widget
 
-    ![Screenshot of the weather widget](assets/weather.png?raw=true)<!-- .element width="150" -->
+    <img src="assets/weather.png?raw=true" height="200" alt="Screenshot of the weather widget" />
 
   - ✅ "Congratulations" widget
 
-    ![Animated screencast of the congratulations widget](assets/congratulations.gif?raw=true)<!-- .element width="150" -->
+    <img src="assets/congratulations.gif?raw=true" height="200" alt="Animated screencast of the congratulations widget" />
 
   - ✅ Youtube embed widget
   - ✅ Web (iframe) widget
 
-    ![Screenshot of the web widget](assets/web.png?raw=true)<!-- .element width="150" -->
+    <img src="assets/web.png?raw=true" height="200" alt="Screenshot of the web widget" />
 
   - ✅ Standalone image widget
 
-    ![Screenshot of the image widget](assets/standalone-image.png?raw=true)<!-- .element width="150" -->
+    <img src="assets/standalone-image.png?raw=true" height="200" alt="Screenshot of the image widget" />
 
   - ✅ Announcements widget
 
-    ![Screenshot of the announcements widget](assets/announcements.png?raw=true)<!-- .element width="150" -->
+    <img src="assets/announcements.png?raw=true" height="200" alt="Screenshot of the announcements widget" />
 
   - ✅ List widget (can be used a directory, time sheet, etc.)
 
-    ![Animated screencast of the list widget](assets/list.gif?raw=true)<!-- .element width="150" -->
+    <img src="assets/list.gif?raw=true" height="200" alt="Animated screencast of the list widget" />
 
 - ✅ Flexible, responsive widget grid that allows you to drag, drop and resize widgets
 - ✅ Versatile slideshow system that allows multiple slideshows, multiple slide types (images, videos, youtube, web, etc.) inside the same display with variable durations, titles and descriptions for each slide!
