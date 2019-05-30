@@ -34,8 +34,6 @@ class SlideCard extends Component {
                   ? '#c23616'
                   : value.type == 'web'
                   ? '#0097e6'
-                  : value.type == 'freeform'
-                  ? '#E68300'
                   : 'transparent'
             }}
           >
@@ -44,9 +42,6 @@ class SlideCard extends Component {
             )}
             {value.type == 'web' && (
               <FontAwesomeIcon icon={faGlobe} fixedWidth size='lg' color='#FFFFFF' />
-            )}
-            {value.type == 'freeform' && (
-              <FontAwesomeIcon icon={faShapes} fixedWidth size='lg' color='#FFFFFF' />
             )}
           </div>
         </div>

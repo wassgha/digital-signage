@@ -42,7 +42,7 @@ npm run dev
 - ✅ Multiple built-in widgets to get you started:
   - ✅ Slideshow widget
 
-    <img src="assets/slideshow.gif?raw=true" height="200" alt="Animated screencast of the slideshow widget" />
+    <img src="assets/slideshow.gif?raw=true" height="300" alt="Animated screencast of the slideshow widget" />
 
   - ✅ Weather widget
 
