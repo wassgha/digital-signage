@@ -8,6 +8,7 @@ import { Component } from 'react'
 import { withRouter } from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faKey, faTv, faThLarge, faImages, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import DropdownButton from '../DropdownButton'
 
 import { logout } from '../../helpers/auth'
 
@@ -45,15 +46,31 @@ class Sidebar extends Component {
         ]
     return (
       <div className='sidebar'>
-        <div className='logo'>
-          <div className='icon'>
-            <FontAwesomeIcon icon={faTv} fixedWidth color='#7bc043' />
+        <DropdownButton
+          onSelect={this.navigateToDisplay}
+          choices={[
+            { _id: '32tin2tinfsfsf', name: 'Acopian Display #1' },
+            { _id: '32tin2regtinfsfsf', name: 'Acopian Display #2' }
+          ].map(display => ({
+            key: display._id,
+            name: display.name
+          }))}
+          style={{ marginTop: 20, marginBottom: 20 }}
+          menuStyle={{ left: 20, top: '70%' }}
+        >
+          <div className='logo'>
+            <div className='icon'>
+              <FontAwesomeIcon icon={faTv} fixedWidth color='#7bc043' />
+            </div>
+            <div className='info'>
+              <span className='name'>Acopian Fifth Floor</span>
+              <span className='status online'>online</span>
+            </div>
+            <div className='caret'>
+              <FontAwesomeIcon icon={'caret-down'} fixedWidth />
+            </div>
           </div>
-          <div className='info'>
-            <span className='name'>Acopian Fifth Floor</span>
-            <span className='status online'>online</span>
-          </div>
-        </div>
+        </DropdownButton>
         <ul className='menu'>
           {menu.map(item => (
             <Link href={item.path} key={item.path}>
@@ -114,10 +131,10 @@ class Sidebar extends Component {
             .logo {
               display: flex;
               flex-direction: row;
-              margin-top: 20px;
-              margin-bottom: 20px;
               padding-right: 10px;
               padding-left: 10px;
+              position: relative;
+              cursor: pointer;
             }
             .logo .icon {
               min-width: 3em;
@@ -152,6 +169,12 @@ class Sidebar extends Component {
               vertical-align: middle;
               line-height: 16px;
               padding-right: 4px;
+            }
+            .logo .caret {
+              position: absolute;
+              top: 50%;
+              margin-top: -8px;
+              right: 16px;
             }
             @media only screen and (max-width: 900px) {
               .sidebar {

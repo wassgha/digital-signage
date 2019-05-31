@@ -15,6 +15,9 @@ import EmptyWidget from '../Widgets/EmptyWidget'
 
 import { getWidgets } from '../../actions/widgets'
 
+const STATUS_BAR_ITEMS = ['date', 'spacer', 'connection', 'time']
+const LAYOUT = 'spaced'
+
 class Display extends React.Component {
   constructor(props) {
     super(props)
@@ -47,10 +50,10 @@ class Display extends React.Component {
       h: widget.h || 1
     }))
 
-    const GridLayoutWithHeight = HeightProvider(GridLayout, this.container)
+    const GridLayoutWithHeight = HeightProvider(GridLayout, this.container, LAYOUT)
 
     return (
-      <Frame>
+      <Frame statusBar={STATUS_BAR_ITEMS}>
         <div className={'gridContainer'} ref={ref => (this.container = ref)}>
           <GridLayoutWithHeight
             className='layout'
@@ -58,6 +61,7 @@ class Display extends React.Component {
             isResizable={false}
             layout={layout}
             cols={6}
+            margin={LAYOUT == 'spaced' ? [10, 10] : [0, 0]}
           >
             {widgets.map(widget => {
               const Widget = Widgets[widget.type] ? Widgets[widget.type].Widget : EmptyWidget
@@ -73,10 +77,10 @@ class Display extends React.Component {
               .gridContainer {
                 flex: 1;
                 overflow: hidden;
-                margin-bottom: 10px;
+                margin-bottom: ${LAYOUT == 'spaced' ? 10 : 0}px;
               }
               .widget {
-                border-radius: 6px;
+                border-radius: ${LAYOUT == 'spaced' ? 6 : 0}px;
                 overflow: hidden;
               }
             `}
