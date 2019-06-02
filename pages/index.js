@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from 'next/link'
+import Router from 'next/router'
 import DropdownButton from '../components/DropdownButton'
 
 import { getDisplays } from '../actions/display'
@@ -20,7 +20,13 @@ class Index extends React.Component {
     return { displays: displayList, host: host }
   }
 
-  navigateToDisplay = () => {}
+  navigateToAdmin = id => {
+    Router.push('/layout/' + id)
+  }
+
+  navigateToDisplay = id => {
+    Router.push('/display/' + id)
+  }
 
   render() {
     const { displays = [] } = this.state
@@ -33,7 +39,7 @@ class Index extends React.Component {
               icon='chevron-down'
               text='Admin Home'
               style={{ ...styles.btn, ...styles.btnAdmin }}
-              onSelect={this.navigateToDisplay}
+              onSelect={this.navigateToAdmin}
               choices={displays.map(display => ({
                 key: display._id,
                 name: display.name
