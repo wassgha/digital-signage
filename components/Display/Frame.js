@@ -30,7 +30,7 @@ class Frame extends React.Component {
   }
 
   render() {
-    const { children, statusBar = ['date', 'spacer', 'connection', 'time'] } = this.props
+    const { children, statusBar = [] } = this.props
     return (
       <div className='display'>
         {statusBar && statusBar.length > 0 && (

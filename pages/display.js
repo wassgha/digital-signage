@@ -12,16 +12,18 @@ class DisplayPage extends React.Component {
     super(props)
   }
 
-  static async getInitialProps({ req }) {
+  static async getInitialProps({ query, req }) {
+    const id = query && query.id
     const host =
       req && req.headers && req.headers.host ? 'http://' + req.headers.host : window.location.origin
-    return { host: host }
+    return { host, id }
   }
+
   render() {
-    const { host } = this.props
+    const { host, id } = this.props
     return (
       <div className={'container'}>
-        <Display host={host} />
+        <Display host={host} display={id} />
         <style jsx>
           {`
             .container {

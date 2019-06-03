@@ -14,12 +14,13 @@ import { protect } from '../helpers/auth.js'
 const GridLayoutWithWidth = WidthProvider(GridLayout)
 
 class Layout extends React.Component {
-  static async getInitialProps({ req }) {
+  static async getInitialProps({ req, query }) {
     const host =
       req && req.headers && req.headers.host ? 'http://' + req.headers.host : window.location.origin
-    const widgets = await getWidgets(host)
+    const id = query && query.id
+    const widgets = await getWidgets(id, host)
 
-    return { widgets }
+    return { id, widgets }
   }
 
   constructor(props) {
@@ -30,14 +31,16 @@ class Layout extends React.Component {
   }
 
   refresh = () => {
-    return getWidgets().then(widgets => {
+    const { id } = this.props
+    return getWidgets(id).then(widgets => {
       this.setState({ widgets })
     })
   }
 
   addWidget = type => {
+    const { id } = this.props
     const widgetDefinition = Widgets[type]
-    return addWidget(type, widgetDefinition && widgetDefinition.defaultData).then(this.refresh)
+    return addWidget(id, type, widgetDefinition && widgetDefinition.defaultData).then(this.refresh)
   }
 
   deleteWidget = id => {
