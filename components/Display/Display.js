@@ -7,6 +7,7 @@ import React from 'react'
 import GridLayout from 'react-grid-layout'
 import socketIOClient from 'socket.io-client'
 import _ from 'lodash'
+import { view } from 'react-easy-state'
 
 import Frame from './Frame.js'
 import HeightProvider from '../Widgets/HeightProvider'
@@ -27,7 +28,6 @@ class Display extends React.Component {
       statusBar: DEFAULT_STATUS_BAR
     }
     this.throttledRefresh = _.debounce(this.refresh, 1500)
-    this.refresh()
   }
 
   componentDidMount() {
@@ -35,6 +35,10 @@ class Display extends React.Component {
     const { host = 'http://localhost' } = this.props
     const socket = socketIOClient(host)
     socket.on('admin:update', () => this.throttledRefresh())
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.display != this.props.display) this.refresh()
   }
 
   refresh = () => {
@@ -97,4 +101,4 @@ class Display extends React.Component {
   }
 }
 
-export default Display
+export default view(Display)

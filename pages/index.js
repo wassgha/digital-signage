@@ -21,11 +21,11 @@ class Index extends React.Component {
   }
 
   navigateToAdmin = id => {
-    Router.push('/layout/' + id)
+    Router.push('/layout?display=' + id)
   }
 
   navigateToDisplay = id => {
-    Router.push('/display/' + id)
+    Router.push('/display?display=' + id)
   }
 
   render() {

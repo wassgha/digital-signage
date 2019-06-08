@@ -1,18 +1,27 @@
 import React from 'react'
+import { view } from 'react-easy-state'
 
 import Frame from '../components/Admin/Frame.js'
 import Display from '../components/Display/Display.js'
 import { protect } from '../helpers/auth.js'
+import { display } from '../stores'
 
 class Preview extends React.Component {
   constructor(props) {
     super(props)
   }
 
-  static async getInitialProps({ req }) {
+  static async getInitialProps({ req, query }) {
     const host =
       req && req.headers && req.headers.host ? 'http://' + req.headers.host : window.location.origin
-    return { host: host }
+    const displayId = query && query.display
+
+    return { host, displayId }
+  }
+
+  componentDidMount() {
+    const { displayId } = this.props
+    display.setId(displayId)
   }
 
   render() {
@@ -23,7 +32,7 @@ class Preview extends React.Component {
         <p>Below is a preview of the display as it will appear on the TV.</p>
         <div className='preview'>
           <div className='content'>
-            <Display host={host} />
+            <Display host={host} display={display.id} />
           </div>
         </div>
         <style jsx>
@@ -56,4 +65,4 @@ class Preview extends React.Component {
     )
   }
 }
-export default protect(Preview)
+export default protect(view(Preview))

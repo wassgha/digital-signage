@@ -2,9 +2,11 @@ import { Component } from 'react'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTv, faCheck, faTimes, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+import { view } from 'react-easy-state'
 
 import Frame from '../components/Admin/Frame.js'
 import { login } from '../helpers/auth.js'
+import { display } from '../stores'
 
 class Login extends Component {
   constructor(props) {
@@ -15,6 +17,12 @@ class Login extends Component {
       password: '',
       alert: null
     }
+  }
+
+  static async getInitialProps({ query }) {
+    const displayId = query && query.display
+    display.setId(displayId)
+    return {}
   }
 
   performLogin = () => {
@@ -208,4 +216,4 @@ class Login extends Component {
   }
 }
 
-export default Login
+export default view(Login)

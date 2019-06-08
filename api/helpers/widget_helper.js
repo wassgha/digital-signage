@@ -3,7 +3,6 @@ const CommonHelper = require('./common_helper')
 
 function addWidget(req, res) {
   let widget = req.crudify.result
-  console.log('inside addWidget middleware ')
   return Display.findById(widget.display)
     .then(display => {
       if (!display) return res.status(404).json({ error: 'Display not found' })

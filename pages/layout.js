@@ -1,5 +1,6 @@
 import React from 'react'
 import GridLayout from 'react-grid-layout'
+import { view } from 'react-easy-state'
 
 import Frame from '../components/Admin/Frame.js'
 import EditableWidget from '../components/Admin/EditableWidget'
@@ -10,6 +11,7 @@ import Widgets from '../widgets'
 
 import { addWidget, getWidgets, deleteWidget, updateWidget } from '../actions/widgets'
 import { protect } from '../helpers/auth.js'
+import { display } from '../stores'
 
 const GridLayoutWithWidth = WidthProvider(GridLayout)
 
@@ -17,10 +19,10 @@ class Layout extends React.Component {
   static async getInitialProps({ req, query }) {
     const host =
       req && req.headers && req.headers.host ? 'http://' + req.headers.host : window.location.origin
-    const id = query && query.id
-    const widgets = await getWidgets(id, host)
+    const displayId = query && query.display
+    const widgets = await getWidgets(displayId, host)
 
-    return { id, widgets }
+    return { widgets, displayId }
   }
 
   constructor(props) {
@@ -30,17 +32,22 @@ class Layout extends React.Component {
     }
   }
 
+  componentDidMount() {
+    const { displayId } = this.props
+    display.setId(displayId)
+  }
+
   refresh = () => {
-    const { id } = this.props
-    return getWidgets(id).then(widgets => {
+    return getWidgets(display.id).then(widgets => {
       this.setState({ widgets })
     })
   }
 
   addWidget = type => {
-    const { id } = this.props
     const widgetDefinition = Widgets[type]
-    return addWidget(id, type, widgetDefinition && widgetDefinition.defaultData).then(this.refresh)
+    return addWidget(display.id, type, widgetDefinition && widgetDefinition.defaultData).then(
+      this.refresh
+    )
   }
 
   deleteWidget = id => {
@@ -129,4 +136,4 @@ class Layout extends React.Component {
   }
 }
 
-export default protect(Layout)
+export default protect(view(Layout))

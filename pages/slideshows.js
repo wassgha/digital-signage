@@ -1,4 +1,5 @@
 import React from 'react'
+import { view } from 'react-easy-state'
 
 import Frame from '../components/Admin/Frame.js'
 import SlideshowList from '../components/Admin/SlideshowList.js'
@@ -7,6 +8,8 @@ import { Button } from '../components/Form'
 
 import { addSlideshow } from '../actions/slideshow'
 import { protect } from '../helpers/auth.js'
+
+import { display } from '../stores'
 
 class Slideshows extends React.Component {
   constructor(props) {
@@ -18,6 +21,16 @@ class Slideshows extends React.Component {
     return addSlideshow().then(() => {
       this.slideshowList && this.slideshowList.current && this.slideshowList.current.refresh()
     })
+  }
+
+  static async getInitialProps({ query }) {
+    const displayId = query && query.display
+    return { displayId }
+  }
+
+  componentDidMount() {
+    const { displayId } = this.props
+    display.setId(displayId)
   }
 
   render() {
@@ -54,4 +67,4 @@ class Slideshows extends React.Component {
   }
 }
 
-export default protect(Slideshows)
+export default protect(view(Slideshows))

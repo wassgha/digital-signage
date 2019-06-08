@@ -4,8 +4,10 @@
  */
 
 import React from 'react'
+import { view } from 'react-easy-state'
 
 import Display from '../components/Display/Display.js'
+import { display } from '../stores'
 
 class DisplayPage extends React.Component {
   constructor(props) {
@@ -13,17 +15,23 @@ class DisplayPage extends React.Component {
   }
 
   static async getInitialProps({ query, req }) {
-    const id = query && query.id
+    const displayId = query && query.display
     const host =
       req && req.headers && req.headers.host ? 'http://' + req.headers.host : window.location.origin
-    return { host, id }
+
+    return { host, displayId }
+  }
+
+  componentDidMount() {
+    const { displayId } = this.props
+    display.setId(displayId)
   }
 
   render() {
-    const { host, id } = this.props
+    const { host } = this.props
     return (
       <div className={'container'}>
-        <Display host={host} display={id} />
+        <Display host={host} display={display.id} />
         <style jsx>
           {`
             .container {
@@ -49,4 +57,4 @@ class DisplayPage extends React.Component {
   }
 }
 
-export default DisplayPage
+export default view(DisplayPage)

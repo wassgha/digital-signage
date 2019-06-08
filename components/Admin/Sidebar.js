@@ -9,8 +9,10 @@ import { withRouter } from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faKey, faTv, faThLarge, faImages, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import DropdownButton from '../DropdownButton'
+import { view } from 'react-easy-state'
 
 import { logout } from '../../helpers/auth'
+import { display } from '../../stores'
 
 class Sidebar extends Component {
   render() {
@@ -20,19 +22,19 @@ class Sidebar extends Component {
           {
             id: 'layout',
             name: 'Layout',
-            path: '/layout',
+            path: '/layout?display=' + display.id,
             icon: faThLarge
           },
           {
             id: 'preview',
             name: 'Preview',
-            path: '/preview',
+            path: '/preview?display=' + display.id,
             icon: faTv
           },
           {
             id: 'slideshow',
             name: 'Slideshows',
-            path: '/slideshows',
+            path: '/slideshows?display=' + display.id,
             icon: faImages
           }
         ]
@@ -40,7 +42,7 @@ class Sidebar extends Component {
           {
             id: 'login',
             name: 'Login',
-            path: '/login',
+            path: '/login?display=' + display.id,
             icon: faKey
           }
         ]
@@ -204,4 +206,4 @@ class Sidebar extends Component {
   }
 }
 
-export default withRouter(Sidebar)
+export default withRouter(view(Sidebar))
