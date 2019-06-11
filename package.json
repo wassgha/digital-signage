@@ -4,10 +4,11 @@
   "description": "This is a user interface for a dynamic digital signage",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev node server.js",
-    "build": "next build",
+    "setup": "[ -f .env ] || makeconf",
+    "dev": "npm run setup && ENVIRON=DEV node server.js",
+    "build": "npm run setup && next build",
     "lint": "eslint --color ./ *.js",
-    "start": "NODE_ENV=production node server.js",
+    "start": "npm run setup && ENVIRON=PROD node server.js",
     "test": "echo \"No test specified yet.\" && exit 0",
     "heroku-postbuild": "next build"
   },
@@ -46,6 +47,7 @@
     "isomorphic-unfetch": "^3.0.0",
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.11",
+    "makeconf": "^1.4.4",
     "mongoose": "^5.4.19",
     "mongoose-crudify": "^0.2.0",
     "multer": "^1.4.1",

@@ -8,13 +8,12 @@ const session = require('cookie-session')
 const bodyParser = require('body-parser')
 const socketIo = require('socket.io')
 
-const dev = process.env.NODE_ENV !== 'production'
-const port = process.env.PORT || 3000
+const Keys = require('./keys')
+
+const dev = Keys.ENVIRON !== 'PROD'
 const app = next({ dev })
 const routes = require('./routes')
 const handle = routes.getRequestHandler(app)
-
-const Keys = require('./keys')
 
 const apiRoutes = require('./api/routes')
 const User = require('./api/models/User')
@@ -80,10 +79,10 @@ app
       return handle(req, res)
     })
 
-    const finalServer = server.listen(port, err => {
+    const finalServer = server.listen(Keys.PORT, err => {
       if (err) throw err
       // eslint-disable-next-line
-      console.log('> Ready on http://localhost:' + port)
+      console.log('> Ready on http://localhost:' + Keys.PORT)
     })
 
     // Socket.io
