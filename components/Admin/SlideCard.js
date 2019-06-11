@@ -2,7 +2,7 @@ import { Component } from 'react'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClock } from '@fortawesome/free-regular-svg-icons'
-import { faTrash, faEdit, faPlay, faGlobe, faShapes } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faEdit, faPlay, faGlobe } from '@fortawesome/free-solid-svg-icons'
 
 import SlideEditDialog from './SlideEditDialog'
 

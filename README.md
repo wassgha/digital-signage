@@ -1,5 +1,8 @@
 ## DigitalSignage
+
 *📺 Simple self-hosted digital signage software for turning screens into beautiful content displays*
+
+![Outdated Dependencies](https://david-dm.org/wassgha/digital-signage.svg) ![Travis Build](https://travis-ci.org/wassgha/digital-signage.svg?branch=master)
 
 ### Screenshots
 
@@ -22,11 +25,14 @@ Use the demo website at [http://digitaldisplay.herokuapp.com](http://digitaldisp
 
 ### How to Run:
 
-1. Set up a MongoDB installation locally and create a `digitaldisplay` database
+1. Set up a MongoDB installation locally (or in the cloud) and create a `digitaldisplay` database
 
-2. Rename the `.env.example` file to `.env`
+2. Run the setup utility using
 
-3. Change references to the database to link to your local database (usually `mongodb://localhost:27017/digitaldisplay`)
+```bash
+npm run setup
+```
+and specify the URI to your database.
 
 4. Install dependencies and run the program
 
