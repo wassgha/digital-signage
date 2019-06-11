@@ -1,0 +1,25 @@
+{
+  "format": ".env",
+  "file": ".env",
+  "config": {
+    "MONGODB_URI": {
+      "description": "Your MongoDB URI (remote or local)",
+      "required": true
+    },
+    "PORT": {
+      "description": "Which port should the server run on?",
+      "default": "3001",
+      "required": true
+    },
+    "ENVIRON": {
+      "description": "Environment (DEV or PROD)",
+      "default": "DEV",
+      "required": true
+    },
+    "SESSION_SECRET": {
+      "description": "Session secret key (can be anything)",
+      "default": "3i2br082jrfdsufnsfk10",
+      "required": true
+    }
+  }
+}

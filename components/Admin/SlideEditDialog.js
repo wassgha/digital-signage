@@ -106,8 +106,7 @@ class SlideEditDialog extends React.Component {
             choices={[
               { id: 'youtube', label: 'Youtube Video' },
               { id: 'web', label: 'Web Page' },
-              { id: 'photo', label: 'Photo' },
-              { id: 'freeform', label: 'Freeform Editor' }
+              { id: 'photo', label: 'Photo' }
             ]}
             onChange={this.handleChange}
           />
@@ -119,14 +118,6 @@ class SlideEditDialog extends React.Component {
               value={upload ? upload.preview : data}
               onChange={this.handleChange}
               inline={true}
-            />
-          ) : type == 'freeform' || upload ? (
-            <Input
-              type={'freeform'}
-              label={'Slide content'}
-              name={'data'}
-              value={data}
-              onChange={this.handleChange}
             />
           ) : (
             <Input
