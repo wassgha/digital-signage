@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "setup": "[ -f .env ] || makeconf",
-    "dev": "npm run setup && ENVIRON=DEV node server.js",
-    "build": "npm run setup && next build",
+    "dev": "ENVIRON=DEV node server.js",
+    "build": "next build",
     "lint": "eslint --color ./ *.js",
-    "start": "npm run setup && ENVIRON=PROD node server.js",
+    "start": "ENVIRON=PROD node server.js",
     "test": "echo \"No test specified yet.\" && exit 0",
     "heroku-postbuild": "next build"
   },
