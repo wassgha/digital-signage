@@ -1,7 +1,13 @@
+const boxen = require('boxen')
 const dotenv = process.env.ENVIRON !== 'PROD' ? require('dotenv').config() : { parsed: {} }
 
 if (dotenv.error) {
-  throw dotenv.error
+  console.error(
+    `Welcome to digital-signage!\n
+You have not configured your installation yet, please run the setup utility by executing:\n` +
+      boxen('$   npm run setup', { padding: 1, margin: 1, borderStyle: 'double' })
+  )
+  process.exit()
 }
 
 const PORT = process.env.PORT || dotenv.parsed.PORT || 3001
