@@ -61,7 +61,6 @@
     "react": "^16.8.6",
     "react-color": "^2.17.0",
     "react-content-loader": "^4.2.1",
-    "react-designer": "git+https://github.com/react-designer/react-designer",
     "react-dom": "^16.8.2",
     "react-dropzone": "^10.0.0",
     "react-grid-layout": "^0.16.6",

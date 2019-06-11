@@ -11,7 +11,6 @@ import GenericSlide from './Slide/Generic'
 import PhotoSlide from './Slide/Photo'
 import YoutubeSlide from './Slide/Youtube'
 import WebSlide from './Slide/Web'
-import FreeformSlide from './Slide/Freeform'
 import Progress from './Progress'
 
 import { getSlides } from '../../../actions/slide'
@@ -101,8 +100,6 @@ class Slideshow extends Component {
         return YoutubeSlide
       case 'web':
         return WebSlide
-      case 'freeform':
-        return FreeformSlide
       default:
         return GenericSlide
     }

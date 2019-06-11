@@ -1,6 +1,5 @@
 import React from 'react'
 import ColorPicker from './ColorPicker'
-import FreeformEditor from '../FreeformEditor'
 import ContentLoader from 'react-content-loader'
 import dynamic from 'next/dynamic'
 
@@ -124,8 +123,6 @@ class Input extends React.Component {
               )
             }}
           </DropzoneWithNoSSR>
-        ) : type == 'freeform' ? (
-          <FreeformEditor data={value} onChange={this.handleChange} />
         ) : (
           <textarea
             onChange={this.handleInputChange}
