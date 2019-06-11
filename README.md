@@ -1,5 +1,8 @@
 ## DigitalSignage
+
 *📺 Simple self-hosted digital signage software for turning screens into beautiful content displays*
+
+![Outdated Dependencies](https://david-dm.org/wassgha/digital-signage.svg) ![Travis Build](https://travis-ci.org/wassgha/digital-signage.svg?branch=master)
 
 ### Screenshots
 
