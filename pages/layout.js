@@ -7,6 +7,8 @@ import EditableWidget from '../components/Admin/EditableWidget'
 import WidthProvider from '../components/Widgets/WidthProvider'
 import DropdownButton from '../components/DropdownButton'
 
+import { Form, Input } from '../components/Form'
+
 import Widgets from '../widgets'
 
 import { addWidget, getWidgets, deleteWidget, updateWidget } from '../actions/widgets'
@@ -90,6 +92,9 @@ class Layout extends React.Component {
               icon: Widgets[widget].icon
             }))}
           />
+        </div>
+        <div className='settings'>
+          <Form />
         </div>
         <div className='layout'>
           <GridLayoutWithWidth
