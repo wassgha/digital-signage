@@ -1,4 +1,6 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPencilAlt, faThLarge, faTh } from '@fortawesome/free-solid-svg-icons'
 import GridLayout from 'react-grid-layout'
 import { view } from 'react-easy-state'
 
@@ -7,7 +9,7 @@ import EditableWidget from '../components/Admin/EditableWidget'
 import WidthProvider from '../components/Widgets/WidthProvider'
 import DropdownButton from '../components/DropdownButton'
 
-import { Form, Input } from '../components/Form'
+import { Form, Switch } from '../components/Form'
 
 import Widgets from '../widgets'
 
@@ -81,7 +83,26 @@ class Layout extends React.Component {
     return (
       <Frame loggedIn={loggedIn}>
         <div className={'head'}>
-          <h1>Layout</h1>
+          <h1>Layout for</h1>{' '}
+          <div className='editable-title'>
+            <input
+              className='input'
+              placeholder='Unnamed Display'
+              value={display && display.name}
+              onChange={event => {
+                const target = event.target
+                const name = target && target.value
+                display.updateName(name)
+              }}
+              onClick={e => {
+                if (e) e.stopPropagation()
+              }}
+              size={display && display.name && display.name.length}
+            />
+            <div className='icon'>
+              <FontAwesomeIcon icon={faPencilAlt} fixedWidth color='#828282' />
+            </div>
+          </div>
           <DropdownButton
             icon='plus'
             text='Add Widget'
@@ -94,7 +115,16 @@ class Layout extends React.Component {
           />
         </div>
         <div className='settings'>
-          <Form />
+          <Form>
+            <Switch
+              checkedLabel={'Compact'}
+              uncheckedLabel={'Spaced'}
+              checkedIcon={faTh}
+              uncheckedIcon={faThLarge}
+              checked={display.layout == 'spaced'}
+              onChange={(name, checked) => display.updateLayout(checked ? 'spaced' : 'compact')}
+            />
+          </Form>
         </div>
         <div className='layout'>
           <GridLayoutWithWidth
@@ -133,6 +163,29 @@ class Layout extends React.Component {
             .layout {
               background: #dfdfdf;
               border-radius: 8px;
+            }
+            .editable-title {
+              display: inline-block;
+              position: relative;
+              margin-right: 16px;
+              border-bottom: 3px solid #aaa;
+            }
+            .editable-title .input {
+              font-family: 'Open Sans', sans-serif;
+              color: #666;
+              background-color: transparent;
+              min-height: 40px;
+              border: none;
+              outline: none;
+              margin-right: 24px;
+              font-size: 24px;
+              font-weight: 600;
+            }
+            .editable-title .icon {
+              position: absolute;
+              right: 8px;
+              top: 50%;
+              margin-top: -8px;
             }
           `}
         </style>
