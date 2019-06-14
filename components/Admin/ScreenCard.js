@@ -128,10 +128,6 @@ class ScreenCard extends Component {
                 padding-right: 4px;
               }
 
-              .duration {
-                margin-right: 12px;
-              }
-
               .middle {
                 font-family: 'Open Sans', sans-serif;
                 display: flex;
