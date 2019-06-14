@@ -1,47 +1,42 @@
 import { Component } from 'react'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faClock, faImages } from '@fortawesome/free-regular-svg-icons'
-import { faTrash, faPlay } from '@fortawesome/free-solid-svg-icons'
+import { faWindowRestore } from '@fortawesome/free-regular-svg-icons'
+import { faChromecast } from '@fortawesome/free-brands-svg-icons'
+import { faTrash, faTv } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 import { view } from 'react-easy-state'
 
-import { deleteSlideshow } from '../../actions/slideshow'
-import { display } from '../../stores'
+import { deleteDisplay } from '../../actions/display'
 
-class SlideshowCard extends Component {
+class ScreenCard extends Component {
   render() {
     const { value, refresh = () => {} } = this.props
     return (
-      <Link href={'/slideshow/' + value._id + '?display=' + display.id}>
+      <Link href={'/layout?display=' + value._id}>
         <div className='card'>
           <div className='left'>
-            <div
-              className={'thumbnail'}
-              style={{
-                // backgroundImage: `url(${value.data})`,
-                backgroundColor: 'gray'
-              }}
-            >
-              <FontAwesomeIcon icon={faPlay} fixedWidth size='lg' color='#FFFFFF' />
+            <div className={'thumbnail'}>
+              <FontAwesomeIcon icon={faTv} fixedWidth size='lg' color='#7bc043' />
             </div>
           </div>
           <div className='middle'>
-            <div className='title'>{value.title || 'Untitled Slideshow'}</div>
+            <div className='title'>{value.name || 'Untitled Display'}</div>
             <div className='info'>
-              <div className='duration'>
+              <div className='widgetnum'>
                 <div className='icon'>
-                  <FontAwesomeIcon icon={faClock} fixedWidth color='#878787' />
+                  <FontAwesomeIcon icon={faWindowRestore} fixedWidth color='#878787' />
                 </div>
-                <span className='text'>
-                  {value.slides.reduce((acc, slide) => acc + slide.duration, 0)}s
-                </span>
+                <span className='text'>{value.widgets.length} widgets</span>
               </div>
-              <div className='slidenum'>
+              <div className='clientnum'>
                 <div className='icon'>
-                  <FontAwesomeIcon icon={faImages} fixedWidth color='#878787' />
+                  <FontAwesomeIcon icon={faChromecast} fixedWidth color='#878787' />
                 </div>
-                <span className='text'>{value.slides.length}</span>
+                <span className='text'>1 client paired</span>
+              </div>
+              <div className='online'>
+                <span className='text'>online</span>
               </div>
             </div>
           </div>
@@ -53,7 +48,7 @@ class SlideshowCard extends Component {
                 color='#828282'
                 onClick={e => {
                   if (e) e.stopPropagation()
-                  deleteSlideshow(value._id).then(refresh)
+                  deleteDisplay(value._id).then(refresh)
                 }}
               />
             </div>
@@ -97,27 +92,40 @@ class SlideshowCard extends Component {
                 flex-direction: row;
               }
 
-              .duration,
-              .slidenum {
+              .widgetnum,
+              .online,
+              .clientnum {
                 font-family: 'Open Sans', sans-serif;
                 font-size: 14px;
                 color: #878787;
+                margin-right: 8px;
               }
 
-              .duration .icon,
-              .slidenum .icon {
+              .widgetnum .icon,
+              .online .icon,
+              .clientnum .icon {
                 margin-right: 4px;
                 display: inline;
                 vertical-align: middle;
               }
 
-              .duration .text,
-              .slidenum .text {
+              .widgetnum .text,
+              .online .text,
+              .clientnum .text {
                 vertical-align: middle;
               }
 
-              .duration {
-                margin-right: 12px;
+              .online {
+                color: #7bc043;
+              }
+
+              .online::before {
+                content: '•';
+                color: #7bc043;
+                font-size: 32px;
+                vertical-align: middle;
+                line-height: 16px;
+                padding-right: 4px;
               }
 
               .middle {
@@ -144,7 +152,6 @@ class SlideshowCard extends Component {
               .thumbnail {
                 height: 60px;
                 width: 60px;
-                border-radius: 2px;
                 background-size: cover;
                 display: flex;
                 justify-content: center;
@@ -163,4 +170,4 @@ class SlideshowCard extends Component {
   }
 }
 
-export default view(SlideshowCard)
+export default view(ScreenCard)

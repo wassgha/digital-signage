@@ -4,7 +4,7 @@ import React from 'react'
 /*
  * A simple HOC that provides facility for listening to container resizes.
  */
-export default function HeightProvider(ComposedComponent, MeasureComponent) {
+export default function HeightProvider(ComposedComponent, MeasureComponent, layout = 'spaced') {
   return class HeightProvider extends React.Component {
     constructor(props) {
       super(props)
@@ -62,7 +62,11 @@ export default function HeightProvider(ComposedComponent, MeasureComponent) {
       return (
         <ComposedComponent
           {...rest}
-          {...{ width: this.state.width, rowHeight: this.state.height / rowNum - 10, cols: colNum }}
+          {...{
+            width: this.state.width,
+            rowHeight: this.state.height / rowNum - (layout == 'spaced' ? 10 : 0),
+            cols: colNum
+          }}
         />
       )
     }

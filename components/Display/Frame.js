@@ -3,58 +3,88 @@
  * for the added widgets
  */
 
+import React from 'react'
 import Clock from 'react-live-clock'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWifi } from '@fortawesome/free-solid-svg-icons'
 
-const Frame = ({ children }) => (
-  <div className='display'>
-    <div className={'status'}>
-      <div className={'left'}>
-        <Clock ticking={true} format={'dddd, MMMM Do.'} />
-      </div>
-      <div className={'right'}>
-        <div className={'wifi'}>
+class Frame extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  renderStatusBarElement = type => {
+    return (
+      <div className={type}>
+        {type == 'date' ? (
+          <Clock ticking={true} format={'dddd, MMMM Do.'} />
+        ) : type == 'connection' ? (
           <FontAwesomeIcon className={'wifi'} icon={faWifi} />
-        </div>
-        <div className={'clock'}>
+        ) : type == 'time' ? (
           <Clock ticking={true} format={'H:mm'} />
-        </div>
+        ) : (
+          ' '
+        )}
       </div>
-    </div>
-    {children}
-    <style jsx>
-      {`
-        .display {
-          display: flex;
-          flex-direction: column;
-          width: 100%;
-          height: 100%;
-          background: black;
-          font-family: Open Sans, sans-serif;
-          color: white;
-        }
-        .status {
-          padding: 30px;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-        }
-        .status .left {
-        }
-        .status .right {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;
-        }
-        .status .right .wifi {
-          margin-right: 10px;
-          color: #baff23;
-        }
-      `}
-    </style>
-  </div>
-)
+    )
+  }
+
+  render() {
+    const { children, statusBar = [] } = this.props
+    return (
+      <div className='display'>
+        {statusBar && statusBar.length > 0 && (
+          <div className={'status'}>
+            {statusBar.map(type => (
+              <div className={type}>
+                {type == 'date' ? (
+                  <Clock ticking={true} format={'dddd, MMMM Do.'} />
+                ) : type == 'connection' ? (
+                  <FontAwesomeIcon className={'wifi'} icon={faWifi} />
+                ) : type == 'time' ? (
+                  <Clock ticking={true} format={'H:mm'} />
+                ) : (
+                  ' '
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+        {children}
+        <style jsx>
+          {`
+            .display {
+              display: flex;
+              flex-direction: column;
+              width: 100%;
+              height: 100%;
+              background: black;
+              font-family: Open Sans, sans-serif;
+              color: white;
+            }
+            .status {
+              padding: 30px;
+              display: flex;
+              flex-direction: row;
+              justify-content: flex-start;
+              align-items: center;
+            }
+            .status .spacer {
+              display: flex;
+              flex: 1;
+            }
+            .status *:not(:first-child):not(:last-child) {
+              margin-right: 8px;
+              margin-left: 8px;
+            }
+            .status .connection {
+              color: #baff23;
+            }
+          `}
+        </style>
+      </div>
+    )
+  }
+}
 
 export default Frame

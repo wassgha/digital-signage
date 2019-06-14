@@ -7,39 +7,50 @@ import React from 'react'
 import GridLayout from 'react-grid-layout'
 import socketIOClient from 'socket.io-client'
 import _ from 'lodash'
+import { view } from 'react-easy-state'
 
 import Frame from './Frame.js'
 import HeightProvider from '../Widgets/HeightProvider'
 import Widgets from '../../widgets'
 import EmptyWidget from '../Widgets/EmptyWidget'
 
-import { getWidgets } from '../../actions/widgets'
+import { getDisplay } from '../../actions/display'
+
+const DEFAULT_STATUS_BAR = []
+const DEFAULT_LAYOUT = 'spaced'
 
 class Display extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      widgets: props.widgets || []
+      widgets: [],
+      layout: DEFAULT_LAYOUT,
+      statusBar: DEFAULT_STATUS_BAR
     }
     this.throttledRefresh = _.debounce(this.refresh, 1500)
   }
 
   componentDidMount() {
-    this.throttledRefresh()
+    this.refresh()
     const { host = 'http://localhost' } = this.props
     const socket = socketIOClient(host)
     socket.on('admin:update', () => this.throttledRefresh())
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.display != this.props.display) this.refresh()
+  }
+
   refresh = () => {
-    return getWidgets().then(widgets => {
-      this.setState({ widgets })
+    const { display } = this.props
+    return getDisplay(display).then(({ widgets = [], layout, statusBar = DEFAULT_STATUS_BAR }) => {
+      this.setState({ widgets, layout, statusBar })
     })
   }
 
   render() {
-    const { widgets } = this.state
-    const layout = widgets.map(widget => ({
+    const { widgets, layout, statusBar } = this.state
+    const widgetLayout = widgets.map(widget => ({
       i: widget._id,
       x: widget.x || 0,
       y: widget.y || 0,
@@ -47,17 +58,18 @@ class Display extends React.Component {
       h: widget.h || 1
     }))
 
-    const GridLayoutWithHeight = HeightProvider(GridLayout, this.container)
+    const GridLayoutWithHeight = HeightProvider(GridLayout, this.container, layout)
 
     return (
-      <Frame>
+      <Frame statusBar={statusBar}>
         <div className={'gridContainer'} ref={ref => (this.container = ref)}>
           <GridLayoutWithHeight
             className='layout'
             isDraggable={false}
             isResizable={false}
-            layout={layout}
+            layout={widgetLayout}
             cols={6}
+            margin={layout == 'spaced' ? [10, 10] : [0, 0]}
           >
             {widgets.map(widget => {
               const Widget = Widgets[widget.type] ? Widgets[widget.type].Widget : EmptyWidget
@@ -73,10 +85,10 @@ class Display extends React.Component {
               .gridContainer {
                 flex: 1;
                 overflow: hidden;
-                margin-bottom: 10px;
+                margin-bottom: ${layout == 'spaced' ? 10 : 0}px;
               }
               .widget {
-                border-radius: 6px;
+                border-radius: ${layout == 'spaced' ? 6 : 0}px;
                 overflow: hidden;
               }
             `}
@@ -87,4 +99,4 @@ class Display extends React.Component {
   }
 }
 
-export default Display
+export default view(Display)

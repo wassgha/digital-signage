@@ -1,14 +1,15 @@
 import axios from 'axios'
 
-export const addWidget = (type, data = {}, host = '') => {
+export const addWidget = (display, type, data = {}, host = '') => {
   return axios.post(host + '/api/v1/widgets', {
+    display,
     type,
     data
   })
 }
 
-export const getWidgets = (host = '') => {
-  return axios.get(host + '/api/v1/widgets').then(res => {
+export const getWidgets = (display, host = '') => {
+  return axios.get(host + '/api/v1/display/' + display + '/widgets').then(res => {
     if (res && res.data) {
       return res.data
     }

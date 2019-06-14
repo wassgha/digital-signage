@@ -37,13 +37,27 @@ class DropdownButton extends Component {
   }
 
   render() {
-    const { icon = null, text = 'Show menu', choices = [], onSelect = () => {} } = this.props
+    const {
+      icon = null,
+      text = 'Show menu',
+      choices = [],
+      onSelect = () => {},
+      style = {},
+      menuStyle = {},
+      children
+    } = this.props
     return (
       <div className={'dropdownContainer'}>
-        <button className={'btn'} onClick={this.showMenu}>
-          <div className={'btnIcon'}>{icon && <FontAwesomeIcon icon={icon} />}</div>
-          {text}
-        </button>
+        {children ? (
+          <div style={style} onClick={this.showMenu}>
+            {children}
+          </div>
+        ) : (
+          <button className={'btn'} onClick={this.showMenu} style={style}>
+            <div className={'btnIcon'}>{icon && <FontAwesomeIcon icon={icon} />}</div>
+            {text}
+          </button>
+        )}
 
         {this.state.showMenu ? (
           <div
@@ -51,6 +65,7 @@ class DropdownButton extends Component {
             ref={element => {
               this.dropdownMenu = element
             }}
+            style={menuStyle}
           >
             {choices.map(choice => (
               <button
@@ -60,9 +75,11 @@ class DropdownButton extends Component {
                   onSelect(choice.key)
                 }}
               >
-                <div className={'btnIcon'}>
-                  {choice.icon && <FontAwesomeIcon icon={choice.icon} prefix={'fab'} />}
-                </div>
+                {choice.icon && (
+                  <div className={'btnIcon'}>
+                    <FontAwesomeIcon icon={choice.icon} prefix={'fab'} />
+                  </div>
+                )}
                 {choice.name}
               </button>
             ))}
@@ -103,9 +120,10 @@ class DropdownButton extends Component {
               flex-direction: column;
               z-index: 2;
               background: white;
-              box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+              box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.1);
               border-radius: 4px;
               overflow: hidden;
+              min-width: 100%;
             }
             .choice {
               font-family: 'Open Sans', sans-serif;
@@ -116,7 +134,7 @@ class DropdownButton extends Component {
               min-width: 200px;
               font-size: 14px;
               border: none;
-              border-bottom: 1px solid #ddd;
+              border-bottom: 1px solid #efefef;
               display: flex;
               padding: 16px;
               padding-left: 24px;
@@ -125,6 +143,12 @@ class DropdownButton extends Component {
               outline: none;
               cursor: pointer;
               flex-direction: row;
+            }
+            .choice:hover {
+              background: #fafafa;
+            }
+            .choice:last-child {
+              border-bottom: 0px;
             }
           `}
         </style>

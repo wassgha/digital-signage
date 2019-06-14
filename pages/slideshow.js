@@ -2,6 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import _ from 'lodash'
+import { view } from 'react-easy-state'
 
 import Frame from '../components/Admin/Frame.js'
 import SlideList from '../components/Admin/SlideList.js'
@@ -12,6 +13,7 @@ import Dialog from '../components/Dialog.js'
 
 import { getSlideshow, updateSlideshow } from '../actions/slideshow'
 import { protect } from '../helpers/auth.js'
+import { display } from '../stores'
 
 const updateSlideshowThrottled = _.debounce((id, data) => {
   return updateSlideshow(id, data)
@@ -31,7 +33,12 @@ class Slideshow extends React.Component {
     const host =
       req && req.headers && req.headers.host ? 'http://' + req.headers.host : window.location.origin
     const slideshow = id && (await getSlideshow(id, host))
-    return { slideshow: slideshow, host: host }
+    return { slideshow, host }
+  }
+
+  componentDidMount() {
+    const { displayId } = this.props
+    display.setId(displayId)
   }
 
   refresh = () => {
@@ -144,4 +151,4 @@ class Slideshow extends React.Component {
   }
 }
 
-export default protect(Slideshow)
+export default protect(view(Slideshow))

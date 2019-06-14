@@ -2,16 +2,16 @@ import { Component } from 'react'
 import React from 'react'
 import ContentLoader from 'react-content-loader'
 
-import SlideshowCard from './SlideshowCard'
+import ScreenCard from './ScreenCard'
 
-import { getSlideshows } from '../../actions/slideshow'
+import { getDisplays } from '../../actions/display'
 
-class SlideshowList extends Component {
+class ScreenList extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      slideshows: null
+      screens: null
     }
   }
 
@@ -20,20 +20,20 @@ class SlideshowList extends Component {
   }
 
   refresh = () => {
-    getSlideshows().then(slideshows => {
+    getDisplays().then(screens => {
       this.setState({
-        slideshows
+        screens
       })
     })
   }
 
   render() {
-    const { slideshows } = this.state
+    const { screens } = this.state
     return (
       <div className={'list'}>
-        {slideshows
-          ? slideshows.map((value, index) => (
-              <SlideshowCard
+        {screens
+          ? screens.map((value, index) => (
+              <ScreenCard
                 key={`item-${index}`}
                 index={index}
                 value={value}
@@ -59,4 +59,4 @@ class SlideshowList extends Component {
   }
 }
 
-export default SlideshowList
+export default ScreenList

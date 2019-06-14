@@ -1,27 +1,24 @@
 import React from 'react'
+import { faThLarge, faTh } from '@fortawesome/free-solid-svg-icons'
 import GridLayout from 'react-grid-layout'
+import { view } from 'react-easy-state'
 
 import Frame from '../components/Admin/Frame.js'
 import EditableWidget from '../components/Admin/EditableWidget'
 import WidthProvider from '../components/Widgets/WidthProvider'
 import DropdownButton from '../components/DropdownButton'
 
+import { Form, Switch } from '../components/Form'
+
 import Widgets from '../widgets'
 
 import { addWidget, getWidgets, deleteWidget, updateWidget } from '../actions/widgets'
 import { protect } from '../helpers/auth.js'
+import { display } from '../stores'
 
 const GridLayoutWithWidth = WidthProvider(GridLayout)
 
 class Layout extends React.Component {
-  static async getInitialProps({ req }) {
-    const host =
-      req && req.headers && req.headers.host ? 'http://' + req.headers.host : window.location.origin
-    const widgets = await getWidgets(host)
-
-    return { widgets }
-  }
-
   constructor(props) {
     super(props)
     this.state = {
@@ -29,15 +26,29 @@ class Layout extends React.Component {
     }
   }
 
+  componentDidMount() {
+    const { displayId } = this.props
+    display.setId(displayId)
+    getWidgets(displayId).then(widgets => {
+      this.setState({ widgets })
+    })
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.displayId != this.props.displayId) this.refresh()
+  }
+
   refresh = () => {
-    return getWidgets().then(widgets => {
+    return getWidgets(display.id).then(widgets => {
       this.setState({ widgets })
     })
   }
 
   addWidget = type => {
     const widgetDefinition = Widgets[type]
-    return addWidget(type, widgetDefinition && widgetDefinition.defaultData).then(this.refresh)
+    return addWidget(display.id, type, widgetDefinition && widgetDefinition.defaultData).then(
+      this.refresh
+    )
   }
 
   deleteWidget = id => {
@@ -70,6 +81,8 @@ class Layout extends React.Component {
       <Frame loggedIn={loggedIn}>
         <div className={'head'}>
           <h1>Layout</h1>
+        </div>
+        <div className='settings'>
           <DropdownButton
             icon='plus'
             text='Add Widget'
@@ -80,6 +93,16 @@ class Layout extends React.Component {
               icon: Widgets[widget].icon
             }))}
           />
+          <Form>
+            <Switch
+              checkedLabel={'Compact'}
+              uncheckedLabel={'Spaced'}
+              checkedIcon={faTh}
+              uncheckedIcon={faThLarge}
+              checked={display.layout == 'spaced'}
+              onChange={(name, checked) => display.updateLayout(checked ? 'spaced' : 'compact')}
+            />
+          </Form>
         </div>
         <div className='layout'>
           <GridLayoutWithWidth
@@ -87,6 +110,7 @@ class Layout extends React.Component {
             cols={6}
             onLayoutChange={this.onLayoutChange}
             draggableCancel={'.ReactModalPortal,.controls'}
+            margin={display.layout == 'spaced' ? [12, 12] : [4, 4]}
           >
             {widgets.map(widget => (
               <div key={widget._id}>
@@ -94,6 +118,7 @@ class Layout extends React.Component {
                   id={widget._id}
                   type={widget.type}
                   onDelete={this.deleteWidget.bind(this, widget._id)}
+                  layout={display.layout}
                 />
               </div>
             ))}
@@ -117,7 +142,14 @@ class Layout extends React.Component {
             }
             .layout {
               background: #dfdfdf;
-              border-radius: 8px;
+              border-radius: ${display.layout == 'spaced' ? '8px' : '0px'};
+            }
+            .settings {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              justify-content: space-between;
+              margin-bottom: 16px;
             }
           `}
         </style>
@@ -126,4 +158,4 @@ class Layout extends React.Component {
   }
 }
 
-export default protect(Layout)
+export default protect(view(Layout))

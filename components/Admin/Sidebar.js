@@ -5,33 +5,71 @@
 
 import Link from 'next/link'
 import { Component } from 'react'
-import { withRouter } from 'next/router'
+import Router, { withRouter } from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faKey, faTv, faThLarge, faImages, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import {
+  faKey,
+  faTv,
+  faEye,
+  faThLarge,
+  faImages,
+  faSignOutAlt
+} from '@fortawesome/free-solid-svg-icons'
+import DropdownButton from '../DropdownButton'
+import { view } from 'react-easy-state'
 
 import { logout } from '../../helpers/auth'
+import { display } from '../../stores'
+import { getDisplays } from '../../actions/display'
 
 class Sidebar extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      displays: props.displays || []
+    }
+  }
+
+  componentDidMount() {
+    const host = window.location.origin
+    getDisplays(host).then(displays => {
+      this.setState({ displays })
+    })
+  }
+
+  navigateToAdmin = id => {
+    Router.push('/layout?display=' + id)
+    display.setId(id)
+  }
+
   render() {
     const { router, loggedIn } = this.props
+    const { displays } = this.state
     const menu = loggedIn
       ? [
           {
+            id: 'screen',
+            name: 'Screens',
+            path: '/screens?display=' + display.id,
+            icon: faTv
+          },
+          {
             id: 'layout',
             name: 'Layout',
-            path: '/layout',
+            path: '/layout?display=' + display.id,
             icon: faThLarge
           },
           {
             id: 'preview',
             name: 'Preview',
-            path: '/preview',
-            icon: faTv
+            path: '/preview?display=' + display.id,
+            icon: faEye
           },
           {
             id: 'slideshow',
             name: 'Slideshows',
-            path: '/slideshows',
+            path: '/slideshows?display=' + display.id,
             icon: faImages
           }
         ]
@@ -39,21 +77,36 @@ class Sidebar extends Component {
           {
             id: 'login',
             name: 'Login',
-            path: '/login',
+            path: '/login?display=' + display.id,
             icon: faKey
           }
         ]
     return (
       <div className='sidebar'>
-        <div className='logo'>
-          <div className='icon'>
-            <FontAwesomeIcon icon={faTv} fixedWidth color='#7bc043' />
-          </div>
-          <div className='info'>
-            <span className='name'>Acopian Fifth Floor</span>
-            <span className='status online'>online</span>
-          </div>
-        </div>
+        {loggedIn && (
+          <DropdownButton
+            onSelect={this.navigateToAdmin}
+            choices={displays.map(display => ({
+              key: display._id,
+              name: display.name
+            }))}
+            style={{ marginTop: 20, marginBottom: 20 }}
+            menuStyle={{ left: 20, top: '70%' }}
+          >
+            <div className='logo'>
+              <div className='icon'>
+                <FontAwesomeIcon icon={faTv} fixedWidth color='#7bc043' />
+              </div>
+              <div className='info'>
+                <span className='name'>{display.name}</span>
+                <span className='status online'>online</span>
+              </div>
+              <div className='caret'>
+                <FontAwesomeIcon icon={'caret-down'} fixedWidth />
+              </div>
+            </div>
+          </DropdownButton>
+        )}
         <ul className='menu'>
           {menu.map(item => (
             <Link href={item.path} key={item.path}>
@@ -111,13 +164,16 @@ class Sidebar extends Component {
               background: #f0f0f0;
               cursor: pointer;
             }
+            .menu li .text {
+              margin-left: 8px;
+            }
             .logo {
               display: flex;
               flex-direction: row;
-              margin-top: 20px;
-              margin-bottom: 20px;
               padding-right: 10px;
               padding-left: 10px;
+              position: relative;
+              cursor: pointer;
             }
             .logo .icon {
               min-width: 3em;
@@ -153,6 +209,12 @@ class Sidebar extends Component {
               line-height: 16px;
               padding-right: 4px;
             }
+            .logo .caret {
+              position: absolute;
+              top: 50%;
+              margin-top: -8px;
+              right: 16px;
+            }
             @media only screen and (max-width: 900px) {
               .sidebar {
                 min-width: 0px;
@@ -181,4 +243,4 @@ class Sidebar extends Component {
   }
 }
 
-export default withRouter(Sidebar)
+export default withRouter(view(Sidebar))

@@ -4,6 +4,7 @@ const mongooseCrudify = require('mongoose-crudify')
 
 const Widget = require('../models/Widget')
 const CommonHelper = require('../helpers/common_helper')
+const WidgetHelper = require('../helpers/widget_helper')
 
 /**
  *  list    - GET /widgets/
@@ -19,7 +20,15 @@ router.use(
     afterActions: [
       {
         middlewares: [CommonHelper.broadcastUpdateMiddleware],
-        only: ['update', 'create', 'delete']
+        only: ['update']
+      },
+      {
+        middlewares: [WidgetHelper.addWidget, CommonHelper.broadcastUpdateMiddleware],
+        only: ['create']
+      },
+      {
+        middlewares: [WidgetHelper.deleteWidget, CommonHelper.broadcastUpdateMiddleware],
+        only: ['delete']
       }
     ]
   })

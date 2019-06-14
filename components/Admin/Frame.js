@@ -3,11 +3,14 @@
  * sidebar and content on the right)
  */
 
+import { view } from 'react-easy-state'
+
 import Sidebar from './Sidebar'
+import { display } from '../../stores'
 
 const Frame = props => (
   <div className='container'>
-    <Sidebar loggedIn={props.loggedIn} />
+    <Sidebar loggedIn={props.loggedIn} display={display.id} />
     <div className='content'>{props.children}</div>
     <style jsx>
       {`
@@ -26,4 +29,4 @@ const Frame = props => (
   </div>
 )
 
-export default Frame
+export default view(Frame)
