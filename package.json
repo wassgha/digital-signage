@@ -10,6 +10,7 @@
     "lint": "eslint --color ./ *.js",
     "start": "ENVIRON=PROD node server.js",
     "test": "echo \"No test specified yet.\" && exit 0",
+    "update": "git pull && npm i && npm run build",
     "heroku-postbuild": "next build"
   },
   "repository": {

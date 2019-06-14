@@ -41,6 +41,16 @@ npm install
 npm run dev
 ```
 
+### Updating the software
+
+Assuming the software was cloned from this github repository, it is possible to use the included script
+
+```bash
+npm run update
+```
+
+which pulls the latest stable version of `digital-signage` from github, installs dependencies and re-builds the software.
+
 ### Features
 
 - ✅ Automatic refresh on content change (you should never need to touch a display once set up!)
