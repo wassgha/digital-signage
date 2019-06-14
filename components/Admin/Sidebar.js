@@ -7,7 +7,14 @@ import Link from 'next/link'
 import { Component } from 'react'
 import { withRouter } from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faKey, faTv, faThLarge, faImages, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import {
+  faKey,
+  faTv,
+  faEye,
+  faThLarge,
+  faImages,
+  faSignOutAlt
+} from '@fortawesome/free-solid-svg-icons'
 import DropdownButton from '../DropdownButton'
 import { view } from 'react-easy-state'
 
@@ -20,6 +27,12 @@ class Sidebar extends Component {
     const menu = loggedIn
       ? [
           {
+            id: 'display',
+            name: 'Displays',
+            path: '/display?display=' + display.id,
+            icon: faTv
+          },
+          {
             id: 'layout',
             name: 'Layout',
             path: '/layout?display=' + display.id,
@@ -29,7 +42,7 @@ class Sidebar extends Component {
             id: 'preview',
             name: 'Preview',
             path: '/preview?display=' + display.id,
-            icon: faTv
+            icon: faEye
           },
           {
             id: 'slideshow',
@@ -65,7 +78,7 @@ class Sidebar extends Component {
               <FontAwesomeIcon icon={faTv} fixedWidth color='#7bc043' />
             </div>
             <div className='info'>
-              <span className='name'>Acopian Fifth Floor</span>
+              <span className='name'>{display.name}</span>
               <span className='status online'>online</span>
             </div>
             <div className='caret'>
@@ -129,6 +142,9 @@ class Sidebar extends Component {
             .logout:hover {
               background: #f0f0f0;
               cursor: pointer;
+            }
+            .menu li .text {
+              margin-left: 8px;
             }
             .logo {
               display: flex;

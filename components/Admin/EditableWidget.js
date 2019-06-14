@@ -41,7 +41,7 @@ class EditableWidget extends React.Component {
   }
 
   render() {
-    const { type = 'slideshow', id } = this.props
+    const { type = 'slideshow', id, layout = 'spaced' } = this.props
     const widget = Widgets[type] || {}
     return (
       <div className={'widget'}>
@@ -65,9 +65,10 @@ class EditableWidget extends React.Component {
           {`
             .widget {
               background-color: rgba(108, 108, 108, 1);
-              border-radius: 6px;
-              width: calc(100% - 16px);
-              height: calc(100% - 16px);
+              border-radius: ${layout == 'spaced' ? '6px' : '0px'};
+              width: 100%;
+              height: 100%;
+              box-sizing: border-box;
               padding: 8px;
               display: flex;
               flex-direction: column;
