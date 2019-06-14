@@ -2,24 +2,24 @@ import React from 'react'
 import { view } from 'react-easy-state'
 
 import Frame from '../components/Admin/Frame.js'
-import SlideshowList from '../components/Admin/SlideshowList.js'
+import ScreenList from '../components/Admin/ScreenList.js'
 import Dialog from '../components/Dialog.js'
 import { Button } from '../components/Form'
 
-import { addSlideshow } from '../actions/slideshow'
+import { addDisplay } from '../actions/display'
 import { protect } from '../helpers/auth.js'
 
 import { display } from '../stores'
 
-class Slideshows extends React.Component {
+class Screens extends React.Component {
   constructor(props) {
     super(props)
-    this.slideshowList = React.createRef()
+    this.screenList = React.createRef()
   }
 
   add = () => {
-    return addSlideshow().then(() => {
-      this.slideshowList && this.slideshowList.current && this.slideshowList.current.refresh()
+    return addDisplay().then(() => {
+      this.screenList && this.screenList.current && this.screenList.current.refresh()
     })
   }
 
@@ -32,12 +32,12 @@ class Slideshows extends React.Component {
     const { loggedIn } = this.props
     return (
       <Frame loggedIn={loggedIn}>
-        <h1>Slideshows</h1>
+        <h1>Screens</h1>
         <div className='wrapper'>
-          <SlideshowList ref={this.slideshowList} />
+          <ScreenList ref={this.screenList} />
           <Dialog />
           <Button
-            text={'+ Add new slideshow'}
+            text={'+ Add new screen'}
             color={'#8bc34a'}
             onClick={this.add}
             style={{ marginLeft: 0, width: '100%' }}
@@ -62,4 +62,4 @@ class Slideshows extends React.Component {
   }
 }
 
-export default protect(view(Slideshows))
+export default protect(view(Screens))

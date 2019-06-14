@@ -11,21 +11,13 @@ class Preview extends React.Component {
     super(props)
   }
 
-  static async getInitialProps({ req, query }) {
-    const host =
-      req && req.headers && req.headers.host ? 'http://' + req.headers.host : window.location.origin
-    const displayId = query && query.display
-
-    return { host, displayId }
-  }
-
   componentDidMount() {
     const { displayId } = this.props
     display.setId(displayId)
   }
 
   render() {
-    const { host = 'http://localhost', loggedIn } = this.props
+    const { host, loggedIn } = this.props
     return (
       <Frame loggedIn={loggedIn}>
         <h1>Preview</h1>

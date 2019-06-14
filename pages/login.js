@@ -21,13 +21,18 @@ class Login extends Component {
 
   static async getInitialProps({ query }) {
     const displayId = query && query.display
+    return { displayId }
+  }
+
+  componentDidMount() {
+    const { displayId } = this.props
     display.setId(displayId)
-    return {}
   }
 
   performLogin = () => {
     const { username, password } = this.state
-    login({ username, password })
+    const { displayId } = this.props
+    login({ username, password }, undefined, displayId)
       .then(resp => {
         if (!resp.success) throw Error()
         this.setState({ alert: 'success' })

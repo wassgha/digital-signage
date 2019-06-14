@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import Router from 'next/router'
 import DropdownButton from '../components/DropdownButton'
 
@@ -20,10 +21,6 @@ class Index extends React.Component {
     return { displays: displayList, host: host }
   }
 
-  navigateToAdmin = id => {
-    Router.push('/layout?display=' + id)
-  }
-
   navigateToDisplay = id => {
     Router.push('/display?display=' + id)
   }
@@ -34,18 +31,9 @@ class Index extends React.Component {
       <div className='home'>
         <p>The Digital Signage server is running in the background.</p>
         <div className='btn-group'>
-          <div style={{ margin: 20 }}>
-            <DropdownButton
-              icon='chevron-down'
-              text='Admin Home'
-              style={{ ...styles.btn, ...styles.btnAdmin }}
-              onSelect={this.navigateToAdmin}
-              choices={displays.map(display => ({
-                key: display._id,
-                name: display.name
-              }))}
-            />
-          </div>
+          <Link href='/layout' style={{ margin: 20 }}>
+            <div className='btn admin'>Admin Home</div>
+          </Link>
           <div style={{ margin: 20 }}>
             <DropdownButton
               icon='chevron-down'

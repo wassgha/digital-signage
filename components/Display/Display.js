@@ -42,12 +42,10 @@ class Display extends React.Component {
   }
 
   refresh = () => {
-    const { display, host = '' } = this.props
-    return getDisplay(display, host).then(
-      ({ widgets = [], layout, statusBar = DEFAULT_STATUS_BAR }) => {
-        this.setState({ widgets, layout, statusBar })
-      }
-    )
+    const { display } = this.props
+    return getDisplay(display).then(({ widgets = [], layout, statusBar = DEFAULT_STATUS_BAR }) => {
+      this.setState({ widgets, layout, statusBar })
+    })
   }
 
   render() {

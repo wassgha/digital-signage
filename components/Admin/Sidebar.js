@@ -5,7 +5,7 @@
 
 import Link from 'next/link'
 import { Component } from 'react'
-import { withRouter } from 'next/router'
+import Router, { withRouter } from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faKey,
@@ -20,16 +20,38 @@ import { view } from 'react-easy-state'
 
 import { logout } from '../../helpers/auth'
 import { display } from '../../stores'
+import { getDisplays } from '../../actions/display'
 
 class Sidebar extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      displays: props.displays || []
+    }
+  }
+
+  componentDidMount() {
+    const host = window.location.origin
+    getDisplays(host).then(displays => {
+      this.setState({ displays })
+    })
+  }
+
+  navigateToAdmin = id => {
+    Router.push('/layout?display=' + id)
+    display.setId(id)
+  }
+
   render() {
     const { router, loggedIn } = this.props
+    const { displays } = this.state
     const menu = loggedIn
       ? [
           {
-            id: 'display',
-            name: 'Displays',
-            path: '/display?display=' + display.id,
+            id: 'screen',
+            name: 'Screens',
+            path: '/screens?display=' + display.id,
             icon: faTv
           },
           {
@@ -61,31 +83,30 @@ class Sidebar extends Component {
         ]
     return (
       <div className='sidebar'>
-        <DropdownButton
-          onSelect={this.navigateToDisplay}
-          choices={[
-            { _id: '32tin2tinfsfsf', name: 'Acopian Display #1' },
-            { _id: '32tin2regtinfsfsf', name: 'Acopian Display #2' }
-          ].map(display => ({
-            key: display._id,
-            name: display.name
-          }))}
-          style={{ marginTop: 20, marginBottom: 20 }}
-          menuStyle={{ left: 20, top: '70%' }}
-        >
-          <div className='logo'>
-            <div className='icon'>
-              <FontAwesomeIcon icon={faTv} fixedWidth color='#7bc043' />
+        {loggedIn && (
+          <DropdownButton
+            onSelect={this.navigateToAdmin}
+            choices={displays.map(display => ({
+              key: display._id,
+              name: display.name
+            }))}
+            style={{ marginTop: 20, marginBottom: 20 }}
+            menuStyle={{ left: 20, top: '70%' }}
+          >
+            <div className='logo'>
+              <div className='icon'>
+                <FontAwesomeIcon icon={faTv} fixedWidth color='#7bc043' />
+              </div>
+              <div className='info'>
+                <span className='name'>{display.name}</span>
+                <span className='status online'>online</span>
+              </div>
+              <div className='caret'>
+                <FontAwesomeIcon icon={'caret-down'} fixedWidth />
+              </div>
             </div>
-            <div className='info'>
-              <span className='name'>{display.name}</span>
-              <span className='status online'>online</span>
-            </div>
-            <div className='caret'>
-              <FontAwesomeIcon icon={'caret-down'} fixedWidth />
-            </div>
-          </div>
-        </DropdownButton>
+          </DropdownButton>
+        )}
         <ul className='menu'>
           {menu.map(item => (
             <Link href={item.path} key={item.path}>

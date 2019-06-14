@@ -30,11 +30,10 @@ class Slideshow extends React.Component {
 
   static async getInitialProps({ query, req }) {
     const id = query && query.id
-    const displayId = query && query.display
     const host =
       req && req.headers && req.headers.host ? 'http://' + req.headers.host : window.location.origin
     const slideshow = id && (await getSlideshow(id, host))
-    return { slideshow, host, displayId }
+    return { slideshow, host }
   }
 
   componentDidMount() {

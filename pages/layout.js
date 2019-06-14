@@ -19,15 +19,6 @@ import { display } from '../stores'
 const GridLayoutWithWidth = WidthProvider(GridLayout)
 
 class Layout extends React.Component {
-  static async getInitialProps({ req, query }) {
-    const host =
-      req && req.headers && req.headers.host ? 'http://' + req.headers.host : window.location.origin
-    const displayId = query && query.display
-    const widgets = await getWidgets(displayId, host)
-
-    return { widgets, displayId }
-  }
-
   constructor(props) {
     super(props)
     this.state = {
@@ -38,6 +29,13 @@ class Layout extends React.Component {
   componentDidMount() {
     const { displayId } = this.props
     display.setId(displayId)
+    getWidgets(displayId).then(widgets => {
+      this.setState({ widgets })
+    })
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.displayId != this.props.displayId) this.refresh()
   }
 
   refresh = () => {
