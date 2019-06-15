@@ -13,41 +13,28 @@ class Frame extends React.Component {
     super(props)
   }
 
-  renderStatusBarElement = type => {
-    return (
-      <div className={type}>
-        {type == 'date' ? (
-          <Clock ticking={true} format={'dddd, MMMM Do.'} />
-        ) : type == 'connection' ? (
-          <FontAwesomeIcon className={'wifi'} icon={faWifi} />
-        ) : type == 'time' ? (
-          <Clock ticking={true} format={'H:mm'} />
-        ) : (
-          ' '
-        )}
-      </div>
-    )
-  }
-
   render() {
     const { children, statusBar = [] } = this.props
     return (
       <div className='display'>
         {statusBar && statusBar.length > 0 && (
           <div className={'status'}>
-            {statusBar.map(type => (
-              <div className={type}>
-                {type == 'date' ? (
-                  <Clock ticking={true} format={'dddd, MMMM Do.'} />
-                ) : type == 'connection' ? (
-                  <FontAwesomeIcon className={'wifi'} icon={faWifi} />
-                ) : type == 'time' ? (
-                  <Clock ticking={true} format={'H:mm'} />
-                ) : (
-                  ' '
-                )}
-              </div>
-            ))}
+            {statusBar.map(item => {
+              const type = item.split('_')[0]
+              return (
+                <div className={type}>
+                  {type == 'date' ? (
+                    <Clock ticking={true} format={'dddd, MMMM Do.'} />
+                  ) : type == 'connection' ? (
+                    <FontAwesomeIcon className={'wifi'} icon={faWifi} />
+                  ) : type == 'time' ? (
+                    <Clock ticking={true} format={'H:mm'} />
+                  ) : (
+                    ' '
+                  )}
+                </div>
+              )
+            })}
           </div>
         )}
         {children}
