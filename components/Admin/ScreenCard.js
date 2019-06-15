@@ -3,7 +3,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWindowRestore } from '@fortawesome/free-regular-svg-icons'
 import { faChromecast } from '@fortawesome/free-brands-svg-icons'
-import { faTrash, faTv } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faTv, faEye, faLink } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 import { view } from 'react-easy-state'
 
@@ -41,6 +41,16 @@ class ScreenCard extends Component {
             </div>
           </div>
           <div className='right'>
+            <Link href={'/layout?display=' + value._id}>
+              <div className='actionIcon'>
+                <FontAwesomeIcon icon={faEye} fixedWidth color='#828282' />
+              </div>
+            </Link>
+            <Link href={'/display/' + value._id}>
+              <div className='actionIcon'>
+                <FontAwesomeIcon icon={faLink} fixedWidth color='#828282' />
+              </div>
+            </Link>
             <div className='actionIcon'>
               <FontAwesomeIcon
                 icon={faTrash}
@@ -159,8 +169,8 @@ class ScreenCard extends Component {
               }
 
               .actionIcon {
-                margin-right: 8px;
-                margin-left: 8px;
+                margin-right: 16px;
+                margin-left: 16px;
               }
             `}
           </style>
