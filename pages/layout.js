@@ -1,5 +1,6 @@
 import React from 'react'
-import { faThLarge, faTh } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faThLarge, faTh, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import GridLayout from 'react-grid-layout'
 import { view } from 'react-easy-state'
 
@@ -81,6 +82,25 @@ class Layout extends React.Component {
       <Frame loggedIn={loggedIn}>
         <div className={'head'}>
           <h1>Layout</h1>
+          <div className='editable-title'>
+            <input
+              className='input'
+              placeholder='Unnamed display'
+              value={display && display.name}
+              onChange={event => {
+                const target = event.target
+                const title = target && target.value
+                display.updateName(title)
+              }}
+              onClick={e => {
+                if (e) e.stopPropagation()
+              }}
+              size={display && display.name && display.name.length}
+            />
+            <div className='icon'>
+              <FontAwesomeIcon icon={faPencilAlt} fixedWidth color='#828282' />
+            </div>
+          </div>
         </div>
         <div className='settings'>
           <DropdownButton
@@ -150,6 +170,30 @@ class Layout extends React.Component {
               align-items: center;
               justify-content: space-between;
               margin-bottom: 16px;
+            }
+            .editable-title {
+              display: inline-block;
+              position: relative;
+              margin-left: 16px;
+              margin-right: 16px;
+              border-bottom: 3px solid #aaa;
+            }
+            .editable-title .input {
+              font-family: 'Open Sans', sans-serif;
+              color: #666;
+              background-color: transparent;
+              min-height: 40px;
+              border: none;
+              outline: none;
+              margin-right: 24px;
+              font-size: 24px;
+              font-weight: 600;
+            }
+            .editable-title .icon {
+              position: absolute;
+              right: 8px;
+              top: 50%;
+              margin-top: -8px;
             }
           `}
         </style>
