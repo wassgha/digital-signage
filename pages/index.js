@@ -22,7 +22,7 @@ class Index extends React.Component {
   }
 
   navigateToDisplay = id => {
-    Router.push('/display?display=' + id)
+    Router.push('/display/' + id)
   }
 
   render() {

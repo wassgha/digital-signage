@@ -1,14 +1,19 @@
 import React from 'react'
-import { faThLarge, faTh } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faThLarge, faTh, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import GridLayout from 'react-grid-layout'
 import { view } from 'react-easy-state'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 
 import Frame from '../components/Admin/Frame.js'
 import EditableWidget from '../components/Admin/EditableWidget'
+import StatusBarElement from '../components/Admin/StatusBarElement'
 import WidthProvider from '../components/Widgets/WidthProvider'
 import DropdownButton from '../components/DropdownButton'
 
 import { Form, Switch } from '../components/Form'
+
+import { StatusBarElementTypes } from '../helpers/statusbar.js'
 
 import Widgets from '../widgets'
 
@@ -66,6 +71,14 @@ class Layout extends React.Component {
     }
   }
 
+  onDragEnd = result => {
+    if (!result.destination) {
+      return
+    }
+
+    display.reorderStatusBarItems(result.source.index, result.destination.index)
+  }
+
   render() {
     const { widgets } = this.state
     const { loggedIn } = this.props
@@ -81,6 +94,70 @@ class Layout extends React.Component {
       <Frame loggedIn={loggedIn}>
         <div className={'head'}>
           <h1>Layout</h1>
+          <div className='editable-title'>
+            <input
+              className='input'
+              placeholder='Unnamed display'
+              value={display && display.name}
+              onChange={event => {
+                const target = event.target
+                const title = target && target.value
+                display.updateName(title)
+              }}
+              onClick={e => {
+                if (e) e.stopPropagation()
+              }}
+              size={display && display.name && display.name.length}
+            />
+            <div className='icon'>
+              <FontAwesomeIcon icon={faPencilAlt} fixedWidth color='#828282' />
+            </div>
+          </div>
+        </div>
+        <div className='settings'>
+          <DropdownButton
+            icon='plus'
+            text='Add Status Bar Item'
+            onSelect={display.addStatusBarItem}
+            choices={Object.keys(StatusBarElementTypes).map(statusBarEl => ({
+              key: statusBarEl,
+              name: StatusBarElementTypes[statusBarEl].name,
+              icon: StatusBarElementTypes[statusBarEl].icon
+            }))}
+          />
+        </div>
+        <div className='statusbar'>
+          {display && display.statusBar && (
+            <DragDropContext onDragEnd={this.onDragEnd}>
+              <Droppable droppableId='droppable' direction='horizontal'>
+                {provided => (
+                  <div
+                    ref={provided.innerRef}
+                    style={{
+                      display: 'flex',
+                      paddingTop: 8,
+                      paddingBottom: 8,
+                      paddingRight: 4,
+                      paddingLeft: 4,
+                      overflow: 'auto',
+                      height: '100%',
+                      boxSizing: 'border-box'
+                    }}
+                    {...provided.droppableProps}
+                  >
+                    {display.statusBar.map((item, index) => (
+                      <StatusBarElement
+                        item={item}
+                        index={index}
+                        onDelete={display.removeStatusBarItem.bind(this, index)}
+                      />
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
+          )}
         </div>
         <div className='settings'>
           <DropdownButton
@@ -144,12 +221,43 @@ class Layout extends React.Component {
               background: #dfdfdf;
               border-radius: ${display.layout == 'spaced' ? '8px' : '0px'};
             }
+            .statusbar {
+              background: #dfdfdf;
+              border-radius: 8px;
+              flex: 1;
+              margin-bottom: 16px;
+              height: 64px;
+            }
             .settings {
               display: flex;
               flex-direction: row;
               align-items: center;
               justify-content: space-between;
               margin-bottom: 16px;
+            }
+            .editable-title {
+              display: inline-block;
+              position: relative;
+              margin-left: 16px;
+              margin-right: 16px;
+              border-bottom: 3px solid #aaa;
+            }
+            .editable-title .input {
+              font-family: 'Open Sans', sans-serif;
+              color: #666;
+              background-color: transparent;
+              min-height: 40px;
+              border: none;
+              outline: none;
+              margin-right: 24px;
+              font-size: 24px;
+              font-weight: 600;
+            }
+            .editable-title .icon {
+              position: absolute;
+              right: 8px;
+              top: 50%;
+              margin-top: -8px;
             }
           `}
         </style>

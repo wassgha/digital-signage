@@ -61,6 +61,7 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.1",
     "react": "^16.8.6",
+    "react-beautiful-dnd": "^11.0.4",
     "react-color": "^2.17.0",
     "react-content-loader": "^4.2.1",
     "react-dom": "^16.8.2",
@@ -74,10 +75,12 @@
     "react-sortable-hoc": "^1.8.3",
     "react-switch": "^5.0.0",
     "react-youtube": "^7.9.0",
+    "shortid": "^2.2.14",
     "socket.io": "^2.2.0",
     "socket.io-client": "^2.2.0",
     "styled-components": "^4.2.0",
     "superagent": "^5.0.5",
+    "uuid": "^3.3.2",
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {

@@ -58,7 +58,6 @@ class EditableWidget extends React.Component {
             <FontAwesomeIcon icon={widget.icon || faTimes} size={'2x'} />
           </div>
           <span className={'type'}>{widget.name || 'Broken Widget'}</span>
-          {/* <span className={'name'}>NEWS</span> */}
         </div>
         <WidgetEditDialog ref={this.dialog} OptionsComponent={widget.Options} id={id} />
         <style jsx>
