@@ -89,6 +89,11 @@ class Login extends Component {
                 </span>
               </div>
             )}
+            <div className={'alert-info'}>
+              <span className={'alert-text'}>
+                Use the username "demo" and password "demo"
+              </span>
+            </div>
             <label for='username'>Username</label>
             <input
               type='text'
@@ -200,13 +205,19 @@ class Login extends Component {
             }
             .alert-error {
               background: #e74c3c;
-              border-radius: 2px;
+              border-radius: 6px;
+              margin-bottom: 16px;
+              padding: 16px;
+            }
+            .alert-info {
+              background: #3ca9e7;
+              border-radius: 6px;
               margin-bottom: 16px;
               padding: 16px;
             }
             .alert-success {
               background: #7bc043;
-              border-radius: 2px;
+              border-radius: 6px;
               margin-bottom: 16px;
               padding: 16px;
             }
