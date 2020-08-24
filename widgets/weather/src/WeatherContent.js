@@ -15,6 +15,7 @@ config.autoAddCss = false
 import WeatherIcon from './WeatherIcon'
 
 const DEFAULT_UNIT = 'imperial'
+const DEFAULT_COUNTRY = 'us'
 const DEFAULT_ZIP = '10001'
 const API_KEY = 'da6ef4bf43eed800fdadd4a728766089'
 const API_URL = 'http://api.openweathermap.org/data/2.5'
@@ -27,9 +28,9 @@ class WeatherContent extends Component {
   }
 
   componentDidMount() {
-    const { data: { unit = DEFAULT_UNIT, zip = DEFAULT_ZIP } = {} } = this.props
+    const { data: { unit = DEFAULT_UNIT, country = DEFAULT_COUNTRY, zip = DEFAULT_ZIP } = {} } = this.props
     axios
-      .get(`${API_URL}/weather?zip=${zip},us&apiKey=${API_KEY}&units=${unit}`)
+      .get(`${API_URL}/weather?zip=${zip},${country}&apiKey=${API_KEY}&units=${unit}`)
       .then(({ data }) => {
         const {
           name,
