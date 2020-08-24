@@ -9,6 +9,7 @@ export default class Weather extends BaseWidget {
       version: '0.1',
       icon: 'cloud-sun',
       defaultData: {
+        country: 'us',
         zip: '10001',
         unit: 'imperial'
       }

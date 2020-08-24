@@ -4,8 +4,9 @@ import { Form, Input } from '../../../components/Form'
 class WeatherOptions extends Component {
   constructor(props) {
     super(props)
-    const { zip, unit } = props.data || {}
+    const { country, zip, unit } = props.data || {}
     this.state = {
+      country,
       zip,
       unit
     }
@@ -23,11 +24,19 @@ class WeatherOptions extends Component {
   }
 
   render() {
-    const { zip, unit } = this.state
+    const { country, zip, unit } = this.state
     return (
       <Form>
         <h3>Widget: Weather</h3>
         <p>Choose your preferences for the weather widget</p>
+        <Input
+          inline={false}
+          label={'Country Code'}
+          type={'text'}
+          name={'country'}
+          value={country}
+          onChange={this.handleChange}
+        />
         <Input
           inline={false}
           label={'ZIP Code'}
