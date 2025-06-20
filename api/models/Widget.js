@@ -1,5 +1,6 @@
-const mongoose = require('mongoose')
-const widgetList = require('../../widgets/widget_list')
+import mongoose from 'mongoose'
+import widgetList from '../../widgets/widget_list.js'
+
 const Schema = mongoose.Schema
 
 const Widget = new Schema({
@@ -12,4 +13,4 @@ const Widget = new Schema({
   display: { type: Schema.Types.ObjectId, ref: 'Display' }
 })
 
-module.exports = mongoose.model('Widget', Widget)
+export default mongoose.model('Widget', Widget)

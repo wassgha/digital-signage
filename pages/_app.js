@@ -1,4 +1,4 @@
-import App, { Container } from 'next/app'
+import App from 'next/app'
 import React from 'react'
 
 import '../styles/GridLayoutStyles.css'
@@ -18,9 +18,9 @@ export default class NextApp extends App {
   render() {
     const { Component, pageProps } = this.props
     return (
-      <Container>
+      <>
         <Component {...pageProps} />
-      </Container>
+      </>
     )
   }
 }

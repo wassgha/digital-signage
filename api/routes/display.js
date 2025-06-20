@@ -1,9 +1,9 @@
-const express = require('express')
-const router = express.Router()
+import express from 'express'
+import Display from '../models/Display.js'
+import DisplayHelper from '../helpers/display_helper.js'
+import CommonHelper from '../helpers/common_helper.js'
 
-const Display = require('../models/Display')
-const DisplayHelper = require('../helpers/display_helper')
-const CommonHelper = require('../helpers/common_helper')
+const router = express.Router()
 
 // Route: /api/v1/display
 router
@@ -82,4 +82,4 @@ router
       .catch(err => next(err))
   })
 
-module.exports = router
+export default router

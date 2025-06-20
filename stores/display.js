@@ -1,8 +1,7 @@
-const ReactEasyState = require('react-easy-state')
-const store = ReactEasyState.store
-const _ = require('lodash')
-const DisplayActions = require('../actions/display')
-const shortid = require('shortid')
+import { store } from '@risingstack/react-easy-state'
+import _ from 'lodash'
+import * as DisplayActions from '../actions/display.js'
+import shortid from 'shortid'
 
 const updateDisplayThrottled = _.debounce((id, data) => {
   return DisplayActions.updateDisplay(id, data)
@@ -56,4 +55,4 @@ const display = store({
   }
 })
 
-module.exports = display
+export default display

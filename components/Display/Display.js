@@ -7,7 +7,7 @@ import React from 'react'
 import GridLayout from 'react-grid-layout'
 import socketIOClient from 'socket.io-client'
 import _ from 'lodash'
-import { view } from 'react-easy-state'
+import { view } from '@risingstack/react-easy-state'
 
 import Frame from './Frame.js'
 import HeightProvider from '../Widgets/HeightProvider'

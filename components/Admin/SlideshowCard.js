@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClock, faImages } from '@fortawesome/free-regular-svg-icons'
 import { faTrash, faPlay } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
-import { view } from 'react-easy-state'
+import { view } from '@risingstack/react-easy-state'
 
 import { deleteSlideshow } from '../../actions/slideshow'
 import { display } from '../../stores'

@@ -1,22 +1,20 @@
 /* eslint-disable multiline-comment-style */
-const express = require('express')
-const next = require('next')
-const mongoose = require('mongoose')
-const passport = require('passport')
-const cookieParser = require('cookie-parser')
-const session = require('cookie-session')
-const bodyParser = require('body-parser')
-const socketIo = require('socket.io')
+import express from 'express'
+import next from 'next'
+import mongoose from 'mongoose'
+import passport from 'passport'
+import cookieParser from 'cookie-parser'
+import session from 'express-session'
+import bodyParser from 'body-parser'
+import { Server as SocketIoServer } from 'socket.io'
 
-const Keys = require('./keys')
+import Keys from './keys.js'
+import apiRoutes from './api/routes/index.js'
+import User from './api/models/User.js'
 
 const dev = Keys.ENVIRON !== 'PROD'
 const app = next({ dev })
-const routes = require('./routes')
-const handle = routes.getRequestHandler(app)
-
-const apiRoutes = require('./api/routes')
-const User = require('./api/models/User')
+const handle = app.getRequestHandler()
 
 app
   .prepare()
@@ -50,8 +48,9 @@ app
     server.use(
       session({
         secret: Keys.SESSION_SECRET,
-        resave: true,
-        saveUninitialized: false
+        resave: false,
+        saveUninitialized: false,
+        cookie: { secure: false }
       })
     )
 
@@ -86,7 +85,12 @@ app
     })
 
     // Socket.io
-    io = socketIo.listen(finalServer)
+    io = new SocketIoServer(finalServer, {
+      cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+      }
+    })
   })
   .catch(ex => {
     // eslint-disable-next-line

@@ -27,7 +27,7 @@ export default function WidthProvider(ComposedComponent) {
       window.removeEventListener('resize', this.onWindowResize)
     }
 
-    onWindowResize = () => {
+    onWindowResize =() => {
       if (!this.mounted) return
       // eslint-disable-next-line
       const node = ReactDOM.findDOMNode(this) // Flow casts this to Text | Element

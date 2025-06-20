@@ -1,5 +1,5 @@
-const Slide = require('../models/Slide')
-const CommonHelper = require('./common_helper')
+import Slide from '../models/Slide.js'
+import CommonHelper from './common_helper.js'
 
 function deleteSlides(slides, res) {
   return Promise.all(
@@ -9,6 +9,6 @@ function deleteSlides(slides, res) {
   ).then(() => CommonHelper.broadcastUpdate(res.io))
 }
 
-module.exports = {
+export default {
   deleteSlides
 }

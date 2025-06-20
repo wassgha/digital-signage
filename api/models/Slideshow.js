@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
+
 const Schema = mongoose.Schema
 
 const Slideshow = new Schema({
@@ -6,4 +7,4 @@ const Slideshow = new Schema({
   slides: [{ type: Schema.Types.ObjectId, ref: 'Slide' }]
 })
 
-module.exports = mongoose.model('Slideshow', Slideshow)
+export default mongoose.model('Slideshow', Slideshow)

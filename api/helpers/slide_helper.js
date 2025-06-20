@@ -1,5 +1,5 @@
-const Slideshow = require('../models/Slideshow')
-const CommonHelper = require('./common_helper')
+import Slideshow from '../models/Slideshow.js'
+import CommonHelper from './common_helper.js'
 
 function addSlide(slide, res, next) {
   return Slideshow.findById(slide.slideshow)
@@ -32,7 +32,7 @@ function deleteSlide(slide, next, res) {
   })
 }
 
-module.exports = {
+export default {
   deleteSlide,
   addSlide
 }

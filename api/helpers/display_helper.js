@@ -1,6 +1,6 @@
-const Widget = require('../models/Widget')
-const Display = require('../models/Display')
-const CommonHelper = require('./common_helper')
+import Widget from '../models/Widget.js'
+import Display from '../models/Display.js'
+import CommonHelper from './common_helper.js'
 
 function deleteWidgets(widgets, res) {
   return Promise.all(
@@ -18,7 +18,7 @@ async function newDisplay(req) {
   return newDisplay.save()
 }
 
-module.exports = {
+export default {
   deleteWidgets,
   newDisplay
 }

@@ -1,5 +1,5 @@
-const Display = require('../models/Display')
-const CommonHelper = require('./common_helper')
+import Display from '../models/Display.js'
+import CommonHelper from './common_helper.js'
 
 function addWidget(req, res) {
   let widget = req.crudify.result
@@ -31,7 +31,7 @@ function deleteWidget(req, res) {
   })
 }
 
-module.exports = {
+export default {
   deleteWidget,
   addWidget
 }

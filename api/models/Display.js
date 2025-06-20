@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const shortid = require('shortid')
+import mongoose from 'mongoose'
+import shortid from 'shortid'
 
 const Schema = mongoose.Schema
 
@@ -18,4 +18,4 @@ const Display = new Schema({
   widgets: [{ type: Schema.Types.ObjectId, ref: 'Widget' }]
 })
 
-module.exports = mongoose.model('Display', Display)
+export default mongoose.model('Display', Display)

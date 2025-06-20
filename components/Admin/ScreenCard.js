@@ -5,7 +5,7 @@ import { faWindowRestore } from '@fortawesome/free-regular-svg-icons'
 import { faChromecast } from '@fortawesome/free-brands-svg-icons'
 import { faTrash, faTv, faEye, faLink } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
-import { view } from 'react-easy-state'
+import { view } from '@risingstack/react-easy-state'
 
 import { deleteDisplay } from '../../actions/display'
 

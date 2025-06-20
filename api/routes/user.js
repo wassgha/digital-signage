@@ -1,8 +1,8 @@
-const express = require('express')
-const router = express.Router()
-const passport = require('passport')
+import express from 'express'
+import passport from 'passport'
+import User from '../models/User.js'
 
-const User = require('../models/User')
+const router = express.Router()
 
 router.get('/demo', function(req, res) {
   User.register(new User({ username: 'demo' }), 'demo', function() {
@@ -19,4 +19,4 @@ router.get('/logout', (req, res) => {
   res.redirect('/login')
 })
 
-module.exports = router
+export default router

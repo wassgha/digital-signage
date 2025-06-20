@@ -69,6 +69,7 @@ class DropdownButton extends Component {
           >
             {choices.map(choice => (
               <button
+                key={choice.key}
                 className={'choice'}
                 onClick={event => {
                   this.closeMenu(event, true /* force */)

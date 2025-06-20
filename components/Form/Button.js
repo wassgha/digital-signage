@@ -1,52 +1,54 @@
-import React from 'react'
-import Lottie from 'react-lottie'
+import React from "react";
 
 class Button extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      loading: false
-    }
+      loading: false,
+    };
+    this.onClickWrapper = this.onClickWrapper.bind(this);
   }
 
-  onClickWrapper = event => {
-    const { onClick = () => {} } = this.props
+  onClickWrapper(event) {
+    const { onClick = () => {} } = this.props;
     return this.setState({ loading: true }, () => {
       onClick(event).then(() => {
-        this.setState({ loading: false })
-      })
-    })
+        this.setState({ loading: false });
+      });
+    });
   }
 
   render() {
-    const { text = 'Submit', color = 'gray', style = { marginLeft: 16 } } = this.props
-    const { loading = false } = this.state
+    const {
+      text = "Submit",
+      color = "gray",
+      style = { marginLeft: 16 },
+    } = this.props;
+    const { loading = false } = this.state;
     return (
       <button
-        className={'btn'}
+        className={"btn"}
         onClick={loading ? () => {} : this.onClickWrapper}
         style={style}
         disabled={loading}
       >
         {loading && (
-          <Lottie
-            height={32}
-            width={32}
-            style={{ margin: 0 }}
-            options={{
-              loop: true,
-              autoplay: true,
-              animationData: require('./assets/loading.json'),
-              rendererSettings: {
-                preserveAspectRatio: 'xMidYMid slice'
-              }
+          <div
+            style={{
+              height: 16,
+              width: 16,
+              border: "2px solid #fff",
+              borderTop: "2px solid transparent",
+              borderRadius: "50%",
+              animation: "spin 1s linear infinite",
+              marginRight: 8
             }}
           />
         )}
         {text}
         <style jsx>{`
           .btn {
-            font-family: 'Open Sans', sans-serif;
+            font-family: "Open Sans", sans-serif;
             background: lightgray;
             text-decoration: none;
             text-transform: uppercase;
@@ -65,10 +67,14 @@ class Button extends React.Component {
             background: ${color};
             cursor: pointer;
           }
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
         `}</style>
       </button>
-    )
+    );
   }
 }
 
-export default Button
+export default Button;

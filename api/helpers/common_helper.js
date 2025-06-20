@@ -7,7 +7,7 @@ function broadcastUpdateMiddleware(req, res) {
   return broadcastUpdate(res.io)
 }
 
-module.exports = {
+export default {
   broadcastUpdate,
   broadcastUpdateMiddleware
 }

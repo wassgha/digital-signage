@@ -1,48 +1,60 @@
-import React from 'react'
-import Link from 'next/link'
-import Router from 'next/router'
-import DropdownButton from '../components/DropdownButton'
+import React from "react";
+import Link from "next/link";
+import Router from "next/router";
+import DropdownButton from "../components/DropdownButton";
 
-import { getDisplays } from '../actions/display'
+import { getDisplays } from "../actions/display";
 
 class Index extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      displays: props.displays || []
-    }
+      displays: props.displays || [],
+    };
   }
 
   static async getInitialProps({ req }) {
     const host =
-      req && req.headers && req.headers.host ? 'http://' + req.headers.host : window.location.origin
-    const displayList = await getDisplays(host)
-    return { displays: displayList, host: host }
+      req && req.headers && req.headers.host
+        ? "http://" + req.headers.host
+        : window.location.origin;
+    try {
+      const displayList = await getDisplays(host);
+      // If no displays from API, provide a default display
+      const displays = displayList && displayList.length > 0 
+        ? displayList 
+        : [{ _id: 'default', name: 'Default Display' }];
+      return { displays, host: host };
+    } catch (error) {
+      console.error('Error fetching displays:', error);
+      // Provide default display if API fails
+      return { displays: [{ _id: 'default', name: 'Default Display' }], host: host };
+    }
   }
 
-  navigateToDisplay = id => {
-    Router.push('/display/' + id)
-  }
+  navigateToDisplay = (id) => {
+    Router.push("/display/" + id);
+  };
 
   render() {
-    const { displays = [] } = this.state
+    const { displays = [] } = this.state;
     return (
-      <div className='home'>
+      <div className="home">
         <p>The Digital Signage server is running in the background.</p>
-        <div className='btn-group'>
-          <Link href='/layout' style={{ margin: 20 }}>
-            <div className='btn admin'>Admin Home</div>
+        <div className="btn-group">
+          <Link href="/layout" style={{ margin: 20 }}>
+            <div className="btn admin">Admin Home</div>
           </Link>
           <div style={{ margin: 20 }}>
             <DropdownButton
-              icon='chevron-down'
-              text='Display Home'
+              icon="chevron-down"
+              text="Display Home"
               style={styles.btn}
               onSelect={this.navigateToDisplay}
-              choices={displays.map(display => ({
+              choices={displays.map((display) => ({
                 key: display._id,
-                name: display.name
+                name: display.name,
               }))}
             />
           </div>
@@ -50,7 +62,7 @@ class Index extends React.Component {
         <style jsx>
           {`
             .home {
-              font-family: 'Open Sans', sans-serif;
+              font-family: "Open Sans", sans-serif;
               padding: 40px;
               max-width: 960px;
               margin: auto;
@@ -84,21 +96,21 @@ class Index extends React.Component {
           `}
         </style>
       </div>
-    )
+    );
   }
 }
 
 const styles = {
   btn: {
     padding: 20,
-    textDecoration: 'none',
-    textTransform: 'uppercase',
+    textDecoration: "none",
+    textTransform: "uppercase",
     borderRadius: 4,
-    fontSize: 16
+    fontSize: 16,
   },
   btnAdmin: {
-    background: '#03a9f4'
-  }
-}
+    background: "#03a9f4",
+  },
+};
 
-export default Index
+export default Index;

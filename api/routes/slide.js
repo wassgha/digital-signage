@@ -1,11 +1,11 @@
-const express = require('express')
-const router = express.Router()
-const multer = require('multer')
-const path = require('path')
+import express from 'express'
+import multer from 'multer'
+import path from 'path'
+import CommonHelper from '../helpers/common_helper.js'
+import Slide from '../models/Slide.js'
+import SlideHelper from '../helpers/slide_helper.js'
 
-const CommonHelper = require('../helpers/common_helper')
-const Slide = require('../models/Slide')
-const SlideHelper = require('../helpers/slide_helper')
+const router = express.Router()
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -85,7 +85,7 @@ router
         // Either the uploaded file if found or the text data field
         const data = req.file && req.file.path ? '/' + req.file.path : req.body.data
 
-        if (data != null && typeof data != undefined) slide.data = data
+        if (data != null && typeof data !== 'undefined') slide.data = data
         if ('type' in req.body) slide.type = req.body.type
         if ('title' in req.body) slide.title = req.body.title
         if ('description' in req.body) slide.description = req.body.description
@@ -101,4 +101,4 @@ router
       .catch(err => next(err))
   })
 
-module.exports = router
+export default router

@@ -1,7 +1,9 @@
-const boxen = require('boxen')
-const dotenv = process.env.ENVIRON !== 'HEROKU' ? require('dotenv').config() : { parsed: {} }
+import boxen from 'boxen'
+import dotenv from 'dotenv'
 
-if (dotenv.error) {
+const dotenvConfig = process.env.ENVIRON !== 'HEROKU' ? dotenv.config() : { parsed: {} }
+
+if (dotenvConfig.error) {
   console.error(
     `Welcome to digital-signage!\n
 You have not configured your installation yet, please run the setup utility by executing:\n` +
@@ -10,14 +12,14 @@ You have not configured your installation yet, please run the setup utility by e
   process.exit()
 }
 
-const PORT = process.env.PORT || dotenv.parsed.PORT || 3001
-const ENVIRON = process.env.ENVIRON || dotenv.parsed.ENVIRON || 'DEV'
+const PORT = process.env.PORT || dotenvConfig.parsed.PORT || 3002
+const ENVIRON = process.env.ENVIRON || dotenvConfig.parsed.ENVIRON || 'DEV'
 const MONGODB_URI =
-  process.env.MONGODB_URI || dotenv.parsed.MONGODB_URI || 'mongodb://localhost/display'
-const SESSION_SECRET = process.env.SESSION_SECRET || dotenv.parsed.SESSION_SECRET
-const HOST_URL = process.env.SERVER_HOST || dotenv.parsed.SERVER_HOST || 'http://localhost:3000/'
+  process.env.MONGODB_URI || dotenvConfig.parsed.MONGODB_URI || 'mongodb://localhost/display'
+const SESSION_SECRET = process.env.SESSION_SECRET || dotenvConfig.parsed.SESSION_SECRET
+const HOST_URL = process.env.SERVER_HOST || dotenvConfig.parsed.SERVER_HOST || 'http://localhost:3000/'
 
-module.exports = {
+export default {
   ENVIRON,
   PORT,
   MONGODB_URI,

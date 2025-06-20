@@ -1,9 +1,10 @@
-const mongoose = require('mongoose')
-const passportLocalMongoose = require('passport-local-mongoose')
+import mongoose from 'mongoose'
+import passportLocalMongoose from 'passport-local-mongoose'
+
 const Schema = mongoose.Schema
 
 const User = new Schema({})
 
 User.plugin(passportLocalMongoose)
 
-module.exports = mongoose.model('User', User)
+export default mongoose.model('User', User)

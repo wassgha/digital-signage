@@ -5,7 +5,7 @@
  */
 
 import React, { Component } from 'react'
-import Lottie from 'react-lottie'
+import Lottie from 'lottie-react'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import AutoScroll from '../../../components/AutoScroll'
 
@@ -32,20 +32,15 @@ class CongratsContent extends Component {
       <div className='congrats'>
         <div className='background'>
           <Lottie
-            options={{
-              loop: true,
-              autoplay: true,
-              animationData: require('./animations/' + animation + '.json'),
-              rendererSettings: {
-                preserveAspectRatio: 'xMidYMid slice'
-              }
-            }}
+            animationData={require('./animations/' + animation + '.json')}
+            loop={true}
+            style={{ width: '100%', height: '100%' }}
           />
         </div>
         <AutoScroll style={{ display: 'block' }}>
           <div className='text'>
-            {text.split('\n').map(line => (
-              <div>{line || <br />}</div>
+            {text.split('\n').map((line, index) => (
+              <div key={index}>{line || <br />}</div>
             ))}
           </div>
         </AutoScroll>
